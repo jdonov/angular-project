@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,11 +51,10 @@ public class UserServiceImpl implements UserService {
             throw new PasswordsNotMatchException("Passwords doesn't match!");
         }
         User user = this.modelMapper.map(userDTO, User.class);
-        user.setUsername(userDTO.getUsername());
         if (this.userRepository.count() == 0) {
-            user.setAuthorities(Set.of(Role.valueOf("ADMIN")));
+            user.setAuthorities(Set.of(Role.valueOf("ROLE_ADMIN")));
         } else {
-            user.setAuthorities(Set.of(Role.valueOf("USER")));
+            user.setAuthorities(Set.of(Role.valueOf("ROLE_USER")));
         }
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user = this.userRepository.saveAndFlush(user);
@@ -81,6 +81,11 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByUsername(username).orElse(null);
     }
 
+    @Override
+    public User getLoggedInUser() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return this.userRepository.findByUsername(username).orElse(null);
+    }
 
     private UserDetails map(User user) {
         return new org.springframework.security.core.userdetails.User(

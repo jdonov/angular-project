@@ -1,10 +1,6 @@
 package com.winery.model.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import javax.validation.constraints.Positive;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "addresses")
@@ -12,9 +8,7 @@ public class Address extends BaseEntity{
     private Winery winery;
     private Region region;
     private String city;
-    private int postCode;
     private String street;
-    private String streetNumber;
 
     public Address() {
     }
@@ -47,16 +41,6 @@ public class Address extends BaseEntity{
         this.city = city;
     }
 
-    @Column(name = "post_code")
-    @Positive(message = "Postcode must be a positive number")
-    public int getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(int postCode) {
-        this.postCode = postCode;
-    }
-
     @Column(name = "street", nullable = false)
     public String getStreet() {
         return street;
@@ -65,14 +49,4 @@ public class Address extends BaseEntity{
     public void setStreet(String street) {
         this.street = street;
     }
-
-    @Column(name = "street_number")
-    public String getStreetNumber() {
-        return streetNumber;
-    }
-
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
-    }
-
 }

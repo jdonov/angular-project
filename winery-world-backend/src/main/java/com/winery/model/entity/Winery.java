@@ -1,23 +1,30 @@
 package com.winery.model.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "winery")
 public class Winery extends BaseEntity{
-
+    private String name;
     private Address address;
     private Set<Wine> wines;
     private User user;
     private Set<Comment> comments;
-    private List<Rating> ratings;
 
     public Winery() {
     }
 
-    @OneToOne
+    @Column(name = "name", nullable = false, unique = true)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     public Address getAddress() {
         return address;
@@ -53,14 +60,5 @@ public class Winery extends BaseEntity{
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
-    }
-
-    @ElementCollection
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
     }
 }
