@@ -1,6 +1,5 @@
 package com.winery.model.entity;
 
-
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -8,7 +7,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "wine")
@@ -17,14 +15,13 @@ public class Wine extends BaseEntity{
     private BigDecimal price;
     private String description;
     private String imageUrl;
-    private String imagePublicId;
     private Winery winery;
     private List<Rating> ratings;
 
     public Wine() {
     }
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     @Length(min = 3, message = "Name must be at least 3 characters long!")
     public String getName() {
         return name;
@@ -54,7 +51,7 @@ public class Wine extends BaseEntity{
         this.description = description;
     }
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", nullable = false)
     public String getImageUrl() {
         return imageUrl;
     }
@@ -63,16 +60,7 @@ public class Wine extends BaseEntity{
         this.imageUrl = imageUrl;
     }
 
-    @Column(name = "image_public_id")
-    public String getImagePublicId() {
-        return imagePublicId;
-    }
-
-    public void setImagePublicId(String imagePublicId) {
-        this.imagePublicId = imagePublicId;
-    }
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "winery_id", referencedColumnName = "id")
     public Winery getWinery() {
         return winery;

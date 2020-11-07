@@ -37,4 +37,9 @@ public class WineryServiceImpl implements WineryService {
         winery = this.wineryRepository.saveAndFlush(winery);
         return this.modelMapper.map(winery, WineryServiceDTO.class);
     }
+
+    @Override
+    public Winery getWineryById(String id) {
+        return this.wineryRepository.findById(id).orElse(null);
+    }
 }

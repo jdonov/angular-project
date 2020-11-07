@@ -1,10 +1,6 @@
 package com.winery.model.binding;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
@@ -12,10 +8,8 @@ public class WineRegisterDTO {
     private String name;
     private BigDecimal price;
     private String description;
-    private int quantityInWarehouse;
-    private double weightInKg;
-    private MultipartFile image;
-    private boolean available;
+    private String imageUrl;
+    private String wineryId;
 
     public WineRegisterDTO() {
     }
@@ -47,39 +41,21 @@ public class WineRegisterDTO {
         this.description = description;
     }
 
-    @Positive(message = "Quantity must be positive!")
-    public int getQuantityInWarehouse() {
-        return quantityInWarehouse;
+    @NotEmpty(message = "Image is required!")
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setQuantityInWarehouse(int quantityInWarehouse) {
-        this.quantityInWarehouse = quantityInWarehouse;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    @Positive(message = "Weight must be positive!")
-    public double getWeightInKg() {
-        return weightInKg;
+    @NotEmpty(message = "Winery is required!")
+    public String getWineryId() {
+        return wineryId;
     }
 
-    public void setWeightInKg(double weightInKg) {
-        this.weightInKg = weightInKg;
-    }
-
-    public MultipartFile getImage() {
-        return image;
-    }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
-
-    @NotNull(message = "Enter availability!")
-    @JsonProperty("available")
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setWineryId(String wineryId) {
+        this.wineryId = wineryId;
     }
 }

@@ -27,7 +27,7 @@ public class WineryController {
         this.wineryService = wineryService;
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<WineryServiceDTO> registerWinery(@Valid @RequestBody WineryRegisterBindingDTO wineryRegisterBindingDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BindingResultException(new Error().setErrors(bindingResult.getAllErrors()

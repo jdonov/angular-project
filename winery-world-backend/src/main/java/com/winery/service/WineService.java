@@ -15,6 +15,6 @@ public interface WineService {
 
     Wine getWineById(String id);
 
-    List<WineServiceDTO> getAllProducts();
+    List<WineServiceDTO> getAllWines();
 
 }

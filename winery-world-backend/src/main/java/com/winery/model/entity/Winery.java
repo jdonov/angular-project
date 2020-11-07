@@ -34,7 +34,7 @@ public class Winery extends BaseEntity{
         this.address = address;
     }
 
-    @OneToMany(mappedBy = "winery", targetEntity = Wine.class)
+    @OneToMany(mappedBy = "winery", targetEntity = Wine.class, cascade = CascadeType.ALL)
     public Set<Wine> getWines() {
         return wines;
     }
@@ -53,7 +53,7 @@ public class Winery extends BaseEntity{
         this.user = user;
     }
 
-    @OneToMany(mappedBy = "winery", targetEntity = Comment.class)
+    @OneToMany(mappedBy = "winery", targetEntity = Comment.class, cascade = CascadeType.ALL)
     public Set<Comment> getComments() {
         return comments;
     }
