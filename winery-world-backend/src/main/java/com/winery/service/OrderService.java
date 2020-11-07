@@ -10,6 +10,8 @@ public interface OrderService {
 
     List<OrderServiceDTO> getClientOrders();
 
+    List<OrderServiceDTO> getOrdersByOwner();
+
     OrderServiceDTO confirmOrder(String orderId);
 
     OrderServiceDTO cancelOrder(String orderId);

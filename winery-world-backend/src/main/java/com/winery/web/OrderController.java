@@ -47,6 +47,12 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping("/owner")
+    public ResponseEntity<List<OrderServiceDTO>> ownerOrders() {
+        List<OrderServiceDTO> orders = this.orderService.getOrdersByOwner();
+        return ResponseEntity.ok(orders);
+    }
+
     @PatchMapping("/{id}/confirm")
     public ResponseEntity<OrderServiceDTO> confirmOrder(@PathVariable("id") String orderId) {
         return ResponseEntity.ok(this.orderService.confirmOrder(orderId));

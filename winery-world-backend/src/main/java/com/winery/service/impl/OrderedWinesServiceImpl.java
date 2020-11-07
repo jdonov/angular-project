@@ -4,6 +4,7 @@ import com.winery.model.binding.OrderWineBindingDTO;
 import com.winery.model.entity.Order;
 import com.winery.model.entity.OrderedWines;
 import com.winery.model.entity.OrderedWinesPK;
+import com.winery.model.entity.Wine;
 import com.winery.repository.OrderedWinesRepository;
 import com.winery.service.OrderedWinesService;
 import com.winery.service.WineService;
@@ -26,11 +27,13 @@ public class OrderedWinesServiceImpl implements OrderedWinesService {
 
     @Override
     public OrderedWines addOrderedWines(OrderWineBindingDTO orderedWine, Order order) {
-        OrderedWines ordPrd = this.modelMapper.map(orderedWine, OrderedWines.class);
+        OrderedWines ordWine = this.modelMapper.map(orderedWine, OrderedWines.class);
         OrderedWinesPK pk = new OrderedWinesPK(order.getId(), orderedWine.getId());
-        ordPrd.setId(pk);
-        ordPrd.setWine(this.wineService.getWineById(orderedWine.getId()));
-        ordPrd.setOrder(order);
-        return  this.orderedWinesRepository.saveAndFlush(ordPrd);
+        ordWine.setId(pk);
+        ordWine.setWine(this.wineService.getWineById(orderedWine.getId()));
+        ordWine.setOrder(order);
+        Wine wine = this.wineService.getWineById(orderedWine.getId());
+        ordWine.setOwner(wine.getWinery().getUser());
+        return  this.orderedWinesRepository.saveAndFlush(ordWine);
     }
 }

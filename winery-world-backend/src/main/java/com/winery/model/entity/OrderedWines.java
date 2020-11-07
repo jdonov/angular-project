@@ -10,6 +10,7 @@ public class OrderedWines {
     private int quantity;
     private Order order;
     private Wine wine;
+    private User owner;
 
     public OrderedWines() {
     }
@@ -53,5 +54,15 @@ public class OrderedWines {
 
     public void setWine(Wine wine) {
         this.wine = wine;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
