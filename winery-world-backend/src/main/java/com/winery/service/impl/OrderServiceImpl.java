@@ -36,25 +36,28 @@ public class OrderServiceImpl implements OrderService {
     public OrderServiceDTO placeOrder(OrderPlaceBindingDTO orderPlaceBindingDTO) {
         Order order = this.modelMapper.map(orderPlaceBindingDTO, Order.class);
         order.setWines(new HashSet<>());
-        User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
+        User user = this.userService.getUser("test@test.com");
         order.setUser(user);
-//        Address receiverAddress = this.addressService.registerAddress(orderPlaceBindingDTO.getReceiverAddress(), user);
-//        order.setReceiverAddress(receiverAddress);
+        Address receiverAddress = this.addressService.registerAddressUser(orderPlaceBindingDTO.getReceiverAddress());
+        order.setReceiverAddress(receiverAddress);
 
         order.setStatus(OrderStatus.RECEIVED);
         order = this.orderRepository.saveAndFlush(order);
         Order orderCopy = order;
         Set<OrderedWines> orderedWines = orderPlaceBindingDTO.getOrderedWines().stream()
-                .map(op -> this.orderedWinesService.addOrderedWines(op, orderCopy))
+                .map(ow -> this.orderedWinesService.addOrderedWines(ow, orderCopy))
                 .collect(Collectors.toSet());
         order.setWines(orderedWines);
         order = this.orderRepository.saveAndFlush(order);
+
         return this.modelMapper.map(order, OrderServiceDTO.class);
     }
 
     @Override
     public List<OrderServiceDTO> getClientOrders() {
-        User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
+        User user = this.userService.getUser("test@test.com");
         return this.orderRepository.findAllByUser(user).stream()
                 .map(o -> this.modelMapper.map(o, OrderServiceDTO.class))
                 .collect(Collectors.toList());

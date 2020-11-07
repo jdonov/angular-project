@@ -1,10 +1,5 @@
 package com.winery.model.binding;
 
-import com.winery.model.entity.Region;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 
 public class AddressUserBindingDTO {

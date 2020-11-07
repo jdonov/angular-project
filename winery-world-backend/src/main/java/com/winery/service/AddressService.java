@@ -10,5 +10,5 @@ import com.winery.model.entity.Winery;
 public interface AddressService {
     Address registerAddressWinery(AddressWineryBindingDTO addressWineryBindingDTO);
 
-    Address registerAddressWinery(AddressUserBindingDTO addressUserBindingDTO);
+    Address registerAddressUser(AddressUserBindingDTO addressUserBindingDTO);
 }

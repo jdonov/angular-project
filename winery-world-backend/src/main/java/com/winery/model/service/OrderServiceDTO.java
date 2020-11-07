@@ -6,8 +6,7 @@ import java.util.Set;
 
 public class OrderServiceDTO extends BaseServiceModel{
     private Set<OrderWineServiceDTO> wines;
-    private String username;
-    private AddressServiceDTO receiverAddress;
+    private AddressOrderServiceDTO receiverAddress;
     private LocalDateTime orderDateTime;
     private String status;
 
@@ -22,19 +21,11 @@ public class OrderServiceDTO extends BaseServiceModel{
         this.wines = wines;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public AddressServiceDTO getReceiverAddress() {
+    public AddressOrderServiceDTO getReceiverAddress() {
         return receiverAddress;
     }
 
-    public void setReceiverAddress(AddressServiceDTO receiverAddress) {
+    public void setReceiverAddress(AddressOrderServiceDTO receiverAddress) {
         this.receiverAddress = receiverAddress;
     }
 

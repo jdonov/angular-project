@@ -2,10 +2,12 @@ package com.winery.config;
 
 
 import com.winery.model.entity.Comment;
+import com.winery.model.entity.OrderedWines;
 import com.winery.model.entity.Rating;
 import com.winery.model.entity.Wine;
 import com.winery.model.service.CommentReplyServiceDTO;
 import com.winery.model.service.CommentServiceDTO;
+import com.winery.model.service.OrderWineServiceDTO;
 import com.winery.model.service.WineServiceDTO;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -49,6 +51,10 @@ public class ApplicationBeanConfiguration {
         });
         modelMapper.typeMap(Wine.class, WineServiceDTO.class).addMappings(mapper -> {
             mapper.using(ratingConverter).map(Wine::getRatings, WineServiceDTO::setRating);
+        });
+
+        modelMapper.typeMap(OrderedWines.class, OrderWineServiceDTO.class).addMappings(mapper -> {
+            mapper.map(src -> src.getWine().getName(), OrderWineServiceDTO::setName);
         });
 
         return modelMapper;

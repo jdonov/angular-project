@@ -27,7 +27,7 @@ public class Order extends BaseEntity{
         this.user = user;
     }
 
-    @OneToMany(mappedBy = "order", targetEntity = OrderedWines.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", targetEntity = OrderedWines.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<OrderedWines> getWines() {
         return wines;
     }

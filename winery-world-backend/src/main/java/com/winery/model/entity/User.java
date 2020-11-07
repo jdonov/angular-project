@@ -13,6 +13,7 @@ public class User extends BaseEntity{
     private String username;
     private String password;
     private Set<Role> authorities;
+    private Address address;
 
     public User() {
     }
@@ -45,5 +46,15 @@ public class User extends BaseEntity{
 
     public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "address_id", nullable = true, referencedColumnName = "id")
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

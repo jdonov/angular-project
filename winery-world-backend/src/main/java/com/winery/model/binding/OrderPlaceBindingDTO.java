@@ -1,5 +1,6 @@
 package com.winery.model.binding;
 
+import com.winery.constraint.AddressUserValidation;
 import com.winery.constraint.AddressWineryValidation;
 import com.winery.constraint.OrderedWines;
 
@@ -11,7 +12,7 @@ public class OrderPlaceBindingDTO {
 
     private Set<OrderWineBindingDTO> orderedWines;
     private String username;
-    private AddressWineryBindingDTO receiverAddress;
+    private AddressUserBindingDTO receiverAddress;
 
     public OrderPlaceBindingDTO() {
     }
@@ -35,12 +36,12 @@ public class OrderPlaceBindingDTO {
     }
 
     @NotNull(message = "Address can not be empty!")
-    @AddressWineryValidation
-    public AddressWineryBindingDTO getReceiverAddress() {
+    @AddressUserValidation
+    public AddressUserBindingDTO getReceiverAddress() {
         return receiverAddress;
     }
 
-    public void setReceiverAddress(AddressWineryBindingDTO receiverAddress) {
+    public void setReceiverAddress(AddressUserBindingDTO receiverAddress) {
         this.receiverAddress = receiverAddress;
     }
 

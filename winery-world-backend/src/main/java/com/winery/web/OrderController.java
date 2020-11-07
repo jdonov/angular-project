@@ -5,7 +5,6 @@ import com.winery.exception.Error;
 import com.winery.model.binding.OrderPlaceBindingDTO;
 import com.winery.model.service.OrderServiceDTO;
 import com.winery.service.OrderService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -22,12 +21,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService orderService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public OrderController(OrderService orderService, ModelMapper modelMapper) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/placeOrder")
@@ -47,7 +44,6 @@ public class OrderController {
     @GetMapping("/client")
     public ResponseEntity<List<OrderServiceDTO>> clientOrders() {
         List<OrderServiceDTO> orders = this.orderService.getClientOrders();
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
         return ResponseEntity.ok(orders);
     }
 

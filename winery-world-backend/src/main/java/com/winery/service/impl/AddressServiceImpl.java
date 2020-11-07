@@ -27,7 +27,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address registerAddressWinery(AddressUserBindingDTO addressUserBindingDTO) {
+    public Address registerAddressUser(AddressUserBindingDTO addressUserBindingDTO) {
         Address address = this.modelMapper.map(addressUserBindingDTO, Address.class);
         return this.addressRepository.saveAndFlush(address);
     }
