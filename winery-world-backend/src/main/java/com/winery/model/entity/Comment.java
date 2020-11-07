@@ -1,7 +1,10 @@
 package com.winery.model.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -10,7 +13,9 @@ public class Comment extends BaseEntity{
     private User user;
     private Winery winery;
     private String comment;
+    private Comment parent;
     private Set<Comment> replies;
+    private LocalDateTime commentDateTime;
 
     public Comment() {
     }
@@ -45,12 +50,33 @@ public class Comment extends BaseEntity{
         this.comment = comment;
     }
 
-    @OneToMany(mappedBy = "comment")
+    // Parent comment
+    @ManyToOne
+    @JoinColumn(nullable=true)
+    public Comment getParent() {
+        return parent;
+    }
+
+    public void setParent(Comment parent) {
+        this.parent = parent;
+    }
+
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     public Set<Comment> getReplies() {
         return replies;
     }
 
     public void setReplies(Set<Comment> replies) {
         this.replies = replies;
+    }
+
+    @Column(name = "comment_date_time")
+    @CreationTimestamp
+    public LocalDateTime getCommentDateTime() {
+        return commentDateTime;
+    }
+
+    public void setCommentDateTime(LocalDateTime commentDateTime) {
+        this.commentDateTime = commentDateTime;
     }
 }

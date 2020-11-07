@@ -32,7 +32,8 @@ public class WineryServiceImpl implements WineryService {
         Winery winery = this.modelMapper.map(wineryRegisterBindingDTO, Winery.class);
         Address address = this.modelMapper.map(wineryRegisterBindingDTO.getAddress(), Address.class);
         winery.setAddress(address);
-        User user = this.userService.getUser("test@test.com"); //TODO CHANGE WITH LOGGED IN USER
+//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
+        User user = this.userService.getUser("test@test.com");
         winery.setUser(user);
         winery = this.wineryRepository.saveAndFlush(winery);
         return this.modelMapper.map(winery, WineryServiceDTO.class);
