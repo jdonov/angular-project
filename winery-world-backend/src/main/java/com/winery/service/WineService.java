@@ -2,6 +2,7 @@ package com.winery.service;
 
 import com.winery.model.binding.WineRegisterDTO;
 import com.winery.model.binding.WineUpdateDTO;
+import com.winery.model.entity.Rating;
 import com.winery.model.entity.Wine;
 import com.winery.model.service.WineServiceDTO;
 
@@ -15,6 +16,8 @@ public interface WineService {
 
     Wine getWineById(String id);
 
-    List<WineServiceDTO> getAllWines();
+    List<WineServiceDTO> getAllWines(String wineryId);
+
+    WineServiceDTO rateWine(String wineId, Rating rating);
 
 }

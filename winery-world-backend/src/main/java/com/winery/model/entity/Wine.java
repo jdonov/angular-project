@@ -70,7 +70,7 @@ public class Wine extends BaseEntity{
         this.winery = winery;
     }
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     public List<Rating> getRatings() {
         return ratings;
     }

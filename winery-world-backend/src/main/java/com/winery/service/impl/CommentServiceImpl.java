@@ -71,9 +71,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentServiceDTO> getCommentsForWinery(String wineryId) {
         List<Comment> comments = this.commentRepository.findAllByWineryIdAndParentIdOrderByCommentDateTimeAsc(wineryId, null);
-        List<CommentServiceDTO> commentServiceDTOS = comments.stream()
+        return comments.stream()
                 .map(c -> this.modelMapper.map(c, CommentServiceDTO.class))
                 .collect(Collectors.toList());
-        return commentServiceDTOS;
     }
 }

@@ -3,7 +3,7 @@ package com.winery.web;
 import com.winery.exception.BindingResultException;
 import com.winery.exception.Error;
 import com.winery.model.binding.WineRegisterDTO;
-import com.winery.model.service.UserServiceDTO;
+import com.winery.model.entity.Rating;
 import com.winery.model.service.WineServiceDTO;
 import com.winery.service.WineService;
 import org.slf4j.Logger;
@@ -12,14 +12,10 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +27,12 @@ public class WineController {
     public WineController(WineService wineService) {
         this.wineService = wineService;
         this.LOGGER = LoggerFactory.getLogger(WineController.class);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<WineServiceDTO>> getAllWines(@RequestParam("wineryId") String wineryId) {
+        List<WineServiceDTO> wines = this.wineService.getAllWines(wineryId);
+        return ResponseEntity.ok(wines);
     }
 
     @PostMapping("/register")
@@ -45,5 +47,11 @@ public class WineController {
             WineServiceDTO wineServiceDTO = this.wineService.addNewWine(wineRegisterDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(wineServiceDTO);
         }
+    }
+    @GetMapping("/rate")
+    public ResponseEntity<WineServiceDTO> rateWine(@RequestParam("wineId") String wineId, @RequestParam("rating")String rating) {
+        Rating rating1 = Rating.valueOf(rating);
+        WineServiceDTO wineServiceDTO = this.wineService.rateWine(wineId, rating1);
+        return ResponseEntity.ok(wineServiceDTO);
     }
 }

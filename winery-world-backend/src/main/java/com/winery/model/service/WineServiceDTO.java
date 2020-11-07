@@ -1,5 +1,7 @@
 package com.winery.model.service;
 
+import com.winery.model.entity.Rating;
+
 import java.math.BigDecimal;
 
 public class WineServiceDTO extends BaseServiceModel{
@@ -7,6 +9,7 @@ public class WineServiceDTO extends BaseServiceModel{
     private BigDecimal price;
     private String description;
     private String imageUrl;
+    private Rating rating;
 
     public WineServiceDTO() {
     }
@@ -41,5 +44,13 @@ public class WineServiceDTO extends BaseServiceModel{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 }
