@@ -1,17 +1,13 @@
 package com.winery.config;
 
 
-import com.winery.model.entity.Comment;
-import com.winery.model.entity.OrderedWines;
-import com.winery.model.entity.Rating;
-import com.winery.model.entity.Wine;
+import com.winery.model.entity.*;
 import com.winery.model.service.CommentReplyServiceDTO;
 import com.winery.model.service.CommentServiceDTO;
 import com.winery.model.service.OrderWineServiceDTO;
 import com.winery.model.service.WineServiceDTO;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
@@ -33,12 +29,15 @@ public class ApplicationBeanConfiguration {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         
-        Converter<List<Rating>, Rating> ratingConverter = mappingContext -> {
+        Converter<List<WineRate>, Rating> ratingConverter = mappingContext -> {
             if (mappingContext.getSource() == null) {
                 return Rating.values()[0];
             } else {
                 return Rating.values()[
-                        (int) Math.ceil(mappingContext.getSource().stream().mapToInt(Enum::ordinal).average().orElse(0))
+                        (int) Math.ceil(mappingContext.getSource().stream()
+                                .map(WineRate::getRate)
+                                .mapToInt(Enum::ordinal)
+                                .average().orElse(0))
                         ];
             }
         };

@@ -10,6 +10,7 @@ public class WineServiceDTO extends BaseServiceModel{
     private String description;
     private String imageUrl;
     private Rating rating;
+    private Rating yourRating;
 
     public WineServiceDTO() {
     }
@@ -52,5 +53,13 @@ public class WineServiceDTO extends BaseServiceModel{
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+    public Rating getYourRating() {
+        return yourRating;
+    }
+
+    public void setYourRating(Rating yourRating) {
+        this.yourRating = yourRating;
     }
 }

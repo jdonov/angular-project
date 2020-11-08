@@ -1,0 +1,5 @@
+<div *ngFor="let rating of ratings, let i = index" class="d-inline-block">
+  <div (mouseenter)="changeColor(i)" (mouseleave)="initRate()" (click)="selectRate(i)">
+    <fa-icon [icon]="faStar" [ngClass]="{'active': i <= hover}"></fa-icon>
+  </div>
+</div>

@@ -2,12 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div *ngFor="let rating of ratings" class="d-inline-block">
-        <div (mouseover)="changeColor()" (mouseout)="changeColor()">
-          <fa-icon [icon]="faStar" [ngClass]="{'active': isActive}"></fa-icon>
-        </div>
-      </div>
-
+      <app-rating></app-rating>
       <router-outlet></router-outlet>
     </div>
   </div>

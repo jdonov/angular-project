@@ -2,11 +2,11 @@ package com.winery.service.impl;
 
 import com.winery.model.binding.WineRegisterDTO;
 import com.winery.model.binding.WineUpdateDTO;
-import com.winery.model.entity.Rating;
-import com.winery.model.entity.Wine;
-import com.winery.model.entity.Winery;
+import com.winery.model.entity.*;
 import com.winery.model.service.WineServiceDTO;
 import com.winery.repository.WineRepository;
+import com.winery.service.UserService;
+import com.winery.service.WineRateService;
 import com.winery.service.WineService;
 import com.winery.service.WineryService;
 import org.modelmapper.ModelMapper;
@@ -22,19 +22,30 @@ import java.util.stream.Collectors;
 public class WineServiceImpl implements WineService {
     private final WineRepository wineRepository;
     private final WineryService wineryService;
+    private final WineRateService wineRateService;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public WineServiceImpl(WineRepository wineRepository, WineryService wineryService, ModelMapper modelMapper) {
+    public WineServiceImpl(WineRepository wineRepository, WineryService wineryService, WineRateService wineRateService, UserService userService, ModelMapper modelMapper) {
         this.wineRepository = wineRepository;
         this.wineryService = wineryService;
+        this.wineRateService = wineRateService;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
     @Override
     public List<WineServiceDTO> getAllWines(String wineryId) {
         Set<Wine> wines = this.wineRepository.findAllByWineryId(wineryId);
-        return wines.stream().map(w -> this.modelMapper.map(w, WineServiceDTO.class)).collect(Collectors.toList());
+//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
+        User user = this.userService.getUser("test2@test.com");
+        return wines.stream().map(w -> {
+            WineServiceDTO wineServiceDTO = this.modelMapper.map(w, WineServiceDTO.class);
+            Rating yourRating = this.wineRateService.getWineRatingForUser(w.getId(), user.getId());
+            wineServiceDTO.setYourRating(yourRating);
+            return wineServiceDTO;
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -71,9 +82,14 @@ public class WineServiceImpl implements WineService {
         if (wine.getRatings() == null) {
             wine.setRatings(new ArrayList<>());
         }
-        wine.getRatings().add(rating);
+//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
+        User user = this.userService.getUser("test@test.com");
+        WineRate wineRate = this.wineRateService.rateWineByUser(wine, user, rating);
+        wine.getRatings().add(wineRate);
         wine = this.wineRepository.saveAndFlush(wine);
-        return this.modelMapper.map(wine, WineServiceDTO.class);
+        WineServiceDTO wineServiceDTO = this.modelMapper.map(wine, WineServiceDTO.class);
+        wineServiceDTO.setYourRating(wineRate.getRate());
+        return wineServiceDTO;
     }
 
 //    private WineServiceDTO saveAndMap(Wine wine) {

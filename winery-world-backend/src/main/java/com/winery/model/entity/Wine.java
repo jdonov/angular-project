@@ -16,7 +16,7 @@ public class Wine extends BaseEntity{
     private String description;
     private String imageUrl;
     private Winery winery;
-    private List<Rating> ratings;
+    private List<WineRate> ratings;
 
     public Wine() {
     }
@@ -70,12 +70,12 @@ public class Wine extends BaseEntity{
         this.winery = winery;
     }
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    public List<Rating> getRatings() {
+    @OneToMany(mappedBy = "wine", fetch = FetchType.EAGER)
+    public List<WineRate> getRatings() {
         return ratings;
     }
 
-    public void setRatings(List<Rating> ratings) {
+    public void setRatings(List<WineRate> ratings) {
         this.ratings = ratings;
     }
 }

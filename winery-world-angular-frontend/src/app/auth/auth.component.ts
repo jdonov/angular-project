@@ -47,7 +47,6 @@ export class AuthComponent implements OnInit {
     this.signupForm.get('confirmPassword').reset();
   }
   onSubmit(): void {
-    console.log(this.signupForm);
     // if (!form.valid) {
     //   return;
     // }

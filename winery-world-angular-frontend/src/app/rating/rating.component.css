@@ -1,0 +1,6 @@
+fa-icon {
+  color: lightpink;
+}
+fa-icon.active {
+  color: deeppink;
+}
