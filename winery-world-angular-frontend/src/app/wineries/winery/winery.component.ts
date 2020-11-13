@@ -20,4 +20,8 @@ export class WineryComponent implements OnInit {
   registerWine(): void {
     this.router.navigate(['/winery/register-wine']);
   }
+
+  leaveComment(): void {
+    this.router.navigate(['/winery/comment']);
+  }
 }

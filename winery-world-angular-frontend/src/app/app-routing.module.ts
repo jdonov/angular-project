@@ -7,6 +7,7 @@ import {AllWineriesComponent} from './wineries/all-wineries/all-wineries.compone
 import {WineryComponent} from './wineries/winery/winery.component';
 import {RegisterEditWineryComponent} from './wineries/register-edit-winery/register-edit-winery.component';
 import {RegisterEditWineComponent} from './wines/register-edit-wine/register-edit-wine.component';
+import {CommentsComponent} from './comments/comments.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'my-orders', component: MyOrdersComponent},
   { path: 'winery', component: WineryComponent, children: [
       { path: 'edit', component: RegisterEditWineryComponent},
-      { path: 'register-wine', component: RegisterEditWineComponent}
+      { path: 'register-wine', component: RegisterEditWineComponent},
+      { path: 'comment', component: CommentsComponent}
     ]
   }
 ];

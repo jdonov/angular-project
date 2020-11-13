@@ -17,6 +17,8 @@ import {DropdownDirective} from './shared/dropdown.directive';
 import { WineryComponent } from './wineries/winery/winery.component';
 import { RegisterEditWineryComponent } from './wineries/register-edit-winery/register-edit-winery.component';
 import { RegisterEditWineComponent } from './wines/register-edit-wine/register-edit-wine.component';
+import { CommentsComponent } from './comments/comments.component';
+import { CommentComponent } from './comments/comment/comment.component';
 
 
 @NgModule({
@@ -27,7 +29,7 @@ import { RegisterEditWineComponent } from './wines/register-edit-wine/register-e
     RatingComponent,
     MyWineriesComponent,
     MyOrdersComponent,
-    AllWinesComponent, AllWineriesComponent, DropdownDirective, WineryComponent, RegisterEditWineryComponent, RegisterEditWineComponent
+    AllWinesComponent, AllWineriesComponent, DropdownDirective, WineryComponent, RegisterEditWineryComponent, RegisterEditWineComponent, CommentsComponent, CommentComponent
   ],
   imports: [BrowserModule, HttpClientModule, FontAwesomeModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],

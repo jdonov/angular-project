@@ -1,0 +1,23 @@
+<div class="row container-fluid justify-content-center mt-5 mb-5">
+  <div class="col-md-8">
+    <div class="d-flex flex-row justify-content-between">
+      <h4>{{comments.length}} comments:</h4>
+      <a class="nav-link text-dark" (click)="leaveCommentToggle()">Leave comment</a>
+    </div>
+    <hr>
+    <div *ngIf="leaveComment">
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+        <textarea formControlName="comment" class="form-control" rows="3" placeholder="Write your comment here!"></textarea>
+        <div class="d-flex justify-content-end mt-2">
+          <button class="btn btn-dark" type="button" (click)="shareComment()">Share</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="!leaveComment">
+      <div *ngFor="let comment of comments; let i = index">
+        <app-comment [comment]="comment" [index]="i"></app-comment>
+      </div>
+    </div>
+  </div>
+</div>
+

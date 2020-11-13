@@ -1,0 +1,37 @@
+<div class="row container-fluid p-2 border-bottom m-0">
+  <div class="col-2 border-right">
+    <p>{{index + 1}}</p>
+    <span>{{comment.username}}</span>
+  </div>
+  <div class="col-10 d-flex flex-column">
+    <p>{{comment.comment}}</p>
+    <div class="d-flex flex-row justify-content-between">
+      <a class="nav-link text-dark" (click)="viewReplies()"
+         [textContent]="viewRep ? 'Hide replies' : 'View replies'"></a>
+      <a class="nav-link text-dark" (click)="leaveReplyToggle()">Reply to comment</a>
+    </div>
+  </div>
+</div>
+<div *ngIf="viewRep">
+  <div *ngFor="let reply of comment.replies; let replyIndex = index">
+    <div class="row container-fluid d-flex justify-content-end p-2 m-0">
+      <div class="col-2 border-right border-bottom">
+        <p>{{replyIndex + 1}}</p>
+        <span>{{reply.username}}</span>
+      </div>
+      <div class="col-9 d-flex flex-column border-bottom">
+        <p>{{reply.reply}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-2 row justify-content-center" *ngIf="leaveReply">
+  <div class="col-10">
+    <form [formGroup]="replyForm" (ngSubmit)="onSubmit()">
+      <textarea formControlName="reply" class="form-control" rows="3" placeholder="Write your reply here!"></textarea>
+      <div class="d-flex justify-content-end mt-2">
+        <button class="btn btn-dark" type="button" (click)="shareReply()">Share</button>
+      </div>
+    </form>
+  </div>
+</div>
