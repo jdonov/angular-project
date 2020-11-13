@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 public class WineryRegisterBindingDTO {
     private String name;
     private AddressWineryBindingDTO address;
+    private String imageUrl;
 
     public WineryRegisterBindingDTO() {
     }
@@ -34,5 +35,14 @@ public class WineryRegisterBindingDTO {
 
     public void setAddress(AddressWineryBindingDTO address) {
         this.address = address;
+    }
+
+    @NotNull(message = "Image url is required!")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

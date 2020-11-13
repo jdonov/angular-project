@@ -1,0 +1,48 @@
+<div class="row container justify-content-center mt-5">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 card p-3 mb-5">
+    <form [formGroup]="wineForm" (ngSubmit)="onSubmit()">
+      <div class="border-bottom mb-3">
+        <h3 class="card-title text-dark">Register wine</h3>
+      </div>
+      <div class="form-group">
+        <label for="name">Wine name</label>
+        <input type="text" id="name" class="form-control" formControlName="name"/>
+        <span *ngIf="wineForm.get('name').touched && !wineForm.get('name').valid">
+          <small class="text-sm text-danger"
+                 *ngIf="wineForm.get('name').errors['required']">Wine name is required!</small>
+      </span>
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" id="price" class="form-control" formControlName="price"/>
+        <span *ngIf="wineForm.get('price').touched && !wineForm.get('price').valid">
+          <small class="text-sm text-danger"
+               *ngIf="wineForm.get('price').errors['required']">Price is
+          required!</small>
+          <small class="text-sm text-danger"
+                 *ngIf="wineForm.get('price').errors['min']">Price must be positive!</small>
+        </span>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" id="description" class="form-control" formControlName="description"/>
+        <small class="text-sm text-danger"
+               *ngIf="wineForm.get('description').touched && wineForm.get('description')">Description is
+          required!</small>
+      </div>
+
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input type="text" id="imageUrl" class="form-control" formControlName="imageUrl"/>
+        <small class="text-sm text-danger"
+               *ngIf="wineForm.get('imageUrl').touched && wineForm.get('imageUrl')">Image URL is
+          required!</small>
+      </div>
+      <div class="d-flex justify-content-around mb-3">
+        <button class="btn btn-light btn-sm" type="submit" [disabled]="!wineForm.valid">Confirm</button>
+        <button class="btn btn-light btn-sm" type="button">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+

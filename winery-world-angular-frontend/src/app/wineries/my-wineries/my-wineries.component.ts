@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DataStorageService} from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-my-wineries',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-wineries.component.css']
 })
 export class MyWineriesComponent implements OnInit {
-
-  constructor() { }
+  wyWineries: string[];
+  constructor(private dataStore: DataStorageService) { }
 
   ngOnInit(): void {
+    this.wyWineries = this.dataStore.getMyWineris();
   }
 
 }

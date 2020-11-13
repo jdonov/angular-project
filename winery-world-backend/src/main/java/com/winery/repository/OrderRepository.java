@@ -15,5 +15,5 @@ public interface OrderRepository extends JpaRepository<Order, String> {
     List<Order> findAllByUser(User user);
 
     @Query(value = "SELECT o FROM Order o JOIN o.wines w WHERE w.owner.id = :id ORDER BY o.status, o.orderDateTime")
-    Set<Order> findAllByWineryOwner(@Param("id") String id);
+    List<Order> findAllByWineryOwner(@Param("id") String id);
 }

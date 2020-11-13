@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderServiceDTO> getOrdersByOwner() {
         //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
         User user = this.userService.getUser("test@test.com");
-        Set<Order> orders = this.orderRepository.findAllByWineryOwner(user.getId());
+        List<Order> orders = this.orderRepository.findAllByWineryOwner(user.getId());
         return orders.stream()
                 .map(o -> this.modelMapper.map(o, OrderServiceDTO.class))
                 .collect(Collectors.toList());

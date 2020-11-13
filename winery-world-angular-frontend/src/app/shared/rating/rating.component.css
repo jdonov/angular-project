@@ -1,5 +1,7 @@
 fa-icon {
   color: lightpink;
+  font-size: 1.5em;
+  margin: 0 0.1em;
 }
 fa-icon.active {
   color: deeppink;

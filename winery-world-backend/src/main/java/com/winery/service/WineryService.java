@@ -6,6 +6,6 @@ import com.winery.model.service.WineryServiceDTO;
 
 public interface WineryService {
     WineryServiceDTO registerWinery(WineryRegisterBindingDTO wineryRegisterBindingDTO);
-
     Winery getWineryById(String id);
+
 }

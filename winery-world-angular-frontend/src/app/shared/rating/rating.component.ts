@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faWineGlassAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-rating',
@@ -7,7 +7,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./rating.component.css']
 })
 export class RatingComponent implements OnInit {
-  faStar = faStar;
+  faStar = faWineGlassAlt;
   ratings = [0, 1, 2, 3, 4];
   selected: number;
   hover: number;

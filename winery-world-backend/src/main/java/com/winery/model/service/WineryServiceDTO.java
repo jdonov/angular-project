@@ -1,8 +1,6 @@
 package com.winery.model.service;
 
 
-import com.winery.model.entity.Rating;
-
 public class WineryServiceDTO extends BaseServiceModel{
     private String name;
     private AddressServiceDTO address;

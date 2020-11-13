@@ -8,6 +8,7 @@ import java.util.Set;
 public class Winery extends BaseEntity{
     private String name;
     private Address address;
+    private String imageUrl;
     private Set<Wine> wines;
     private User user;
     private Set<Comment> comments;
@@ -32,6 +33,15 @@ public class Winery extends BaseEntity{
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Column
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @OneToMany(mappedBy = "winery", targetEntity = Wine.class, cascade = CascadeType.ALL)
