@@ -24,4 +24,8 @@ export class WineryComponent implements OnInit {
   leaveComment(): void {
     this.router.navigate(['/winery/comment']);
   }
+
+  viewWines(): void {
+    this.router.navigate(['/winery/wines']);
+  }
 }

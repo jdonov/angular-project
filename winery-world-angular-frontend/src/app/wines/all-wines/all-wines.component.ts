@@ -8,9 +8,11 @@ import {DataStorageService} from '../../shared/data-storage.service';
 })
 export class AllWinesComponent implements OnInit {
 
-  constructor() { }
+  wines: string[];
+  constructor(private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
+    this.wines = this.dataStorageService.getWines();
   }
 
 }

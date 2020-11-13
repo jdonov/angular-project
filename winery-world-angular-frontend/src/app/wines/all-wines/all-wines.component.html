@@ -1,1 +1,8 @@
-<p>Wines works correctly!</p>
+<div class="container mt-5">
+  <li *ngIf="wines.length === 0" class="list-group-item">No wineries registered yet!</li>
+  <ul class="list-group" *ngIf="wines.length > 0">
+    <a *ngFor="let winery of wines" class="list-group-item list-group-item-action list-group-item-light" routerLink="/winery/wines/wine">
+      {{winery}}
+    </a>
+  </ul>
+</div>
