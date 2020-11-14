@@ -7,7 +7,7 @@ import com.winery.model.service.CommentServiceDTO;
 
 import java.util.List;
 
-public interface CommentService {
+public interface CommentService{
     CommentServiceDTO placeComment(CommentBindingDTO commentBindingDTO);
 
     CommentReplyServiceDTO placeReply(CommentReplyBindingDTO commentReplyBindingDTO);

@@ -50,10 +50,10 @@ public class GlobalExceptionHandlerController {
 //    public Error dataIntegrityViolation(DataIntegrityViolationException e) {
 //        return new Error().setErrors(List.of("Bad data format!"));
 //    }
-//
-//    @ExceptionHandler(RuntimeException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public Error allErrors(RuntimeException e) {
-//        return new Error().setErrors(List.of(e.getMessage()));
-//    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Error allErrors(RuntimeException e) {
+        return new Error().setErrors(List.of(e.getMessage()));
+    }
 }

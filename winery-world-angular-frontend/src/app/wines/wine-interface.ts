@@ -1,7 +1,9 @@
 export interface WineInterface {
+  id: string;
   name: string;
   imageUrl: string;
   price: number;
   description: string;
-  rating: number
+  rating: number;
+  yourRating: number;
 }

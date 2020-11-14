@@ -2,15 +2,14 @@
   <div class="card d-flex flex-row">
     <div class="col-6 pl-0">
       <img class="card-img"
-           src="https://images.unsplash.com/photo-1558241665-89718b74c89c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+           [src]="(winery | async).winery.imageUrl">
     </div>
     <div class="col-6 d-flex flex-column justify-content-between">
-      <h4 class="card-title mt-3">Winery name</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Region: Some Region</h6>
-      <h6 class="card-subtitle mb-2 text-muted">Address: Some address</h6>
+      <h4 class="card-title mt-3" [textContent]="(winery | async).winery.name"></h4>
+      <h6 class="card-subtitle mb-2 text-muted" [textContent]="'Region: ' + (winery | async).winery.address.region"></h6>
+      <h6 class="card-subtitle mb-2 text-muted" [textContent]="'' + (winery | async).winery.address.city + ', ' + (winery | async).winery.address.street"></h6>
       <hr>
-      <p class="card-body pl-0">
-        Some description text to build on the card title and make up the bulk of the card's content.
+      <p class="card-body pl-0" [textContent]="(winery | async).winery.description">
       </p>
       <div class="d-flex flex-row justify-content-between pb-3">
         <button type="button" class="btn btn-light btn-sm" (click)="viewWines()">View wines</button>

@@ -1,7 +1,5 @@
 package com.winery.service.impl;
 
-import com.winery.exception.BindingResultException;
-import com.winery.exception.Error;
 import com.winery.model.binding.CommentBindingDTO;
 import com.winery.model.binding.CommentReplyBindingDTO;
 import com.winery.model.entity.Comment;
@@ -16,7 +14,6 @@ import com.winery.service.WineryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;

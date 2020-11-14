@@ -3,7 +3,6 @@ package com.winery.model.service;
 
 public class WineryServiceDTO extends BaseServiceModel{
     private String name;
-    private AddressServiceDTO address;
     private String description;
     private String imageUrl;
 
@@ -16,14 +15,6 @@ public class WineryServiceDTO extends BaseServiceModel{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public AddressServiceDTO getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressServiceDTO address) {
-        this.address = address;
     }
 
     public String getDescription() {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
-import {WineryModel} from '../winery.model';
+import {WineriesModel} from '../winery.model';
 import {Observable} from 'rxjs';
 
 
@@ -11,13 +11,13 @@ import {Observable} from 'rxjs';
   styleUrls: ['./all-wineries.component.css']
 })
 export class AllWineriesComponent implements OnInit {
-  wineries: Observable<{wineries: WineryModel[]}>;
+  wineries: Observable<{wineries: WineriesModel[]}>;
 
   constructor(private store: Store<fromApp.AppState>) {
   }
 
   ngOnInit(): void {
-    this.wineries = this.store.select('wineries');
+    this.wineries = this.store.select('allWineries');
   }
 
 }

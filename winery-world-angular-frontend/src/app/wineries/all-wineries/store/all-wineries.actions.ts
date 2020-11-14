@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {WineryModel} from '../winery.model';
+import {WineryModel} from '../../winery.model';
 
 export const FETCH_WINERIES = '[Wineries] Fetch Wineries';
 export const ADD_WINERY = '[Wineries] Add Winery';
@@ -14,4 +14,4 @@ export class AddWinery implements Action {
   }
 }
 
-export type WineryActions = FetchWineries | AddWinery;
+export type AllWineriesActions = FetchWineries | AddWinery;

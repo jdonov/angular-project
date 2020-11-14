@@ -57,7 +57,7 @@ public class Winery extends BaseEntity{
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "winery", targetEntity = Wine.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "winery", targetEntity = Wine.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Wine> getWines() {
         return wines;
     }
@@ -76,7 +76,7 @@ public class Winery extends BaseEntity{
         this.user = user;
     }
 
-    @OneToMany(mappedBy = "winery", targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "winery", targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Comment> getComments() {
         return comments;
     }

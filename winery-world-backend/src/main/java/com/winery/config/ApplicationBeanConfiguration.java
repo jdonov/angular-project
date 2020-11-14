@@ -25,7 +25,6 @@ public class ApplicationBeanConfiguration {
     }
 
     @Bean
-    @SuppressWarnings({"unchecked", "deprecated"})
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         
