@@ -1,6 +1,7 @@
 package com.winery.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -9,6 +10,7 @@ public class Winery extends BaseEntity{
     private String name;
     private Address address;
     private String imageUrl;
+    private String description;
     private Set<Wine> wines;
     private User user;
     private Set<Comment> comments;
@@ -35,13 +37,24 @@ public class Winery extends BaseEntity{
         this.address = address;
     }
 
-    @Column
+    @Column(name = "image", nullable = false)
+    @NotNull(message = "Image url is required!")
     public String getImageUrl() {
         return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Column(name = "description", nullable = false)
+    @NotNull(message = "Description is required!")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @OneToMany(mappedBy = "winery", targetEntity = Wine.class, cascade = CascadeType.ALL)

@@ -21,6 +21,8 @@ import { CommentsComponent } from './comments/comments.component';
 import { CommentComponent } from './comments/comment/comment.component';
 import { WineComponent } from './wines/wine/wine.component';
 import { ShoppingCartComponent } from './header/shopping-cart/shopping-cart.component';
+import {StoreModule} from '@ngrx/store';
+import * as fromApp from './store/app.reducer';
 
 
 @NgModule({
@@ -33,7 +35,13 @@ import { ShoppingCartComponent } from './header/shopping-cart/shopping-cart.comp
     MyOrdersComponent,
     AllWinesComponent, AllWineriesComponent, DropdownDirective, WineryComponent, RegisterEditWineryComponent, RegisterEditWineComponent, CommentsComponent, CommentComponent, WineComponent, ShoppingCartComponent
   ],
-  imports: [BrowserModule, HttpClientModule, FontAwesomeModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    StoreModule.forRoot(fromApp.appReducer),
+    FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent]
 })

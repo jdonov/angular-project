@@ -1,13 +1,15 @@
 package com.winery.model.service;
 
+import java.util.List;
 
-public class WineryServiceDTO extends BaseServiceModel{
+public class WineryDetailsServiceDTO {
     private String name;
     private AddressServiceDTO address;
     private String description;
     private String imageUrl;
+    private List<WineServiceDTO> wines;
 
-    public WineryServiceDTO() {
+    public WineryDetailsServiceDTO() {
     }
 
     public String getName() {
@@ -40,5 +42,13 @@ public class WineryServiceDTO extends BaseServiceModel{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public List<WineServiceDTO> getWines() {
+        return wines;
+    }
+
+    public void setWines(List<WineServiceDTO> wines) {
+        this.wines = wines;
     }
 }
