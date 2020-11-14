@@ -8,7 +8,7 @@ import {DataStorageService} from '../../shared/data-storage.service';
 })
 export class AllWinesComponent implements OnInit {
 
-  wines: string[];
+  wines: { name: string, imageUrl: string }[];
   constructor(private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {

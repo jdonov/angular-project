@@ -20,6 +20,7 @@ import { RegisterEditWineComponent } from './wines/register-edit-wine/register-e
 import { CommentsComponent } from './comments/comments.component';
 import { CommentComponent } from './comments/comment/comment.component';
 import { WineComponent } from './wines/wine/wine.component';
+import { ShoppingCartComponent } from './header/shopping-cart/shopping-cart.component';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { WineComponent } from './wines/wine/wine.component';
     RatingComponent,
     MyWineriesComponent,
     MyOrdersComponent,
-    AllWinesComponent, AllWineriesComponent, DropdownDirective, WineryComponent, RegisterEditWineryComponent, RegisterEditWineComponent, CommentsComponent, CommentComponent, WineComponent
+    AllWinesComponent, AllWineriesComponent, DropdownDirective, WineryComponent, RegisterEditWineryComponent, RegisterEditWineComponent, CommentsComponent, CommentComponent, WineComponent, ShoppingCartComponent
   ],
   imports: [BrowserModule, HttpClientModule, FontAwesomeModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],

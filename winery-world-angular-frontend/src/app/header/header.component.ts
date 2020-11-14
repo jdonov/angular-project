@@ -7,7 +7,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
   isAuthenticated = false;
   // private userSub: Subscription;
 

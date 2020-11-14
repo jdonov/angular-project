@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { faWineGlassAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,12 +9,11 @@ import { faWineGlassAlt} from '@fortawesome/free-solid-svg-icons';
 export class RatingComponent implements OnInit {
   faStar = faWineGlassAlt;
   ratings = [0, 1, 2, 3, 4];
-  selected: number;
+  @Input() selected: number;
   hover: number;
 
   constructor() { }
   ngOnInit(): void {
-    this.selected = -1;
     this.hover = this.selected;
   }
   changeColor(rate: number): void {

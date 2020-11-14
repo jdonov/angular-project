@@ -1,9 +1,10 @@
 <div class="container mt-5">
 <li *ngIf="wyWineries.length === 0" class="list-group-item">No wineries registered yet!</li>
 <ul class="list-group" *ngIf="wyWineries.length > 0">
-  <a *ngFor="let winery of wyWineries" class="list-group-item list-group-item-action list-group-item-light" routerLink="/winery">
+  <a *ngFor="let winery of wyWineries" class="list-group-item list-group-item-action list-group-item-light" routerLink="winery">
     {{winery}}
   </a>
 </ul>
 </div>
+
 

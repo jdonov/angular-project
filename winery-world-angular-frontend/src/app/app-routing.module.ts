@@ -17,13 +17,13 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'my-wineries', component: MyWineriesComponent},
   { path: 'my-orders', component: MyOrdersComponent},
-  { path: 'winery', component: WineryComponent, children: [
+  { path: 'my-wineries/winery', component: WineryComponent, children: [
       { path: 'edit', component: RegisterEditWineryComponent},
       { path: 'register-wine', component: RegisterEditWineComponent},
       { path: 'comment', component: CommentsComponent},
       { path: 'wines', component: AllWinesComponent, children: [
           { path: 'wine', component: WineComponent}
-          ]}
+        ]}
     ]
   }
 ];

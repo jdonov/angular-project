@@ -14,18 +14,18 @@ export class WineryComponent implements OnInit {
   }
 
   editWinery(): void{
-    this.router.navigate(['/winery/edit']);
+    this.router.navigate(['/my-wineries/winery/edit']);
   }
 
   registerWine(): void {
-    this.router.navigate(['/winery/register-wine']);
+    this.router.navigate(['/my-wineries/winery/register-wine']);
   }
 
   leaveComment(): void {
-    this.router.navigate(['/winery/comment']);
+    this.router.navigate(['/my-wineries/winery/comment']);
   }
 
   viewWines(): void {
-    this.router.navigate(['/winery/wines']);
+    this.router.navigate(['/my-wineries/winery/wines']);
   }
 }
