@@ -14,6 +14,14 @@ public class WineRegisterDTO {
     public WineRegisterDTO() {
     }
 
+    public WineRegisterDTO(String name, BigDecimal price, String description, String imageUrl, String wineryId) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.wineryId = wineryId;
+    }
+
     @NotEmpty(message = "Product name can not be empty!")
     public String getName() {
         return name;

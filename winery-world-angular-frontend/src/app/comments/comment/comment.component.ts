@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommentInterface} from '../comment.interface';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CommentService} from '../comment.service';
+import {CommentServiceDTO} from '../commentServiceDTO';
 
 @Component({
   selector: 'app-comment',
@@ -9,7 +9,7 @@ import {CommentService} from '../comment.service';
   styleUrls: ['./comment.component.css']
 })
 export class CommentComponent implements OnInit {
-  @Input() comment: CommentInterface;
+  @Input() comment: CommentServiceDTO;
   @Input() index: number;
   viewRep = false;
   leaveReply = false;
@@ -39,8 +39,8 @@ export class CommentComponent implements OnInit {
 
   shareReply(): void {
     const reply = this.replyForm.get('reply').value;
-    this.commentService.addReplyToComment(reply, this.comment.id);
-    this.comment = this.commentService.getComment(this.comment.id);
+    // this.commentService.addReplyToComment(reply, this.comment.id);
+    // this.comment = this.commentService.getComment(this.comment.id);
     this.leaveReply = false;
     this.viewRep = true;
   }

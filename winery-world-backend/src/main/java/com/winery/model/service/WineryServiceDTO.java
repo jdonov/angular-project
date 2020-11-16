@@ -6,6 +6,7 @@ public class WineryServiceDTO extends BaseServiceModel{
     private String description;
     private String imageUrl;
 
+
     public WineryServiceDTO() {
     }
 

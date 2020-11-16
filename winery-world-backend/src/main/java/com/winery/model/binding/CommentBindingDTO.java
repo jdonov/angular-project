@@ -10,6 +10,11 @@ public class CommentBindingDTO {
     public CommentBindingDTO() {
     }
 
+    public CommentBindingDTO(String comment, String wineryId) {
+        this.comment = comment;
+        this.wineryId = wineryId;
+    }
+
     @NotEmpty(message = "Comment can not be empty!")
     public String getComment() {
         return comment;

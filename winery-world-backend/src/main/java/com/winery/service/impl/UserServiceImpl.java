@@ -87,6 +87,11 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByUsername(username).orElse(null);
     }
 
+    @Override
+    public long getCountOfAllUsers() {
+        return this.userRepository.count();
+    }
+
     private UserDetails map(User user) {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),

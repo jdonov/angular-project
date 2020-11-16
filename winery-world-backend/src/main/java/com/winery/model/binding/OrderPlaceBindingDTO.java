@@ -17,6 +17,12 @@ public class OrderPlaceBindingDTO {
     public OrderPlaceBindingDTO() {
     }
 
+    public OrderPlaceBindingDTO(Set<OrderWineBindingDTO> orderedWines, String username, AddressUserBindingDTO receiverAddress) {
+        this.orderedWines = orderedWines;
+        this.username = username;
+        this.receiverAddress = receiverAddress;
+    }
+
     @OrderedWines
     public Set<OrderWineBindingDTO> getOrderedWines() {
         return orderedWines;

@@ -9,6 +9,7 @@ public class WineryDetailsServiceDTO extends BaseServiceModel{
     private String imageUrl;
     private List<WineServiceDTO> wines;
     private List<CommentServiceDTO> comments;
+    private String owner;
 
     public WineryDetailsServiceDTO() {
     }
@@ -59,5 +60,13 @@ public class WineryDetailsServiceDTO extends BaseServiceModel{
 
     public void setComments(List<CommentServiceDTO> comments) {
         this.comments = comments;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

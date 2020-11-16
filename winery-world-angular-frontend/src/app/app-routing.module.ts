@@ -10,14 +10,16 @@ import {RegisterEditWineComponent} from './wines/register-edit-wine/register-edi
 import {CommentsComponent} from './comments/comments.component';
 import {AllWinesComponent} from './wines/all-wines/all-wines.component';
 import {WineComponent} from './wines/wine/wine.component';
+import {AllWineriesResolverService} from './wineries/all-wineries/all-wineries-resolver.service';
+import {WineryResolverService} from './wineries/winery/winery-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
-  { path: 'home', component: AllWineriesComponent},
+  { path: 'home', component: AllWineriesComponent, resolve: [AllWineriesResolverService]},
   { path: 'auth', component: AuthComponent },
   { path: 'my-wineries', component: MyWineriesComponent},
   { path: 'my-orders', component: MyOrdersComponent},
-  { path: 'my-wineries/winery', component: WineryComponent, children: [
+  { path: 'my-wineries/:wineryId', component: WineryComponent, resolve: [WineryResolverService], children: [
       { path: 'edit', component: RegisterEditWineryComponent},
       { path: 'register-wine', component: RegisterEditWineComponent},
       { path: 'comment', component: CommentsComponent},

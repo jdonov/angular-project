@@ -9,7 +9,7 @@
         <p class="card-text">{{winery.description}}</p>
       </div>
       <div class="d-flex justify-content-center mb-3">
-        <a routerLink="/my-wineries/winery" class="btn btn-dark w-50">View details</a>
+        <a [routerLink]="['/my-wineries', winery.id]" class="btn btn-dark w-50">View details</a>
       </div>
     </div>
   </div>

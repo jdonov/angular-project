@@ -23,6 +23,8 @@ import { WineComponent } from './wines/wine/wine.component';
 import { ShoppingCartComponent } from './header/shopping-cart/shopping-cart.component';
 import {StoreModule} from '@ngrx/store';
 import * as fromApp from './store/app.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {WineriesEffects} from './wineries/store/wineries.effects';
 
 
 @NgModule({
@@ -32,8 +34,7 @@ import * as fromApp from './store/app.reducer';
     AuthComponent,
     RatingComponent,
     MyWineriesComponent,
-    MyOrdersComponent,
-    AllWinesComponent, AllWineriesComponent, DropdownDirective, WineryComponent, RegisterEditWineryComponent, RegisterEditWineComponent, CommentsComponent, CommentComponent, WineComponent, ShoppingCartComponent
+    MyOrdersComponent, AllWinesComponent, AllWineriesComponent, DropdownDirective, WineryComponent, RegisterEditWineryComponent, RegisterEditWineComponent, CommentsComponent, CommentComponent, WineComponent, ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +42,7 @@ import * as fromApp from './store/app.reducer';
     AppRoutingModule,
     ReactiveFormsModule,
     StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([WineriesEffects]),
     FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent]

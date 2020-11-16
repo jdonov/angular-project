@@ -32,6 +32,12 @@ public class WineryController {
         return ResponseEntity.ok(wineries);
     }
 
+    @GetMapping("my-wineries")
+    public ResponseEntity<List<WineryServiceDTO>> getMyWineries() {
+        List<WineryServiceDTO> wineries = this.wineryService.getMyWineries();
+        return ResponseEntity.ok(wineries);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<WineryDetailsServiceDTO> getWineryDetails(@PathVariable("id") String id) {
         WineryDetailsServiceDTO winery = this.wineryService.getWineryDetails(id);

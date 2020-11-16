@@ -16,5 +16,7 @@ public interface UserService extends UserDetailsService {
 
     User getLoggedInUser();
 
+    long getCountOfAllUsers();
+
 
 }

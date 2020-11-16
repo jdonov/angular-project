@@ -2,10 +2,7 @@ package com.winery.config;
 
 
 import com.winery.model.entity.*;
-import com.winery.model.service.CommentReplyServiceDTO;
-import com.winery.model.service.CommentServiceDTO;
-import com.winery.model.service.OrderWineServiceDTO;
-import com.winery.model.service.WineServiceDTO;
+import com.winery.model.service.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -49,6 +46,10 @@ public class ApplicationBeanConfiguration {
         });
         modelMapper.typeMap(Wine.class, WineServiceDTO.class).addMappings(mapper -> {
             mapper.using(ratingConverter).map(Wine::getRatings, WineServiceDTO::setRating);
+        });
+
+        modelMapper.typeMap(Winery.class, WineryDetailsServiceDTO.class).addMappings(mapper -> {
+            mapper.map(src -> src.getUser().getUsername(), WineryDetailsServiceDTO::setOwner);
         });
 
         modelMapper.typeMap(OrderedWines.class, OrderWineServiceDTO.class).addMappings(mapper -> {

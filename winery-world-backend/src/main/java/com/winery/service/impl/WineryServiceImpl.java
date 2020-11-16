@@ -49,6 +49,20 @@ public class WineryServiceImpl implements WineryService {
     }
 
     @Override
+    public WineryServiceDTO registerWineryInit(WineryRegisterBindingDTO wineryRegisterBindingDTO, String username) {
+        if (this.wineryRepository.findByName(wineryRegisterBindingDTO.getName()).orElse(null) != null) {
+            throw new WineryAlreadyExistsException("Winery with this name already exists!");
+        }
+        Winery winery = this.modelMapper.map(wineryRegisterBindingDTO, Winery.class);
+        Address address = this.modelMapper.map(wineryRegisterBindingDTO.getAddress(), Address.class);
+        winery.setAddress(address);
+        User user = this.userService.getUser(username);
+        winery.setUser(user);
+        winery = this.wineryRepository.saveAndFlush(winery);
+        return this.modelMapper.map(winery, WineryServiceDTO.class);
+    }
+
+    @Override
     public Winery getWineryById(String id) {
         return this.wineryRepository.findById(id).orElse(null);
     }
@@ -65,6 +79,15 @@ public class WineryServiceImpl implements WineryService {
     @Override
     public List<WineryServiceDTO> getAllWineries() {
         return this.wineryRepository.findAll().stream()
+                .map(w -> this.modelMapper.map(w, WineryServiceDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<WineryServiceDTO> getMyWineries() {
+        //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
+        User user = this.userService.getUser("test@test.com");
+        return this.wineryRepository.findAllByUser(user).stream()
                 .map(w -> this.modelMapper.map(w, WineryServiceDTO.class))
                 .collect(Collectors.toList());
     }

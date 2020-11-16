@@ -15,9 +15,11 @@ public class WineryRegisterBindingDTO {
     public WineryRegisterBindingDTO() {
     }
 
-    public WineryRegisterBindingDTO(String name, AddressWineryBindingDTO address) {
+    public WineryRegisterBindingDTO(String name, AddressWineryBindingDTO address, String description, String imageUrl) {
         this.name = name;
         this.address = address;
+        this.description = description;
+        this.imageUrl = imageUrl;
     }
 
     @NotEmpty(message = "Winery name can not be empty!")

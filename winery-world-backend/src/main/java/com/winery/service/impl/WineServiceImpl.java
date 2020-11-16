@@ -92,7 +92,22 @@ public class WineServiceImpl implements WineService {
         return wineServiceDTO;
     }
 
-//    private WineServiceDTO saveAndMap(Wine wine) {
+    @Override
+    public WineServiceDTO rateWineInit(String wineId, Rating rating, String username) {
+        Wine wine = this.wineRepository.findById(wineId).orElse(null);
+        if (wine.getRatings() == null) {
+            wine.setRatings(new ArrayList<>());
+        }
+        User user = this.userService.getUser(username);
+        WineRate wineRate = this.wineRateService.rateWineByUser(wine, user, rating);
+        wine.getRatings().add(wineRate);
+        wine = this.wineRepository.saveAndFlush(wine);
+        WineServiceDTO wineServiceDTO = this.modelMapper.map(wine, WineServiceDTO.class);
+        wineServiceDTO.setYourRating(wineRate.getRate());
+        return wineServiceDTO;
+    }
+
+    //    private WineServiceDTO saveAndMap(Wine wine) {
 //        Wine savedWine = this.wineRepository.saveAndFlush(wine);
 //        WineServiceDTO wineServiceDTO = this.modelMapper.map(wine, WineServiceDTO.class);
 //        Rating avgRating = savedWine.getRatings() == null ? Rating.VERY_BAD : setWineRating(savedWine.getRatings());

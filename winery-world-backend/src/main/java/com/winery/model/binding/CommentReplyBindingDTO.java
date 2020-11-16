@@ -10,6 +10,11 @@ public class CommentReplyBindingDTO {
     public CommentReplyBindingDTO() {
     }
 
+    public CommentReplyBindingDTO(String parentId, CommentBindingDTO reply) {
+        this.parentId = parentId;
+        this.reply = reply;
+    }
+
     @NotEmpty(message = "Reply should refer to existing comment!")
     public String getParentId() {
         return parentId;

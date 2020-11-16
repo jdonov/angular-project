@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import {Observable} from 'rxjs';
-import {WineryModel} from '../winery.model';
+import {WineryDetailsServiceDTO} from '../winery.model';
 
 @Component({
   selector: 'app-winery',
@@ -11,17 +11,23 @@ import {WineryModel} from '../winery.model';
   styleUrls: ['./winery.component.css']
 })
 export class WineryComponent implements OnInit {
-
-  winery: Observable<{ winery: WineryModel}>;
+  isInMine: boolean;
+  winery: Observable<{winery: WineryDetailsServiceDTO}>;
+  wineryId: string;
 
   constructor(private store: Store<fromApp.AppState>, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.winery = this.store.select('winery');
+    this.route.params.subscribe((params: Params) => {
+      this.wineryId = params.wineryId;
+    });
+
+    this.winery = this.store.select('allWineries');
+    this.isInMine = true;
   }
 
   editWinery(): void{
-    this.router.navigate(['/my-wineries/winery/edit']);
+    this.router.navigate(['/my-wineries', this.wineryId, 'edit']);
   }
 
   registerWine(): void {
@@ -33,6 +39,6 @@ export class WineryComponent implements OnInit {
   }
 
   viewWines(): void {
-    this.router.navigate(['/my-wineries/winery/wines']);
+    this.router.navigate(['/my-wineries', this.wineryId, 'wines']);
   }
 }

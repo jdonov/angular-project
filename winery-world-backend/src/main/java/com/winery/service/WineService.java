@@ -20,4 +20,6 @@ public interface WineService {
 
     WineServiceDTO rateWine(String wineId, Rating rating);
 
+    WineServiceDTO rateWineInit(String wineId, Rating rating, String username);
+
 }

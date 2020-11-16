@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface WineryService {
     WineryServiceDTO registerWinery(WineryRegisterBindingDTO wineryRegisterBindingDTO);
+    WineryServiceDTO registerWineryInit(WineryRegisterBindingDTO wineryRegisterBindingDTO, String username);
     Winery getWineryById(String id);
     WineryDetailsServiceDTO getWineryDetails(String id);
     List<WineryServiceDTO> getAllWineries();
+    List<WineryServiceDTO> getMyWineries();
 }
