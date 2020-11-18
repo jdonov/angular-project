@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {WineModel} from '../wines/wine.model';
+import {WineServiceDTO} from '../wines/wine.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataStorageService {
   wineries: string[];
-  wines: WineModel[];
+  wines: WineServiceDTO[];
 
   constructor(private http: HttpClient) {
     this.wineries = [];

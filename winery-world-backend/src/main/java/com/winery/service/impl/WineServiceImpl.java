@@ -83,7 +83,7 @@ public class WineServiceImpl implements WineService {
             wine.setRatings(new ArrayList<>());
         }
 //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test@test.com");
+        User user = this.userService.getUser("test2@test.com");
         WineRate wineRate = this.wineRateService.rateWineByUser(wine, user, rating);
         wine.getRatings().add(wineRate);
         wine = this.wineRepository.saveAndFlush(wine);

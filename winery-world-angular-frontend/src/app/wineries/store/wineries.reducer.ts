@@ -9,7 +9,6 @@ export interface State {
 
 const initialState: State = {
   wineries: [],
-  // winery: {id: undefined, address: null, description: '', imageUrl: '', name: '', wines: [], owner: ''}
   winery: null
 };
 
@@ -30,6 +29,24 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
       return {
         ...state,
         winery: action.payload
+      };
+    case AllWineryActions.RATE_WINE_SUCCESS:
+      const wineToUpdate = state.winery.wines.find(w => w.id === action.payload.wine.id);
+      const wineToUpdateIndex = state.winery.wines.indexOf(wineToUpdate);
+      const updatedWine = {
+        ...state.winery.wines[wineToUpdateIndex],
+        ...action.payload.wine
+      };
+      const updatedWines = [...state.winery.wines];
+      updatedWines[wineToUpdateIndex] = updatedWine;
+      const updatedWinery = {
+        ...state.winery,
+        wines: updatedWines
+      };
+
+      return {
+        ...state,
+        winery: updatedWinery
       };
     default:
       return state;

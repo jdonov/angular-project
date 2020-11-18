@@ -1,8 +1,7 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {WineModel} from '../wine.model';
-import {Store} from '@ngrx/store';
-import * as fromApp from '../../store/app.reducer';
-
+import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {WineServiceDTO, WineRate} from '../wine.model';
+import {Subject} from 'rxjs';
+import {WineService} from './wine.service';
 
 @Component({
   selector: 'app-wine',
@@ -10,14 +9,14 @@ import * as fromApp from '../../store/app.reducer';
   styleUrls: ['./wine.component.css']
 })
 export class WineComponent implements OnInit {
-  @Input() wine: WineModel;
+  @Input() wine: WineServiceDTO;
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private wineService: WineService) { }
 
   ngOnInit(): void {
   }
 
-  leaveRating(rating: string): void{
-
+  leaveRating(rating: string): void {
+    this.wineService.wineRate.next({rating, wineId: this.wine.id});
   }
 }

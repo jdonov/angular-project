@@ -1,4 +1,4 @@
-export interface WineModel {
+export interface WineServiceDTO {
   id: string;
   name: string;
   imageUrl: string;
@@ -11,4 +11,5 @@ export interface WineModel {
 export interface WineRate{
   rating: string;
   wineId: string;
+  wineryId: string;
 }
