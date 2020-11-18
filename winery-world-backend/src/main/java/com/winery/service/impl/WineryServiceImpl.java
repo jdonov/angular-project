@@ -83,17 +83,16 @@ public class WineryServiceImpl implements WineryService {
             Rating yourRating = this.wineRateService.getWineRatingForUser(w.getId(), user.getId());
             w.setYourRating(yourRating);
         });
-//        List<WineServiceDTO> wines = wineryDetailsServiceDTO.getWines();
-//        List<WineServiceDTO> sorted = wines.stream()
+
         wineryDetailsServiceDTO.getWines().sort((w1,w2) -> {
-                    if (w2.getYourRating() == null && w1.getYourRating() == null) {
+                    if (w2.getRating() == null && w1.getRating() == null) {
                         return 0;
-                    } else if (w2.getYourRating() == null) {
+                    } else if (w2.getRating() == null) {
                         return -1;
-                    } else if (w1.getYourRating() == null) {
+                    } else if (w1.getRating() == null) {
                         return 1;
                     } else {
-                        return w2.getYourRating().compareTo(w1.getYourRating());
+                        return w2.getRating().compareTo(w1.getRating());
                     }
                 });
 
