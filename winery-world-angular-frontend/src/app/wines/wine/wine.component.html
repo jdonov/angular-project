@@ -4,11 +4,13 @@
   </span>
   <div class="container-fluid d-flex flex-column justify-content-center align-items-center mt-2">
     <h6 class="list-group-item-heading">{{ wine.name }}</h6>
+    <p>Overall rating: <strong class="text-lowercase">{{wine.rating}}</strong></p>
     <p>{{wine.description}}</p>
     <p [textContent]="'Price: ' + wine.price + 'lv.'"></p>
-    <div>
-      <span>Your rating: </span>
-      <app-rating [selected]="wine.yourRating"></app-rating>
+    <div class="d-flex align-items-center justify-content-around mb-1">
+      <span class="mr-1">Your rating: </span>
+      <app-rating [initRating]="wine.yourRating" #ratingComponent></app-rating>
+      <a class="nav-link text-secondary" (click)="leaveRating(ratingComponent.getRate())">Leave a rating</a>
     </div>
     <div class="container-fluid d-flex flex-row justify-content-end">
       <div class="col-5 d-flex form-group flex-row">

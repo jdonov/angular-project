@@ -39,7 +39,7 @@ public class WineServiceImpl implements WineService {
     public List<WineServiceDTO> getAllWines(String wineryId) {
         Set<Wine> wines = this.wineRepository.findAllByWineryId(wineryId);
 //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test2@test.com");
+        User user = this.userService.getUser("test@test.com");
         return wines.stream().map(w -> {
             WineServiceDTO wineServiceDTO = this.modelMapper.map(w, WineServiceDTO.class);
             Rating yourRating = this.wineRateService.getWineRatingForUser(w.getId(), user.getId());

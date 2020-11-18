@@ -32,7 +32,6 @@ export class WineriesEffects {
   fetchWinery = this.actions$.pipe(
     ofType(WineriesActions.FETCH_WINERY),
     switchMap((action: FetchWinery) => {
-
       return this.http.get<WineryDetailsServiceDTO>(environment.apiURL + END_POINT_GET_ALL_WINERY + action.payload.id);
     }),
     map(winery => {

@@ -1,5 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {WineInterface} from '../wine-interface';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {WineModel} from '../wine.model';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../../store/app.reducer';
+
 
 @Component({
   selector: 'app-wine',
@@ -7,9 +10,14 @@ import {WineInterface} from '../wine-interface';
   styleUrls: ['./wine.component.css']
 })
 export class WineComponent implements OnInit {
-  @Input() wine: WineInterface;
-  constructor() { }
+  @Input() wine: WineModel;
+
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
+  }
+
+  leaveRating(rating: string): void{
+
   }
 }

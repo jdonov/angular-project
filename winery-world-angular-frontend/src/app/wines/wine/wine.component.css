@@ -2,3 +2,10 @@ img {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
+p > strong {
+  font-style: italic;
+}
+a:hover {
+  cursor: pointer;
+}
+

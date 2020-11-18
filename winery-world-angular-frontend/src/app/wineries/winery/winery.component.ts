@@ -31,11 +31,11 @@ export class WineryComponent implements OnInit {
   }
 
   registerWine(): void {
-    this.router.navigate(['/my-wineries/winery/register-wine']);
+    this.router.navigate(['/my-wineries', this.wineryId, 'register-wine']);
   }
 
   leaveComment(): void {
-    this.router.navigate(['/my-wineries/winery/comment']);
+    this.router.navigate(['/my-wineries', this.wineryId, 'comment']);
   }
 
   viewWines(): void {

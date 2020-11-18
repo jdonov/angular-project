@@ -1,4 +1,4 @@
-export interface WineInterface {
+export interface WineModel {
   id: string;
   name: string;
   imageUrl: string;
@@ -6,4 +6,9 @@ export interface WineInterface {
   description: string;
   rating: number;
   yourRating: number;
+}
+
+export interface WineRate{
+  rating: string;
+  wineId: string;
 }

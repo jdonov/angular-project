@@ -1,4 +1,4 @@
-import {WineInterface} from '../wines/wine-interface';
+import {WineModel} from '../wines/wine.model';
 
 export interface WineryDetailsServiceDTO {
   id: string;
@@ -6,7 +6,7 @@ export interface WineryDetailsServiceDTO {
   address: AddressServiceDTO;
   description: string;
   imageUrl: string;
-  wines: WineInterface[];
+  wines: WineModel[];
   owner: string;
 }
 
