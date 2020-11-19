@@ -19,7 +19,7 @@ import com.winery.service.WineryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +40,7 @@ public class WineryServiceImpl implements WineryService {
     }
 
     @Override
-    public WineryServiceDTO registerWinery(WineryRegisterBindingDTO wineryRegisterBindingDTO) {
+    public WineryDetailsServiceDTO registerWinery(WineryRegisterBindingDTO wineryRegisterBindingDTO) {
         if (this.wineryRepository.findByName(wineryRegisterBindingDTO.getName()).orElse(null) != null) {
             throw new WineryAlreadyExistsException("Winery with this name already exists!");
         }
@@ -51,7 +51,10 @@ public class WineryServiceImpl implements WineryService {
         User user = this.userService.getUser("test@test.com");
         winery.setUser(user);
         winery = this.wineryRepository.saveAndFlush(winery);
-        return this.modelMapper.map(winery, WineryServiceDTO.class);
+        WineryDetailsServiceDTO wineryDetailsServiceDTO = this.modelMapper.map(winery, WineryDetailsServiceDTO.class);
+        wineryDetailsServiceDTO.setWines(new ArrayList<>());
+        wineryDetailsServiceDTO.setComments(new ArrayList<>());
+        return wineryDetailsServiceDTO;
     }
 
     @Override

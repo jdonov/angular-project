@@ -48,8 +48,12 @@ public class ApplicationBeanConfiguration {
             mapper.using(ratingConverter).map(Wine::getRatings, WineServiceDTO::setRating);
         });
 
+
         modelMapper.typeMap(Winery.class, WineryDetailsServiceDTO.class).addMappings(mapper -> {
             mapper.map(src -> src.getUser().getUsername(), WineryDetailsServiceDTO::setOwner);
+        });
+        modelMapper.typeMap(Winery.class, WineryServiceDTO.class).addMappings(mapper -> {
+            mapper.map(src -> src.getUser().getUsername(), WineryServiceDTO::setOwner);
         });
 
         modelMapper.typeMap(OrderedWines.class, OrderWineServiceDTO.class).addMappings(mapper -> {

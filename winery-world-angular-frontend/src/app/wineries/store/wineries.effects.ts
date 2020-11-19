@@ -4,19 +4,21 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import * as WineriesActions from './wineries.actions';
-import {switchMap, map} from 'rxjs/operators';
+import {switchMap, map, tap, withLatestFrom} from 'rxjs/operators';
 import {WineryDetailsServiceDTO, WineryServiceDTO} from '../winery.model';
 import {environment} from '../../../environments/environment';
-import {FetchWinery} from './wineries.actions';
+import {AddWineryStart, FetchWinery} from './wineries.actions';
 import {WineRate, WineServiceDTO} from '../../wines/wine.model';
+import {Router} from '@angular/router';
 
 const END_POINT_GET_ALL_WINERIES = 'api/winery';
 const END_POINT_GET_WINERY = 'api/winery/';
+const END_POINT_REGISTER_WINERY = 'api/winery/register';
 const END_POINT_RATE_WINE = 'api/wine/rate';
 
 @Injectable()
 export class WineriesEffects {
-  constructor(private actions$: Actions, private http: HttpClient, private store: Store<fromApp.AppState>) {
+  constructor(private actions$: Actions, private http: HttpClient, private store: Store<fromApp.AppState>, private router: Router) {
   }
 
   @Effect()
@@ -38,6 +40,19 @@ export class WineriesEffects {
     }),
     map(winery => {
       return new WineriesActions.SetWinery(winery);
+    })
+  );
+
+  @Effect()
+  registerWinery = this.actions$.pipe(
+    ofType(WineriesActions.ADD_WINERY_START),
+    switchMap((action: AddWineryStart) => {
+      return this.http.post<WineryDetailsServiceDTO>(environment.apiURL + END_POINT_REGISTER_WINERY, action.payload);
+    }),
+    map(winery => new WineriesActions.AddWinerySuccess(winery)),
+    // withLatestFrom(this.store.select(state => state.allWineries.winery)),
+    tap(() => {
+      this.router.navigate(['/my-wineries']);
     })
   );
 

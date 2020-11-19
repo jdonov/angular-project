@@ -6,6 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 import {WineryDetailsServiceDTO} from '../winery.model';
 import {WineService} from '../../wines/wine/wine.service';
 import {RateWineStart} from '../store/wineries.actions';
+import {map, tap, withLatestFrom} from 'rxjs/operators';
 
 @Component({
   selector: 'app-winery',
@@ -17,6 +18,7 @@ export class WineryComponent implements OnInit, OnDestroy {
   winery: Observable<{winery: WineryDetailsServiceDTO}>;
   wineryId: string;
   wineSubscription: Subscription;
+  isMineSubscription: Subscription;
 
   constructor(private store: Store<fromApp.AppState>, private route: ActivatedRoute, private router: Router, private wineService: WineService) { }
 
@@ -26,7 +28,13 @@ export class WineryComponent implements OnInit, OnDestroy {
     });
 
     this.winery = this.store.select('allWineries');
-    this.isInMine = true;
+    this.isMineSubscription = this.store.select(state => state.allWineries.winery).pipe(
+      withLatestFrom(this.store.select(state => state.auth.user)),
+      map(([winery, user]) => {
+        return {owner: winery.owner, user: user.username};
+
+      })
+    ).subscribe((data) => this.isInMine = data.owner === data.user);
 
     this.wineSubscription = this.wineService.wineRate.subscribe(w => {
       this.store.dispatch(new RateWineStart({rating: w.rating, wineId: w.wineId, wineryId: this.wineryId}));
@@ -34,22 +42,23 @@ export class WineryComponent implements OnInit, OnDestroy {
   }
 
   editWinery(): void{
-    this.router.navigate(['/my-wineries', this.wineryId, 'edit']);
+    this.router.navigate(['/wineries', this.wineryId, 'edit']);
   }
 
   registerWine(): void {
-    this.router.navigate(['/my-wineries', this.wineryId, 'register-wine']);
+    this.router.navigate(['/wineries', this.wineryId, 'register-wine']);
   }
 
   leaveComment(): void {
-    this.router.navigate(['/my-wineries', this.wineryId, 'comment']);
+    this.router.navigate(['/wineries', this.wineryId, 'comment']);
   }
 
   viewWines(): void {
-    this.router.navigate(['/my-wineries', this.wineryId, 'wines']);
+    this.router.navigate(['/wineries', this.wineryId, 'wines']);
   }
 
   ngOnDestroy(): void {
     this.wineSubscription.unsubscribe();
+    this.isMineSubscription.unsubscribe();
   }
 }

@@ -20,10 +20,20 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
         ...state,
         wineries: [...action.payload]
       };
-    case AllWineryActions.ADD_WINERY:
+    case AllWineryActions.ADD_WINERY_SUCCESS:
+      const wineryService: WineryServiceDTO = {
+        id: action.payload.id,
+        name: action.payload.name,
+        description: action.payload.description,
+        imageUrl: action.payload.imageUrl,
+        owner: action.payload.owner
+      };
+      const updatedWineries = [...state.wineries, wineryService];
+      const newWinery = {...action.payload};
       return {
         ...state,
-        wineries: [...state.wineries, action.payload]
+        wineries: updatedWineries,
+        winery: newWinery
       };
     case AllWineryActions.SET_WINERY:
       return {

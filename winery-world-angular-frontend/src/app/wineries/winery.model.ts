@@ -16,6 +16,7 @@ export interface WineryServiceDTO {
   name: string;
   description: string;
   imageUrl: string;
+  owner: string;
 }
 
 export interface AddressServiceDTO{
@@ -25,6 +26,14 @@ export interface AddressServiceDTO{
 }
 
 export interface WineryRegisterBindingDTO {
+  name: string;
+  description: string;
+  imageUrl: string;
+  address: AddressServiceDTO;
+}
+
+export interface WineryEditBindingDTO {
+  id: string;
   name: string;
   description: string;
   imageUrl: string;

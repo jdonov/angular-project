@@ -17,9 +17,11 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: AllWineriesComponent, resolve: [AllWineriesResolverService]},
   { path: 'auth', component: AuthComponent },
-  { path: 'my-wineries', component: MyWineriesComponent},
+  { path: 'my-wineries', component: MyWineriesComponent, resolve: [AllWineriesResolverService], children: [
+      { path: 'register', component: RegisterEditWineryComponent}
+    ]},
   { path: 'my-orders', component: MyOrdersComponent},
-  { path: 'my-wineries/:wineryId', component: WineryComponent, resolve: [WineryResolverService], children: [
+  { path: 'wineries/:wineryId', component: WineryComponent, resolve: [WineryResolverService], children: [
       { path: 'edit', component: RegisterEditWineryComponent},
       { path: 'register-wine', component: RegisterEditWineComponent},
       { path: 'comment', component: CommentsComponent},

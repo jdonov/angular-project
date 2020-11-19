@@ -45,14 +45,14 @@ public class WineryController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<WineryServiceDTO> registerWinery(@Valid @RequestBody WineryRegisterBindingDTO wineryRegisterBindingDTO, BindingResult bindingResult) {
+    public ResponseEntity<WineryDetailsServiceDTO> registerWinery(@Valid @RequestBody WineryRegisterBindingDTO wineryRegisterBindingDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BindingResultException(new Error().setErrors(bindingResult.getAllErrors()
                     .stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList())));
         } else {
-            WineryServiceDTO wineryServiceDTO = this.wineryService.registerWinery(wineryRegisterBindingDTO);
+            WineryDetailsServiceDTO wineryServiceDTO = this.wineryService.registerWinery(wineryRegisterBindingDTO);
             return ResponseEntity.status(HttpStatus.OK).body(wineryServiceDTO);
         }
     }

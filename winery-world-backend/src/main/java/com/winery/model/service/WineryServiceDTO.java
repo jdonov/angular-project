@@ -5,6 +5,7 @@ public class WineryServiceDTO extends BaseServiceModel{
     private String name;
     private String description;
     private String imageUrl;
+    private String owner;
 
 
     public WineryServiceDTO() {
@@ -32,5 +33,13 @@ public class WineryServiceDTO extends BaseServiceModel{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

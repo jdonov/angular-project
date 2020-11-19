@@ -12,7 +12,7 @@ const user = {
 };
 
 const initialState: State = {
-  user: null,
+  user: new User(user.id, user.username, user.token, user.tokenExpirationDate),
   authError: null,
   loading: false
 };

@@ -2,11 +2,12 @@ import {Action} from '@ngrx/store';
 import {WineryDetailsServiceDTO, WineryRegisterBindingDTO, WineryServiceDTO} from '../winery.model';
 import {WineRate, WineServiceDTO} from '../../wines/wine.model';
 
-export const FETCH_WINERIES = '[Wineries] Fetch Wineries';
-export const SET_WINERIES = '[Wineries] Set Wineries';
-export const ADD_WINERY = '[Wineries] Add Winery';
-export const FETCH_WINERY = '[Wineries] Fetch Winery';
-export const SET_WINERY = '[Wineries] Set Winery';
+export const FETCH_WINERIES = '[Wineries] Fetch wineries';
+export const SET_WINERIES = '[Wineries] Set wineries';
+export const ADD_WINERY_START = '[Wineries] Add winery start';
+export const ADD_WINERY_SUCCESS = '[Wineries] Add winery success';
+export const FETCH_WINERY = '[Wineries] Fetch winery';
+export const SET_WINERY = '[Wineries] Set winery';
 export const RATE_WINE_START = '[Wineries] Rate wine start';
 export const RATE_WINE_SUCCESS = '[Wineries] Rate wine success';
 
@@ -32,9 +33,15 @@ export class SetWinery implements Action {
   }
 }
 
-export class AddWinery implements Action {
-  readonly type = ADD_WINERY;
+export class AddWineryStart implements Action {
+  readonly type = ADD_WINERY_START;
   constructor(public payload: WineryRegisterBindingDTO) {
+  }
+}
+
+export class AddWinerySuccess implements Action {
+  readonly type = ADD_WINERY_SUCCESS;
+  constructor(public payload: WineryDetailsServiceDTO) {
   }
 }
 
@@ -50,4 +57,5 @@ export class RateWineSuccess implements Action {
   }
 }
 
-export type WineriesActions = FetchWineries | SetWineries | AddWinery | FetchWinery | SetWinery | RateWineStart | RateWineSuccess;
+export type WineriesActions = FetchWineries | SetWineries | AddWineryStart | AddWinerySuccess |
+  FetchWinery | SetWinery | RateWineStart | RateWineSuccess;
