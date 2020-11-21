@@ -25,6 +25,7 @@ import {StoreModule} from '@ngrx/store';
 import * as fromApp from './store/app.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {WineriesEffects} from './wineries/store/wineries.effects';
+import {CommentsEffects} from './comments/store/comments.effects';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import {WineriesEffects} from './wineries/store/wineries.effects';
     AppRoutingModule,
     ReactiveFormsModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([WineriesEffects]),
+    EffectsModule.forRoot([WineriesEffects, CommentsEffects]),
     FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent]

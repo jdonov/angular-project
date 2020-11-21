@@ -14,7 +14,7 @@ export interface AppState {
 export const appReducer: ActionReducerMap<AppState> = {
   auth: fromAuth.authReducer,
   allWineries: fromWineries.wineriesReducer,
-  comments: fromComments.CommentsReducer
+  comments: fromComments.commentsReducer
 };
 
 export const selectUser = (state: AppState) => state.auth.user;

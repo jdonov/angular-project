@@ -3,14 +3,13 @@ import {Actions, Effect, ofType} from '@ngrx/effects';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
-import * as WineriesActions from './wineries.actions';
+import * as AllWineriesActions from './wineries.actions';
 import {switchMap, map, tap, withLatestFrom} from 'rxjs/operators';
 import {WineryDetailsServiceDTO, WineryEditBindingDTO, WineryServiceDTO} from '../winery.model';
 import {environment} from '../../../environments/environment';
 import {AddWineryStart, FetchWinery, RateUpdateWineSuccess} from './wineries.actions';
 import {WineServiceDTO} from '../../wines/wine.model';
 import {Router} from '@angular/router';
-import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
 
 const END_POINT_GET_ALL_WINERIES = 'api/winery';
 const END_POINT_GET_WINERY = 'api/winery/';
@@ -26,38 +25,38 @@ export class WineriesEffects {
   constructor(private actions$: Actions,
               private http: HttpClient,
               private store: Store<fromApp.AppState>,
-              private router: Router, private registerEditWineryService: RegisterEditWineryService) {
+              private router: Router) {
   }
 
   @Effect()
   fetchWineries = this.actions$.pipe(
-    ofType(WineriesActions.FETCH_WINERIES),
+    ofType(AllWineriesActions.FETCH_WINERIES),
     switchMap(() => {
       return this.http.get<WineryServiceDTO[]>(environment.apiURL + END_POINT_GET_ALL_WINERIES);
     }),
     map(wineries => {
-      return new WineriesActions.SetWineries(wineries);
+      return new AllWineriesActions.SetWineries(wineries);
     })
   );
 
   @Effect()
   fetchWinery = this.actions$.pipe(
-    ofType(WineriesActions.FETCH_WINERY),
+    ofType(AllWineriesActions.FETCH_WINERY),
     switchMap((action: FetchWinery) => {
       return this.http.get<WineryDetailsServiceDTO>(environment.apiURL + END_POINT_GET_WINERY + action.payload.id);
     }),
     map(winery => {
-      return new WineriesActions.SetWinery(winery);
+      return new AllWineriesActions.SetWinery(winery);
     })
   );
 
   @Effect()
   registerWinery = this.actions$.pipe(
-    ofType(WineriesActions.ADD_WINERY_START),
+    ofType(AllWineriesActions.ADD_WINERY_START),
     switchMap((action: AddWineryStart) => {
       return this.http.post<WineryDetailsServiceDTO>(environment.apiURL + END_POINT_REGISTER_WINERY, action.payload);
     }),
-    map(winery => new WineriesActions.AddWinerySuccess(winery)),
+    map(winery => new AllWineriesActions.AddWinerySuccess(winery)),
     // withLatestFrom(this.store.select(state => state.allWineries.winery)),
     tap(() => {
       this.router.navigate(['/my-wineries']);
@@ -66,7 +65,7 @@ export class WineriesEffects {
 
   @Effect()
   rateWine = this.actions$.pipe(
-    ofType(WineriesActions.RATE_WINE_START),
+    ofType(AllWineriesActions.RATE_WINE_START),
     switchMap((action: any) => {
       // Initialize Params Object
       let params = new HttpParams();
@@ -77,13 +76,13 @@ export class WineriesEffects {
       return this.http.get<WineServiceDTO>(environment.apiURL + END_POINT_RATE_WINE, {params: params});
     }),
     map(wine => {
-      return new WineriesActions.RateUpdateWineSuccess({wine: wine});
+      return new AllWineriesActions.RateUpdateWineSuccess({wine: wine});
     })
   );
 
   @Effect()
   editWinery = this.actions$.pipe(
-    ofType(WineriesActions.EDIT_WINERY_START),
+    ofType(AllWineriesActions.EDIT_WINERY_START),
     switchMap((action: any) => {
       const winery = {
         name: action.payload.name,
@@ -93,30 +92,30 @@ export class WineriesEffects {
       };
       return this.http.patch<WineryEditBindingDTO>(environment.apiURL + END_POINT_EDIT_WINERY + action.payload.id, winery);
     }),
-    map(winery => new WineriesActions.EditWinerySuccess(winery))
+    map(winery => new AllWineriesActions.EditWinerySuccess(winery))
   );
 
   @Effect()
   addNewWine = this.actions$.pipe(
-    ofType(WineriesActions.EDIT_WINERY_ADD_WINE_START),
+    ofType(AllWineriesActions.EDIT_WINERY_ADD_WINE_START),
     switchMap((action: any) => {
       return this.http.post<WineServiceDTO>(environment.apiURL + END_POINT_EDIT_WINERY_ADD_WINE, action.payload);
     }),
-    map(wine => new WineriesActions.WineRegisterSuccess(wine))
+    map(wine => new AllWineriesActions.WineRegisterSuccess(wine))
   );
 
   @Effect()
   deleteWine = this.actions$.pipe(
-    ofType(WineriesActions.DELETE_WINE_START),
+    ofType(AllWineriesActions.DELETE_WINE_START),
     switchMap((action: any) => {
       return this.http.delete<{id: string}>(environment.apiURL + END_POINT_DELETE_WINE + action.payload.id);
     }),
-    map(id => new WineriesActions.WineDeleteSuccess(id))
+    map(id => new AllWineriesActions.WineDeleteSuccess(id))
   );
 
   @Effect()
   editWine = this.actions$.pipe(
-    ofType(WineriesActions.EDIT_WINE_START),
+    ofType(AllWineriesActions.EDIT_WINE_START),
     switchMap((action: any) => {
       return this.http.put<WineServiceDTO>(environment.apiURL + END_POINT_EDIT_WINE, action.payload);
     }),

@@ -5,7 +5,7 @@ import {CommentService} from './comment.service';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import {Observable} from 'rxjs';
-import {CommentServiceDTO} from './commentServiceDTO';
+import {CommentServiceDTO} from './comment.model';
 
 @Component({
   selector: 'app-comments',

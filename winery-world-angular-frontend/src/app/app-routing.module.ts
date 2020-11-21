@@ -12,6 +12,7 @@ import {AllWinesComponent} from './wines/all-wines/all-wines.component';
 import {WineComponent} from './wines/wine/wine.component';
 import {AllWineriesResolverService} from './wineries/all-wineries/all-wineries-resolver.service';
 import {WineryResolverService} from './wineries/winery/winery-resolver.service';
+import {CommentsResolverService} from './comments/comments-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'wineries/:wineryId', component: WineryComponent, resolve: [WineryResolverService], children: [
       { path: 'edit', component: RegisterEditWineryComponent},
       { path: 'register-wine', component: RegisterEditWineComponent},
-      { path: 'comment', component: CommentsComponent},
+      { path: 'comments', component: CommentsComponent, resolve: [CommentsResolverService]},
       { path: 'wines', component: AllWinesComponent, children: [
           { path: 'wine/:id', component: RegisterEditWineComponent}
         ]},

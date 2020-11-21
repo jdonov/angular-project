@@ -8,6 +8,7 @@ import {WineService} from '../../wines/wine/wine.service';
 import {RateWineStart} from '../store/wineries.actions';
 import {map, tap, withLatestFrom} from 'rxjs/operators';
 import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
+import {ResetComments} from '../../comments/store/comments.actions';
 
 @Component({
   selector: 'app-winery',
@@ -61,8 +62,8 @@ export class WineryComponent implements OnInit, OnDestroy {
     this.router.navigate(['/wineries', this.wineryId, 'register-wine']);
   }
 
-  leaveComment(): void {
-    this.router.navigate(['/wineries', this.wineryId, 'comment']);
+  viewComments(): void {
+    this.router.navigate(['/wineries', this.wineryId, 'comments']);
   }
 
   viewWines(): void {
@@ -72,5 +73,6 @@ export class WineryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.wineSubscription.unsubscribe();
     this.isMineSubscription.unsubscribe();
+    this.store.dispatch(new ResetComments());
   }
 }

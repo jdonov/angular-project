@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CommentService} from '../comment.service';
-import {CommentServiceDTO} from '../commentServiceDTO';
+import {CommentServiceDTO} from '../comment.model';
 
 @Component({
   selector: 'app-comment',
