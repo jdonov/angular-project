@@ -13,3 +13,11 @@ export interface WineRate{
   wineId: string;
   wineryId: string;
 }
+
+export interface WineRegisterDTO {
+  name: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+  wineryId: string;
+}

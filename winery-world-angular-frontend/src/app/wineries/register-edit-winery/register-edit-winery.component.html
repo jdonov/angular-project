@@ -16,7 +16,7 @@
         <div class="form-group">
           <label for="region">Region</label>
           <select class="form-control" id="region" formControlName="region">
-            <option *ngFor="let region of regions; let i = index" [textContent]="region" [attr.value]="i" [attr.selected]="i === selectedOption ? 'true' : null"></option>
+            <option *ngFor="let region of regions; let i = index" [textContent]="region" [attr.value]="region" [attr.selected]="region === selectedOption ? 'true' : null"></option>
           </select>
           <span *ngIf="wineryForm.get('address.region').touched && !wineryForm.get('address.region').valid">
             <small class="text-sm text-danger"

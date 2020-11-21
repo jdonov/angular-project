@@ -54,6 +54,18 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
         winery: {...editedWinery}
       };
 
+    case AllWineryActions.EDIT_WINERY_ADD_WINE_SUCCESS:
+      const wineryWines = [...state.winery.wines];
+      wineryWines.push({...action.payload});
+      const wineryWithNewWine: WineryDetailsServiceDTO = {
+        ...state.winery,
+        wines: wineryWines
+      };
+      return {
+        ...state,
+        winery: wineryWithNewWine
+      };
+
     case AllWineryActions.RATE_WINE_SUCCESS:
       const wineToUpdate = state.winery.wines.find(w => w.id === action.payload.wine.id);
       const wineToUpdateIndex = state.winery.wines.indexOf(wineToUpdate);

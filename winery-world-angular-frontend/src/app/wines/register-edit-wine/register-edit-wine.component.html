@@ -27,20 +27,18 @@
         <label for="description">Description</label>
         <input type="text" id="description" class="form-control" formControlName="description"/>
         <small class="text-sm text-danger"
-               *ngIf="wineForm.get('description').touched && wineForm.get('description')">Description is
-          required!</small>
+               *ngIf="wineForm.get('description').touched && !wineForm.get('description').valid">Description is required!</small>
       </div>
 
       <div class="form-group">
         <label for="imageUrl">Image URL</label>
         <input type="text" id="imageUrl" class="form-control" formControlName="imageUrl"/>
         <small class="text-sm text-danger"
-               *ngIf="wineForm.get('imageUrl').touched && wineForm.get('imageUrl')">Image URL is
-          required!</small>
+               *ngIf="wineForm.get('imageUrl').touched && !wineForm.get('imageUrl').valid">Image URL is required!</small>
       </div>
       <div class="d-flex justify-content-around mb-3">
         <button class="btn btn-light btn-sm" type="submit" [disabled]="!wineForm.valid">Confirm</button>
-        <button class="btn btn-light btn-sm" type="button">Cancel</button>
+        <button class="btn btn-light btn-sm" type="button" (click)="cancel()">Cancel</button>
       </div>
     </form>
   </div>

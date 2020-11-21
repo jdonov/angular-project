@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {WineryDetailsServiceDTO, WineryEditBindingDTO, WineryRegisterBindingDTO, WineryServiceDTO} from '../winery.model';
-import {WineRate, WineServiceDTO} from '../../wines/wine.model';
+import {WineRate, WineRegisterDTO, WineServiceDTO} from '../../wines/wine.model';
 
 export const FETCH_WINERIES = '[Wineries] Fetch wineries';
 export const SET_WINERIES = '[Wineries] Set wineries';
@@ -12,6 +12,8 @@ export const RATE_WINE_START = '[Wineries] Rate wine start';
 export const RATE_WINE_SUCCESS = '[Wineries] Rate wine success';
 export const EDIT_WINERY_START = '[Wineries] Edit winery start';
 export const EDIT_WINERY_SUCCESS = '[Wineries] Edit winery success';
+export const EDIT_WINERY_ADD_WINE_START = '[Wineries] Edit winery add wine start';
+export const EDIT_WINERY_ADD_WINE_SUCCESS = '[Wineries] Edit winery add wine success';
 
 export class FetchWineries implements Action {
   readonly type = FETCH_WINERIES;
@@ -47,18 +49,6 @@ export class AddWinerySuccess implements Action {
   }
 }
 
-export class RateWineStart implements Action {
-  readonly type = RATE_WINE_START;
-  constructor(public payload: WineRate) {
-  }
-}
-
-export class RateWineSuccess implements Action {
-  readonly type = RATE_WINE_SUCCESS;
-  constructor(public payload: {wine: WineServiceDTO}) {
-  }
-}
-
 export class EditWineryStart implements Action {
   readonly type = EDIT_WINERY_START;
   constructor(public payload: WineryEditBindingDTO) {
@@ -71,5 +61,30 @@ export class EditWinerySuccess implements Action {
   }
 }
 
+export class RateWineStart implements Action {
+  readonly type = RATE_WINE_START;
+  constructor(public payload: WineRate) {
+  }
+}
+
+export class WineRegisterStart implements Action {
+  readonly type = EDIT_WINERY_ADD_WINE_START;
+  constructor(public payload: WineRegisterDTO) {
+  }
+}
+
+export class WineRegisterSuccess implements Action{
+  readonly type = EDIT_WINERY_ADD_WINE_SUCCESS;
+  constructor(public payload: WineServiceDTO) {
+  }
+}
+
+export class RateWineSuccess implements Action {
+  readonly type = RATE_WINE_SUCCESS;
+  constructor(public payload: {wine: WineServiceDTO}) {
+  }
+}
+
 export type WineriesActions = FetchWineries | SetWineries | AddWineryStart | AddWinerySuccess |
-  FetchWinery | SetWinery | RateWineStart | RateWineSuccess | EditWineryStart | EditWinerySuccess;
+  FetchWinery | SetWinery | RateWineStart | RateWineSuccess | EditWineryStart | EditWinerySuccess |
+  WineRegisterStart | WineRegisterSuccess;

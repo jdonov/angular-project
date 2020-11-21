@@ -15,7 +15,7 @@ import {Observable, Subscription} from 'rxjs';
 export class RegisterEditWineryComponent implements OnInit {
   regions = ['SELECT_REGION', 'NORTH_WESTERN', 'NORTH_CENTRAL', 'NORTH_EASTERN', 'SOUTH_WESTERN', 'SOUTH_CENTRAL', 'SOUTH_EASTERN'];
   wineryForm: FormGroup;
-  selectedOption: number;
+  selectedOption: string;
   isRegisterMode: false;
   winerySubscription: Subscription;
   winery: Observable<WineryDetailsServiceDTO>;
@@ -41,7 +41,7 @@ export class RegisterEditWineryComponent implements OnInit {
           this.wineryForm.setValue({
             'name': winery.name,
             'address': {
-              'region': this.regions.indexOf(winery.address.region),
+              'region': winery.address.region,
               'city': winery.address.city,
               'street': winery.address.street
             },
@@ -49,7 +49,7 @@ export class RegisterEditWineryComponent implements OnInit {
             'imageUrl': winery.imageUrl
           });
           this.wineryId = winery.id;
-          this.selectedOption = this.regions.indexOf(winery.address.region);
+          this.selectedOption = winery.address.region;
         }
       );
     }
@@ -57,25 +57,21 @@ export class RegisterEditWineryComponent implements OnInit {
   }
 
   onSubmit(): void{
+
     const winery: WineryRegisterBindingDTO = {
-      name: this.wineryForm.get('name').value,
-      imageUrl: this.wineryForm.get('imageUrl').value,
-      description: this.wineryForm.get('description').value,
-      address: {
-        region: this.regions[this.wineryForm.get('address.region').value],
-        city: this.wineryForm.get('address.city').value,
-        street: this.wineryForm.get('address.street').value
-      }
+      ...this.wineryForm.value
     };
+
     this.isRegisterMode ? this.registerEditService.registerWinery(winery) : this.registerEditService.editWinery( this.wineryId, winery);
   }
 
   cancel(): void {
     this.wineryForm.reset();
+    if (this.isRegisterMode) {
+      this.registerEditService.isSent.next(true);
+    }
     this.isRegisterMode = false;
     this.router.navigate(['../'], {relativeTo: this.route});
-    this.registerEditService.isSent.next(true);
-
   }
 
 }

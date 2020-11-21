@@ -10,16 +10,21 @@ import {environment} from '../../../environments/environment';
 import {AddWineryStart, FetchWinery} from './wineries.actions';
 import {WineServiceDTO} from '../../wines/wine.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
 
 const END_POINT_GET_ALL_WINERIES = 'api/winery';
 const END_POINT_GET_WINERY = 'api/winery/';
 const END_POINT_REGISTER_WINERY = 'api/winery/register';
 const END_POINT_RATE_WINE = 'api/wine/rate';
 const END_POINT_EDIT_WINERY = 'api/winery/edit/';
+const END_POINT_EDIT_WINERY_ADD_WINE = 'api/wine/register';
 
 @Injectable()
 export class WineriesEffects {
-  constructor(private actions$: Actions, private http: HttpClient, private store: Store<fromApp.AppState>, private router: Router, private route: ActivatedRoute) {
+  constructor(private actions$: Actions,
+              private http: HttpClient,
+              private store: Store<fromApp.AppState>,
+              private router: Router, private registerEditWineryService: RegisterEditWineryService) {
   }
 
   @Effect()
@@ -87,6 +92,15 @@ export class WineriesEffects {
       return this.http.patch<WineryEditBindingDTO>(environment.apiURL + END_POINT_EDIT_WINERY + action.payload.id, winery);
     }),
     map(winery => new WineriesActions.EditWinerySuccess(winery))
+  );
+
+  @Effect()
+  addNewWine = this.actions$.pipe(
+    ofType(WineriesActions.EDIT_WINERY_ADD_WINE_START),
+    switchMap((action: any) => {
+      return this.http.post<WineServiceDTO>(environment.apiURL + END_POINT_EDIT_WINERY_ADD_WINE, action.payload);
+    }),
+    map(wine => new WineriesActions.WineRegisterSuccess(wine))
   );
 
 }
