@@ -7,7 +7,7 @@ import * as WineriesActions from './wineries.actions';
 import {switchMap, map, tap, withLatestFrom} from 'rxjs/operators';
 import {WineryDetailsServiceDTO, WineryEditBindingDTO, WineryServiceDTO} from '../winery.model';
 import {environment} from '../../../environments/environment';
-import {AddWineryStart, FetchWinery} from './wineries.actions';
+import {AddWineryStart, FetchWinery, RateUpdateWineSuccess} from './wineries.actions';
 import {WineServiceDTO} from '../../wines/wine.model';
 import {Router} from '@angular/router';
 import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
@@ -19,6 +19,7 @@ const END_POINT_RATE_WINE = 'api/wine/rate';
 const END_POINT_EDIT_WINERY = 'api/winery/edit/';
 const END_POINT_EDIT_WINERY_ADD_WINE = 'api/wine/register';
 const END_POINT_DELETE_WINE = 'api/wine/delete/';
+const END_POINT_EDIT_WINE = 'api/wine/edit';
 
 @Injectable()
 export class WineriesEffects {
@@ -76,7 +77,7 @@ export class WineriesEffects {
       return this.http.get<WineServiceDTO>(environment.apiURL + END_POINT_RATE_WINE, {params: params});
     }),
     map(wine => {
-      return new WineriesActions.RateWineSuccess({wine: wine});
+      return new WineriesActions.RateUpdateWineSuccess({wine: wine});
     })
   );
 
@@ -113,4 +114,12 @@ export class WineriesEffects {
     map(id => new WineriesActions.WineDeleteSuccess(id))
   );
 
+  @Effect()
+  editWine = this.actions$.pipe(
+    ofType(WineriesActions.EDIT_WINE_START),
+    switchMap((action: any) => {
+      return this.http.put<WineServiceDTO>(environment.apiURL + END_POINT_EDIT_WINE, action.payload);
+    }),
+    map(wine => new RateUpdateWineSuccess({wine}))
+  );
 }

@@ -7,23 +7,24 @@
     <p>Overall rating: <strong class="text-lowercase">{{wine.rating}}</strong></p>
     <p>{{wine.description}}</p>
     <p [textContent]="'Price: ' + wine.price + 'lv.'"></p>
-    <div class="d-flex align-items-center justify-content-around mb-1">
+    <div class="d-flex align-items-center justify-content-around mb-1" *ngIf="!isMine">
       <span class="mr-1">Your rating: </span>
       <app-rating [initRating]="wine.yourRating" #ratingComponent></app-rating>
       <a class="nav-link text-secondary" (click)="leaveRating(ratingComponent.getRate())">Leave a rating</a>
     </div>
-    <div class="container-fluid d-flex flex-row justify-content-between">
-      <div class="col-5 pl-3">
-        <div *ngIf="isMine">
+    <div class="container-fluid d-flex flex-row justify-content-end">
+      <div class="col-5 d-flex justify-content-end" *ngIf="isMine">
           <button class="btn btn-sm btn-light mr-2" (click)="editWine()">Edit</button>
           <button class="btn btn-sm btn-light" (click)="deleteWine()">Delete</button>
-        </div>
       </div>
-      <div class="col-6 d-flex form-group flex-row">
+      <div class="col-6 d-flex form-group flex-row justify-content-end" *ngIf="!isMine">
         <label for="order-wine">Quantity</label>
         <input class="form-control ml-2 mr-2 w-25" id="order-wine" type="number" min="0"/>
         <button class="btn btn-sm btn-dark">Add</button>
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="editMode">
+  <app-register-edit-wine [editMode]="true" [wine]="wine" (cancelEdit)="editWine()"></app-register-edit-wine>
 </div>

@@ -26,15 +26,14 @@ const routes: Routes = [
       { path: 'register-wine', component: RegisterEditWineComponent},
       { path: 'comment', component: CommentsComponent},
       { path: 'wines', component: AllWinesComponent, children: [
-          { path: 'wine', component: WineComponent}
-        ]
-      },
+          { path: 'wine/:id', component: RegisterEditWineComponent}
+        ]},
     ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {anchorScrolling: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

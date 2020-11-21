@@ -66,7 +66,7 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
         winery: wineryWithNewWine
       };
 
-    case AllWineryActions.RATE_WINE_SUCCESS:
+    case AllWineryActions.RATE_UPDATE_WINE_SUCCESS:
       const wineToUpdate = state.winery.wines.find(w => w.id === action.payload.wine.id);
       const wineToUpdateIndex = state.winery.wines.indexOf(wineToUpdate);
       const updatedWine = {

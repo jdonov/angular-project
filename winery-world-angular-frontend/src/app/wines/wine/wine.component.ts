@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {WineServiceDTO} from '../wine.model';
 
 import {WineService} from './wine.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-wine',
@@ -12,6 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class WineComponent implements OnInit {
   @Input() wine: WineServiceDTO;
   @Input() isMine: boolean;
+  editMode = false;
   constructor(private wineService: WineService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -21,7 +23,7 @@ export class WineComponent implements OnInit {
     this.wineService.wineRate.next({rating, wineId: this.wine.id});
   }
   editWine(): void{
-
+    this.editMode = !this.editMode;
   }
 
   deleteWine(): void {
