@@ -40,6 +40,20 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
         ...state,
         winery: action.payload
       };
+    case AllWineryActions.EDIT_WINERY_SUCCESS:
+
+      const editedWinery = {...state.winery, ...action.payload};
+      const editedWineries = [...state.wineries];
+      const wineryToEdit = editedWineries.find(w => w.id === editedWinery.id);
+      const i = editedWineries.indexOf(wineryToEdit);
+      editedWineries[i] = editedWinery;
+
+      return {
+        ...state,
+        wineries: [...editedWineries],
+        winery: {...editedWinery}
+      };
+
     case AllWineryActions.RATE_WINE_SUCCESS:
       const wineToUpdate = state.winery.wines.find(w => w.id === action.payload.wine.id);
       const wineToUpdateIndex = state.winery.wines.indexOf(wineToUpdate);

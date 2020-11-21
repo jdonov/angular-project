@@ -7,6 +7,7 @@ import {WineryDetailsServiceDTO} from '../winery.model';
 import {WineService} from '../../wines/wine/wine.service';
 import {RateWineStart} from '../store/wineries.actions';
 import {map, tap, withLatestFrom} from 'rxjs/operators';
+import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
 
 @Component({
   selector: 'app-winery',
@@ -19,8 +20,13 @@ export class WineryComponent implements OnInit, OnDestroy {
   wineryId: string;
   wineSubscription: Subscription;
   isMineSubscription: Subscription;
+  isSentSubscription: Subscription;
 
-  constructor(private store: Store<fromApp.AppState>, private route: ActivatedRoute, private router: Router, private wineService: WineService) { }
+  constructor(private store: Store<fromApp.AppState>,
+              private route: ActivatedRoute,
+              private router: Router,
+              private wineService: WineService,
+              private registerEditWineryService: RegisterEditWineryService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -38,6 +44,12 @@ export class WineryComponent implements OnInit, OnDestroy {
 
     this.wineSubscription = this.wineService.wineRate.subscribe(w => {
       this.store.dispatch(new RateWineStart({rating: w.rating, wineId: w.wineId, wineryId: this.wineryId}));
+    });
+
+    this.isSentSubscription = this.registerEditWineryService.isSent.subscribe((data) => {
+      if(data){
+        this.router.navigate(['./'], {relativeTo: this.route});
+      }
     });
   }
 

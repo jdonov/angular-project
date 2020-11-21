@@ -50,8 +50,6 @@ export class RegisterEditWineryComponent implements OnInit {
           });
           this.wineryId = winery.id;
           this.selectedOption = this.regions.indexOf(winery.address.region);
-          console.log(winery.address.region);
-          console.log(this.selectedOption);
         }
       );
     }
@@ -59,7 +57,6 @@ export class RegisterEditWineryComponent implements OnInit {
   }
 
   onSubmit(): void{
-    console.log(this.selectedOption);
     const winery: WineryRegisterBindingDTO = {
       name: this.wineryForm.get('name').value,
       imageUrl: this.wineryForm.get('imageUrl').value,

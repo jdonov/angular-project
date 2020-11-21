@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {WineryEditBindingDTO, WineryRegisterBindingDTO} from '../winery.model';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
-import {AddWineryStart} from '../store/wineries.actions';
-import {Router} from '@angular/router';
+import {AddWineryStart, EditWineryStart} from '../store/wineries.actions';
 import {Subject} from 'rxjs';
 
 
@@ -22,7 +21,7 @@ export class RegisterEditWineryService {
       id,
       ...winery
     };
+    this.store.dispatch(new EditWineryStart(wineryToEdit));
     this.isSent.next(true);
-    console.log(wineryToEdit);
   }
 }

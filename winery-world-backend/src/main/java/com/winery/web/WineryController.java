@@ -5,6 +5,7 @@ import com.winery.exception.Error;
 import com.winery.model.binding.WineryRegisterBindingDTO;
 import com.winery.model.service.WineryDetailsServiceDTO;
 import com.winery.model.service.WineryServiceDTO;
+import com.winery.model.service.WineryUpdateServiceDTO;
 import com.winery.service.WineryService;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -55,5 +56,11 @@ public class WineryController {
             WineryDetailsServiceDTO wineryServiceDTO = this.wineryService.registerWinery(wineryRegisterBindingDTO);
             return ResponseEntity.status(HttpStatus.OK).body(wineryServiceDTO);
         }
+    }
+
+    @PatchMapping("edit/{id}")
+    public ResponseEntity<WineryUpdateServiceDTO> updateWinery(@PathVariable("id") String id, @RequestBody WineryRegisterBindingDTO wineryRegisterBindingDTO) {
+        WineryUpdateServiceDTO winery = this.wineryService.updateWinery(id, wineryRegisterBindingDTO);
+        return ResponseEntity.ok(winery);
     }
 }

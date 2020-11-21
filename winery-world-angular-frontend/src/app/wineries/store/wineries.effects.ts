@@ -5,20 +5,21 @@ import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import * as WineriesActions from './wineries.actions';
 import {switchMap, map, tap, withLatestFrom} from 'rxjs/operators';
-import {WineryDetailsServiceDTO, WineryServiceDTO} from '../winery.model';
+import {WineryDetailsServiceDTO, WineryEditBindingDTO, WineryServiceDTO} from '../winery.model';
 import {environment} from '../../../environments/environment';
 import {AddWineryStart, FetchWinery} from './wineries.actions';
-import {WineRate, WineServiceDTO} from '../../wines/wine.model';
-import {Router} from '@angular/router';
+import {WineServiceDTO} from '../../wines/wine.model';
+import {ActivatedRoute, Router} from '@angular/router';
 
 const END_POINT_GET_ALL_WINERIES = 'api/winery';
 const END_POINT_GET_WINERY = 'api/winery/';
 const END_POINT_REGISTER_WINERY = 'api/winery/register';
 const END_POINT_RATE_WINE = 'api/wine/rate';
+const END_POINT_EDIT_WINERY = 'api/winery/edit/';
 
 @Injectable()
 export class WineriesEffects {
-  constructor(private actions$: Actions, private http: HttpClient, private store: Store<fromApp.AppState>, private router: Router) {
+  constructor(private actions$: Actions, private http: HttpClient, private store: Store<fromApp.AppState>, private router: Router, private route: ActivatedRoute) {
   }
 
   @Effect()
@@ -66,12 +67,26 @@ export class WineriesEffects {
       // Begin assigning parameters
       params = params.append('wineId', action.payload.wineId);
       params = params.append('rating', action.payload.rating);
-      console.log(params);
       return this.http.get<WineServiceDTO>(environment.apiURL + END_POINT_RATE_WINE, {params: params});
     }),
     map(wine => {
       return new WineriesActions.RateWineSuccess({wine: wine});
     })
+  );
+
+  @Effect()
+  editWinery = this.actions$.pipe(
+    ofType(WineriesActions.EDIT_WINERY_START),
+    switchMap((action: any) => {
+      const winery = {
+        name: action.payload.name,
+        imageUrl: action.payload.imageUrl,
+        description: action.payload.description,
+        address: action.payload.address
+      };
+      return this.http.patch<WineryEditBindingDTO>(environment.apiURL + END_POINT_EDIT_WINERY + action.payload.id, winery);
+    }),
+    map(winery => new WineriesActions.EditWinerySuccess(winery))
   );
 
 }
