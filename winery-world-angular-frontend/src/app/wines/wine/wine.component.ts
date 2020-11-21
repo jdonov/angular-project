@@ -1,7 +1,8 @@
-import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {WineServiceDTO, WineRate} from '../wine.model';
-import {Subject} from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
+import {WineServiceDTO} from '../wine.model';
+
 import {WineService} from './wine.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-wine',
@@ -10,13 +11,21 @@ import {WineService} from './wine.service';
 })
 export class WineComponent implements OnInit {
   @Input() wine: WineServiceDTO;
-
-  constructor(private wineService: WineService) { }
+  @Input() isMine: boolean;
+  constructor(private wineService: WineService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
 
   leaveRating(rating: string): void {
     this.wineService.wineRate.next({rating, wineId: this.wine.id});
+  }
+  editWine(): void{
+
+  }
+
+  deleteWine(): void {
+    this.wineService.deleteWine(this.wine.id);
+    this.router.navigate(['../', 'wines'], {relativeTo: this.route});
   }
 }

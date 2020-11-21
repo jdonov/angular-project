@@ -1,8 +1,5 @@
 package com.winery.model.binding;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
@@ -12,8 +9,6 @@ public class WineUpdateDTO {
     private BigDecimal price;
     private String description;
     private String imageUrl;
-    private MultipartFile image;
-    private boolean available;
 
     public WineUpdateDTO() {
     }
@@ -57,22 +52,5 @@ public class WineUpdateDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public MultipartFile getImage() {
-        return image;
-    }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
-
-    @JsonProperty("available")
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
     }
 }

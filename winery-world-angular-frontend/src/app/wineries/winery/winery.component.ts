@@ -66,7 +66,7 @@ export class WineryComponent implements OnInit, OnDestroy {
   }
 
   viewWines(): void {
-    this.router.navigate(['/wineries', this.wineryId, 'wines']);
+    this.router.navigate(['/wineries', this.wineryId, 'wines'], {queryParams: {author: this.isInMine}});
   }
 
   ngOnDestroy(): void {

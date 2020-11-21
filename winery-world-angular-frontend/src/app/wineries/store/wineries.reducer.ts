@@ -77,12 +77,22 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
       updatedWines[wineToUpdateIndex] = updatedWine;
       const updatedWinery = {
         ...state.winery,
-        wines: updatedWines
+        wines: [...updatedWines]
       };
 
       return {
         ...state,
-        winery: updatedWinery
+        winery: {...updatedWinery}
+      };
+    case AllWineryActions.DELETE_WINE_SUCCESS:
+      const winesCollToDelete = [...state.winery.wines.filter(w => w.id !== action.payload.id)];
+      const updatedWineryDelWine = {
+        ...state.winery,
+        wines: [...winesCollToDelete]
+      };
+      return {
+        ...state,
+        winery: {...updatedWineryDelWine}
       };
     default:
       return state;

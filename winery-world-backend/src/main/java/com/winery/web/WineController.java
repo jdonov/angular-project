@@ -3,7 +3,9 @@ package com.winery.web;
 import com.winery.exception.BindingResultException;
 import com.winery.exception.Error;
 import com.winery.model.binding.WineRegisterDTO;
+import com.winery.model.binding.WineUpdateDTO;
 import com.winery.model.entity.Rating;
+import com.winery.model.service.WineDeletedServiceDTO;
 import com.winery.model.service.WineServiceDTO;
 import com.winery.service.WineService;
 import org.slf4j.Logger;
@@ -53,5 +55,15 @@ public class WineController {
         Rating rating1 = Rating.valueOf(rating);
         WineServiceDTO wineServiceDTO = this.wineService.rateWine(wineId, rating1);
         return ResponseEntity.ok(wineServiceDTO);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<WineServiceDTO> editWine(@RequestBody WineUpdateDTO wineUpdateDTO) {
+        return ResponseEntity.ok(this.wineService.updateWine(wineUpdateDTO));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<WineDeletedServiceDTO> deleteWine(@PathVariable("id") String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.wineService.deleteWine(id));
     }
 }

@@ -27,7 +27,8 @@ const routes: Routes = [
       { path: 'comment', component: CommentsComponent},
       { path: 'wines', component: AllWinesComponent, children: [
           { path: 'wine', component: WineComponent}
-        ]}
+        ]
+      },
     ]
   }
 ];

@@ -21,3 +21,11 @@ export interface WineRegisterDTO {
   imageUrl: string;
   wineryId: string;
 }
+
+export interface WineUpdateDTO {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+}

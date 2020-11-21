@@ -3,6 +3,7 @@ package com.winery.service.impl;
 import com.winery.model.binding.WineRegisterDTO;
 import com.winery.model.binding.WineUpdateDTO;
 import com.winery.model.entity.*;
+import com.winery.model.service.WineDeletedServiceDTO;
 import com.winery.model.service.WineServiceDTO;
 import com.winery.repository.WineRepository;
 import com.winery.service.UserService;
@@ -13,12 +14,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional()
 public class WineServiceImpl implements WineService {
     private final WineRepository wineRepository;
     private final WineryService wineryService;
@@ -50,21 +53,21 @@ public class WineServiceImpl implements WineService {
 
     @Override
     public WineServiceDTO addNewWine(WineRegisterDTO wineRegisterDTO){
-        Winery winery = this.wineryService.getWineryById(wineRegisterDTO.getWineryId());
         Wine wine = this.modelMapper.map(wineRegisterDTO, Wine.class);
         wine = this.wineRepository.saveAndFlush(wine);
         return this.modelMapper.map(wine, WineServiceDTO.class);
     }
 
     @Override
-    public WineServiceDTO updateWine(WineUpdateDTO productUpdateDTO) {
-        Wine wine = this.wineRepository.findById(productUpdateDTO.getId()).orElse(null);
+    public WineServiceDTO updateWine(WineUpdateDTO wineUpdateDTO) {
+        Wine wine = this.wineRepository.findById(wineUpdateDTO.getId()).orElse(null);
         if (wine == null) {
             throw new IllegalStateException("No such wine!");
         }
-        wine.setName(productUpdateDTO.getName());
-        wine.setDescription(productUpdateDTO.getDescription());
-        wine.setPrice(productUpdateDTO.getPrice());
+        wine.setName(wineUpdateDTO.getName());
+        wine.setPrice(wineUpdateDTO.getPrice());
+        wine.setDescription(wineUpdateDTO.getDescription());
+        wine.setImageUrl(wineUpdateDTO.getImageUrl());
 
         wine = this.wineRepository.saveAndFlush(wine);
         return this.modelMapper.map(wine, WineServiceDTO.class);
@@ -105,6 +108,18 @@ public class WineServiceImpl implements WineService {
         WineServiceDTO wineServiceDTO = this.modelMapper.map(wine, WineServiceDTO.class);
         wineServiceDTO.setYourRating(wineRate.getRate());
         return wineServiceDTO;
+    }
+
+    @Override
+    public WineDeletedServiceDTO deleteWine(String id) {
+        Wine wine = this.wineRepository.findById(id).orElse(null);
+        if(wine != null) {
+            Winery winery = this.wineryService.getWineryById(wine.getWinery().getId());
+            winery.getWines().remove(wine);
+            this.wineRepository.delete(wine);
+            return new WineDeletedServiceDTO(id);
+        }
+        return null;
     }
 
     //    private WineServiceDTO saveAndMap(Wine wine) {

@@ -2,7 +2,7 @@
   <li *ngIf="(winery | async).winery.wines.length === 0" class="list-group-item">No wines registered yet!</li>
   <ul class="list-group col-9" *ngIf="(winery | async).winery.wines.length > 0">
     <li *ngFor="let wine of (winery | async).winery.wines" class="list-group-item p-0 border-0">
-      <app-wine [wine]="wine"></app-wine>
+      <app-wine [wine]="wine" [isMine]="isInMine"></app-wine>
     </li>
   </ul>
 </div>

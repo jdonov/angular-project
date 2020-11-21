@@ -126,5 +126,4 @@ public class WineryServiceImpl implements WineryService {
         winery = this.wineryRepository.save(winery);
         return this.modelMapper.map(winery, WineryUpdateServiceDTO.class);
     }
-
 }

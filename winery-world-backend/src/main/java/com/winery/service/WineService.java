@@ -4,6 +4,7 @@ import com.winery.model.binding.WineRegisterDTO;
 import com.winery.model.binding.WineUpdateDTO;
 import com.winery.model.entity.Rating;
 import com.winery.model.entity.Wine;
+import com.winery.model.service.WineDeletedServiceDTO;
 import com.winery.model.service.WineServiceDTO;
 
 
@@ -21,5 +22,7 @@ public interface WineService {
     WineServiceDTO rateWine(String wineId, Rating rating);
 
     WineServiceDTO rateWineInit(String wineId, Rating rating, String username);
+
+    WineDeletedServiceDTO deleteWine(String id);
 
 }

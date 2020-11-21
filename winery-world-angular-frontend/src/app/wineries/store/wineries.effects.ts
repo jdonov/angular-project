@@ -9,7 +9,7 @@ import {WineryDetailsServiceDTO, WineryEditBindingDTO, WineryServiceDTO} from '.
 import {environment} from '../../../environments/environment';
 import {AddWineryStart, FetchWinery} from './wineries.actions';
 import {WineServiceDTO} from '../../wines/wine.model';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
 
 const END_POINT_GET_ALL_WINERIES = 'api/winery';
@@ -18,6 +18,7 @@ const END_POINT_REGISTER_WINERY = 'api/winery/register';
 const END_POINT_RATE_WINE = 'api/wine/rate';
 const END_POINT_EDIT_WINERY = 'api/winery/edit/';
 const END_POINT_EDIT_WINERY_ADD_WINE = 'api/wine/register';
+const END_POINT_DELETE_WINE = 'api/wine/delete/';
 
 @Injectable()
 export class WineriesEffects {
@@ -101,6 +102,15 @@ export class WineriesEffects {
       return this.http.post<WineServiceDTO>(environment.apiURL + END_POINT_EDIT_WINERY_ADD_WINE, action.payload);
     }),
     map(wine => new WineriesActions.WineRegisterSuccess(wine))
+  );
+
+  @Effect()
+  deleteWine = this.actions$.pipe(
+    ofType(WineriesActions.DELETE_WINE_START),
+    switchMap((action: any) => {
+      return this.http.delete<{id: string}>(environment.apiURL + END_POINT_DELETE_WINE + action.payload.id);
+    }),
+    map(id => new WineriesActions.WineDeleteSuccess(id))
   );
 
 }
