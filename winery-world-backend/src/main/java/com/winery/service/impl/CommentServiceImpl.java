@@ -14,6 +14,7 @@ import com.winery.service.WineryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,9 +68,15 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentServiceDTO> getCommentsForWinery(String wineryId) {
-        List<Comment> comments = this.commentRepository.findAllByWineryIdAndParentIdOrderByCommentDateTimeAsc(wineryId, null);
+        List<Comment> comments = this.commentRepository.findAllByWineryIdAndParentIdOrderByCommentDateTimeDesc(wineryId, null);
         return comments.stream()
                 .map(c -> this.modelMapper.map(c, CommentServiceDTO.class))
+                .map(c -> {
+                    List<CommentReplyServiceDTO> replies = c.getReplies();
+                    replies.sort(Comparator.comparing(CommentReplyServiceDTO::getCommentDateTime).reversed());
+                    c.setReplies(replies);
+                    return c;
+                })
                 .collect(Collectors.toList());
     }
 }

@@ -49,4 +49,5 @@ export class ReplyToCommentSuccess implements Action {
   }
 }
 
-export type CommentsActions = FetchComments | SetComments | ResetComments | AddCommentStart | AddCommentSuccess | ReplyToCommentStart;
+export type CommentsActions = FetchComments | SetComments | ResetComments |
+  AddCommentStart | AddCommentSuccess | ReplyToCommentStart | ReplyToCommentSuccess;

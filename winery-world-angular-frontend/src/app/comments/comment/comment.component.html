@@ -30,7 +30,8 @@
     <form [formGroup]="replyForm" (ngSubmit)="onSubmit()">
       <textarea formControlName="reply" class="form-control" rows="3" placeholder="Write your reply here!"></textarea>
       <div class="d-flex justify-content-end mt-2">
-        <button class="btn btn-dark" type="button" (click)="shareReply()">Share</button>
+        <button class="btn btn-sm btn-dark mr-2" type="button" (click)="cancelReply()">Cancel</button>
+        <button class="btn btn-sm btn-dark" type="submit">Share</button>
       </div>
     </form>
   </div>

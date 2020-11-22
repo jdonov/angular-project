@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, String> {
-    List<Comment> findAllByWineryIdAndParentIdOrderByCommentDateTimeAsc(String wineryId, String parentId);
+    List<Comment> findAllByWineryIdAndParentIdOrderByCommentDateTimeDesc(String wineryId, String parentId);
 }

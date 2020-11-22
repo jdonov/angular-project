@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CommentService} from '../comment.service';
-import {CommentServiceDTO} from '../comment.model';
+import {CommentReplyBindingDTO, CommentServiceDTO} from '../comment.model';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../../store/app.reducer';
+import {ReplyToCommentStart} from '../store/comments.actions';
 
 @Component({
   selector: 'app-comment',
@@ -15,11 +17,11 @@ export class CommentComponent implements OnInit {
   leaveReply = false;
   replyForm: FormGroup;
 
-  constructor(private commentService: CommentService) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
     this.replyForm = new FormGroup({
-      reply: new FormControl(null)
+      reply: new FormControl(null, Validators.required)
     });
   }
 
@@ -30,19 +32,24 @@ export class CommentComponent implements OnInit {
 
   leaveReplyToggle(): void {
     this.viewRep = false;
-    this.leaveReply = !this.leaveReply;
+    this.leaveReply = true;
   }
 
   onSubmit(): void {
-
-  }
-
-  shareReply(): void {
-    const reply = this.replyForm.get('reply').value;
-    // this.commentService.addReplyToComment(reply, this.comment.id);
-    // this.comment = this.commentService.getComment(this.comment.id);
+    const reply: CommentReplyBindingDTO = {
+      parentId: this.comment.id,
+      reply: {
+        comment: this.replyForm.get('reply').value,
+        wineryId: this.comment.wineryId
+      }
+    };
+    this.store.dispatch(new ReplyToCommentStart(reply));
+    this.viewRep = false;
     this.leaveReply = false;
-    this.viewRep = true;
   }
 
+  cancelReply(): void {
+    this.replyForm.reset();
+    this.leaveReply = false;
+  }
 }

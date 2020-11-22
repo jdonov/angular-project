@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {CommentInterface} from './comment.interface';
-import {CommentService} from './comment.service';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import {Observable} from 'rxjs';
-import {CommentServiceDTO} from './comment.model';
+import {CommentBindingDTO, CommentServiceDTO} from './comment.model';
+import {ActivatedRoute, Params} from '@angular/router';
+import {AddCommentStart} from './store/comments.actions';
 
 @Component({
   selector: 'app-comments',
@@ -14,32 +14,37 @@ import {CommentServiceDTO} from './comment.model';
 })
 export class CommentsComponent implements OnInit {
   leaveComment = false;
-  // comments: CommentInterface[];
   comments: Observable<{ comments: CommentServiceDTO[]}>;
   commentForm: FormGroup;
-  // constructor(private commentsService: CommentService) { }
-  constructor(private store: Store<fromApp.AppState>) {
+  wineryId: string;
+  constructor(private store: Store<fromApp.AppState>, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    // this.comments = this.commentsService.getComments();
     this.comments = this.store.select('comments');
     this.commentForm = new FormGroup({
       comment: new FormControl(null)
     });
+    this.route.parent.params.subscribe((params: Params) => {
+      this.wineryId = params.wineryId;
+    });
   }
 
   onSubmit(): void {
-
+    const comment: CommentBindingDTO = {
+      ...this.commentForm.value,
+      wineryId: this.wineryId
+    };
+    this.store.dispatch(new AddCommentStart(comment));
+    this.leaveComment = false;
   }
 
   leaveCommentToggle(): void {
     this.leaveComment = !this.leaveComment;
   }
 
-  shareComment(): void {
-    const comment = this.commentForm.get('comment').value;
-    // this.commentsService.addComment(comment);
+  cancelComment(): void {
+    this.commentForm.reset();
     this.leaveComment = false;
   }
 }
