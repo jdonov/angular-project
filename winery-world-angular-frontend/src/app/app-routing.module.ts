@@ -16,21 +16,21 @@ import {CommentsResolverService} from './comments/comments-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
-  { path: 'home', component: AllWineriesComponent, resolve: [AllWineriesResolverService]},
   { path: 'auth', component: AuthComponent },
-  { path: 'my-wineries', component: MyWineriesComponent, resolve: [AllWineriesResolverService], children: [
-      { path: 'register', component: RegisterEditWineryComponent}
-    ]},
-  { path: 'my-orders', component: MyOrdersComponent},
-  { path: 'wineries/:wineryId', component: WineryComponent, resolve: [WineryResolverService], children: [
-      { path: 'edit', component: RegisterEditWineryComponent},
-      { path: 'register-wine', component: RegisterEditWineComponent},
-      { path: 'comments', component: CommentsComponent, resolve: [CommentsResolverService]},
-      { path: 'wines', component: AllWinesComponent, children: [
-          { path: 'wine/:id', component: RegisterEditWineComponent}
-        ]},
-    ]
-  }
+  { path: 'home', component: AllWineriesComponent, resolve: [AllWineriesResolverService]},
+  { path: 'my-orders', component: MyOrdersComponent}
+  // { path: 'my-wineries', component: MyWineriesComponent, resolve: [AllWineriesResolverService], children: [
+  //     { path: 'register', component: RegisterEditWineryComponent}
+  //   ]},
+  // { path: 'wineries/:wineryId', component: WineryComponent, resolve: [WineryResolverService], children: [
+  //     { path: 'edit', component: RegisterEditWineryComponent},
+  //     { path: 'register-wine', component: RegisterEditWineComponent},
+  //     { path: 'comments', component: CommentsComponent, resolve: [CommentsResolverService]},
+  //     { path: 'wines', component: AllWinesComponent, children: [
+  //         { path: 'wine/:id', component: RegisterEditWineComponent}
+  //       ]},
+  //   ]
+  // }
 ];
 
 @NgModule({
