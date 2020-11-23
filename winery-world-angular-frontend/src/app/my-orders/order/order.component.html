@@ -1,0 +1,8 @@
+<div>
+  <div *ngFor="let wine of order.wines">
+    <p>Name: {{wine.name}}, Quantity: {{wine.quantity}}</p>
+  </div>
+  <p>Address: {{order.receiverAddress.city}}, {{order.receiverAddress.street}}</p>
+  <p>Date: {{order.orderDateTime}}</p>
+  <p>Status: {{order.status}}</p>
+</div>

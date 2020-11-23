@@ -1,17 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
+import {OrderServiceDTO} from '../my-orders.model';
 import {Store} from '@ngrx/store';
-import * as fromApp from '../store/app.reducer';
-import {OrderServiceDTO, OrderWineView} from './my-orders.model';
-import {map} from 'rxjs/operators';
+import * as fromApp from '../../store/app.reducer';
 import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
-  selector: 'app-my-orders',
-  templateUrl: './my-orders.component.html',
-  styleUrls: ['./my-orders.component.css']
+  selector: 'app-my-sent-orders',
+  templateUrl: './my-sent-orders.component.html',
+  styleUrls: ['./my-sent-orders.component.css']
 })
-export class MyOrdersComponent implements OnInit, OnDestroy {
+export class MySentOrdersComponent implements OnInit, OnDestroy {
+
   received: boolean;
   receivedSubscription: Subscription;
   orders: Observable<OrderServiceDTO[]>;
@@ -19,10 +19,11 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.receivedSubscription = this.route.queryParams.subscribe((params: Params) => this.received = params.received);
-    this.orders = this.store.select(state => state.myOrders.receivedOrders);
+    this.orders = this.store.select(state => state.myOrders.sentOrders);
   }
 
   ngOnDestroy(): void {
     this.receivedSubscription.unsubscribe();
   }
+
 }

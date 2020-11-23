@@ -34,7 +34,9 @@ export class MyOrdersEffects {
     switchMap((action: any) => {
       return this.http.get<OrderServiceDTO[]>(environment.apiURL + END_POINT_FETCH_ORDERS_SENT);
     }),
-    map(orders => new AllOrdersActions.SetSentOrders(orders))
+    map(orders => {
+      return new AllOrdersActions.SetSentOrders(orders);
+    })
   );
 
   @Effect()
