@@ -16,8 +16,8 @@ export class MyOrdersComponent implements OnInit {
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    this.orders = this.store.select('order').pipe(
-      map(st => st.orderedWines)
+    this.orders = this.store.select('myOrders').pipe(
+      map(st => st.shoppingCart.orderedWines)
     );
   }
 

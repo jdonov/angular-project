@@ -16,8 +16,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    this.itemsSubscription = this.store.select('order').subscribe(st => {
-      this.items = st.orderedWines.length;
+    this.itemsSubscription = this.store.select('myOrders').subscribe(st => {
+      this.items = st.shoppingCart.orderedWines.length;
     });
   }
 

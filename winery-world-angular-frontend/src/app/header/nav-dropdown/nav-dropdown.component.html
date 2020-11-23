@@ -1,0 +1,9 @@
+
+  <a class="nav-link dropdown-toggle" role="button" (click)="toggleMenu()">
+    My orders</a>
+  <ul class="dropdown-menu bg-dark" [ngClass]="{'show': isOpen}">
+    <a class="dropdown-item text-light" routerLink="/my-orders" [queryParams]="{'received': true}" (click)="toggleMenu()">Received orders</a>
+    <a class="dropdown-item text-light" routerLink="/my-orders" [queryParams]="{'received': false}" (click)="toggleMenu()">Sent orders</a>
+    <a class="dropdown-item text-light" routerLink="/shopping-cart" (click)="toggleMenu()">Shopping-cart</a>
+  </ul>
+

@@ -1,7 +1,5 @@
 package com.winery.model.service;
 
-import com.winery.model.entity.Region;
-
 public class AddressOrderServiceDTO {
     private String city;
     private String street;

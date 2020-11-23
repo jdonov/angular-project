@@ -1,6 +1,5 @@
 export interface OrderPlaceBindingDTO{
   orderedWines: OrderWineView[];
-  username: string;
   receiverAddress: AddressUserBindingDTO;
 }
 
@@ -16,4 +15,17 @@ export interface OrderWineView extends OrderWineBindingDTO{
 export interface AddressUserBindingDTO{
   city: string;
   street: string;
+}
+
+export interface OrderServiceDTO{
+  wines: OrderWineServiceDTO[];
+  receiverAddress: AddressUserBindingDTO;
+  orderDateTime: Date;
+  status: string;
+}
+
+export interface OrderWineServiceDTO{
+  wineId: string;
+  name: string;
+  quantity: number;
 }

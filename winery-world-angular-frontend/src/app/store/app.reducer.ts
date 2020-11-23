@@ -11,14 +11,14 @@ export interface AppState {
   auth: fromAuth.State;
   allWineries: fromWineries.State;
   comments: fromComments.State;
-  order: fromMyOrders.State;
+  myOrders: fromMyOrders.State;
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
   auth: fromAuth.authReducer,
   allWineries: fromWineries.wineriesReducer,
   comments: fromComments.commentsReducer,
-  order: fromMyOrders.ordersReducer
+  myOrders: fromMyOrders.ordersReducer
 };
 
 export const selectUser = (state: AppState) => state.auth.user;

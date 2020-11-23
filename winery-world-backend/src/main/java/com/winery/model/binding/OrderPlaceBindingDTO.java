@@ -11,15 +11,13 @@ import java.util.Set;
 public class OrderPlaceBindingDTO {
 
     private Set<OrderWineBindingDTO> orderedWines;
-    private String username;
     private AddressUserBindingDTO receiverAddress;
 
     public OrderPlaceBindingDTO() {
     }
 
-    public OrderPlaceBindingDTO(Set<OrderWineBindingDTO> orderedWines, String username, AddressUserBindingDTO receiverAddress) {
+    public OrderPlaceBindingDTO(Set<OrderWineBindingDTO> orderedWines, AddressUserBindingDTO receiverAddress) {
         this.orderedWines = orderedWines;
-        this.username = username;
         this.receiverAddress = receiverAddress;
     }
 
@@ -30,15 +28,6 @@ public class OrderPlaceBindingDTO {
 
     public void setOrderedWines(Set<OrderWineBindingDTO> orderedWines) {
         this.orderedWines = orderedWines;
-    }
-
-    @NotEmpty(message = "Receiver first name can not be empty!")
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @NotNull(message = "Address can not be empty!")

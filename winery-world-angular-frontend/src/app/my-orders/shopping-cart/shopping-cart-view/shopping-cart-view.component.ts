@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
-import {OrderWineView} from '../../../my-orders/my-orders.model';
+import {AddressUserBindingDTO, OrderWineView} from '../../my-orders.model';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../../store/app.reducer';
 import {map} from 'rxjs/operators';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import * as AllMyOrdersActions from '../../store/my-orders.actions';
 
 @Component({
   selector: 'app-shopping-cart-view',
@@ -14,11 +15,12 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class ShoppingCartViewComponent implements OnInit {
   orders: Observable<OrderWineView[]>;
   deliveryAddressForm: FormGroup;
+  enterAddress = true;
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    this.orders = this.store.select('order').pipe(
-      map(st => st.orderedWines)
+    this.orders = this.store.select('myOrders').pipe(
+      map(st => st.shoppingCart.orderedWines)
     );
     this.deliveryAddressForm = new FormGroup({
       'city': new FormControl(null, Validators.required),
@@ -27,6 +29,18 @@ export class ShoppingCartViewComponent implements OnInit {
   }
 
   submitForm(): void {
+    const userAddress: AddressUserBindingDTO = {
+      ...this.deliveryAddressForm.value
+    };
+    this.store.dispatch(new AllMyOrdersActions.SetReceiverAddressStart(userAddress));
+    this.enterAddress = false;
+  }
 
+  sendOrder(): void {
+    this.store.dispatch(new AllMyOrdersActions.SendOrderStart());
+  }
+
+  editAddress(): void {
+    this.enterAddress = true;
   }
 }
