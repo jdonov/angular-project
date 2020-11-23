@@ -8,7 +8,7 @@ export interface State {
 }
 
 const user = {
-  id: '123', username: 'test@test.com', token: 'someToken', tokenExpirationDate: new Date()
+  id: '123', username: 'test2@test.com', token: 'someToken', tokenExpirationDate: new Date()
 };
 
 const initialState: State = {

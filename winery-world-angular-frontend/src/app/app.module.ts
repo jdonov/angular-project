@@ -16,6 +16,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {WineriesEffects} from './wineries/store/wineries.effects';
 import {CommentsEffects} from './comments/store/comments.effects';
 import {WineriesModule} from './wineries/wineries.module';
+import { ShoppingCartViewComponent } from './header/shopping-cart/shopping-cart-view/shopping-cart-view.component';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import {WineriesModule} from './wineries/wineries.module';
     AppComponent,
     HeaderComponent,
     AuthComponent,
-    MyOrdersComponent, ShoppingCartComponent
+    MyOrdersComponent, ShoppingCartComponent, ShoppingCartViewComponent
   ],
   imports: [
     BrowserModule,

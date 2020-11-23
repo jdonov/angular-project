@@ -4,8 +4,8 @@ export interface WineServiceDTO {
   imageUrl: string;
   price: number;
   description: string;
-  rating: number;
-  yourRating: number;
+  rating: string;
+  yourRating: string;
 }
 
 export interface WineRate{

@@ -4,7 +4,7 @@
   </span>
   <div class="container-fluid d-flex flex-column justify-content-center align-items-center mt-2">
     <h6 class="list-group-item-heading">{{ wine.name }}</h6>
-    <p>Overall rating: <strong class="text-lowercase">{{wine.rating}}</strong></p>
+    <p>Overall rating: <strong class="text-lowercase">{{wine.rating | removeUnderscore}}</strong></p>
     <p>{{wine.description}}</p>
     <p [textContent]="'Price: ' + wine.price + 'lv.'"></p>
     <div class="d-flex align-items-center justify-content-around mb-1" *ngIf="!isMine">
@@ -19,8 +19,8 @@
       </div>
       <div class="col-6 d-flex form-group flex-row justify-content-end" *ngIf="!isMine">
         <label for="order-wine">Quantity</label>
-        <input class="form-control ml-2 mr-2 w-25" id="order-wine" type="number" min="0"/>
-        <button class="btn btn-sm btn-dark">Add</button>
+        <input #quantity class="form-control ml-2 mr-2 w-25" id="order-wine" type="number" min="0"/>
+        <button class="btn btn-sm btn-dark" type="button" (click)="addToCaret()">Add</button>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@
     </div>
     <div class="col-6 d-flex flex-column justify-content-between">
       <h4 class="card-title mt-3" [textContent]="(winery | async).winery.name"></h4>
-      <h6 class="card-subtitle mb-2 text-muted" [textContent]="'Region: ' + (winery | async).winery.address.region"></h6>
+      <h6 class="card-subtitle mb-2 text-muted" [textContent]="'Region: ' + (winery | async).winery.address.region | removeUnderscore | titlecase"></h6>
       <h6 class="card-subtitle mb-2 text-muted" [textContent]="'' + (winery | async).winery.address.city + ', ' + (winery | async).winery.address.street"></h6>
       <hr>
       <p class="card-body pl-0" [textContent]="(winery | async).winery.description">
