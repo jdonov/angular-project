@@ -42,7 +42,8 @@ export class WineComponent implements OnInit {
       id: this.wine.id,
       quantity: Number(this.quantity.nativeElement.value),
       name: this.wine.name,
-      wineryName: this.wineryName
+      wineryName: this.wineryName,
+      price: this.wine.price
     };
     this.store.dispatch(new AddWineToOrder(wine));
   }

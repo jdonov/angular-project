@@ -1,9 +1,11 @@
 <div class="d-flex flex-column align-items-center" *ngIf="(orders | async).length > 0">
   <ul class="list-group mt-5">
     <li class="list-group-item list-group-item-action list-group-item-light" *ngFor="let order of (orders | async)">
-      Wine name: {{order.name}}, from winery: {{order.wineryName}}, quantity: {{order.quantity}}
+      Wine name: {{order.name}}, from winery: {{order.wineryName}}, quantity: {{order.quantity}}, wine price: {{order.price | currency: 'EUR'}},
+      total price {{(order.price * order.quantity) | currency: 'EUR'}}
     </li>
   </ul>
+  <p class="border mt-1 p-3"><strong class="mr-2">Total order amount:</strong> {{totalOrderPrice | currency: 'EUR'}}</p>
   <div class="col-xs-12 col-md-6 col-md-offset-3 card p-3 mt-5" *ngIf="enterAddress">
     <form class="flex-column w-100 align-items-center" [formGroup]="deliveryAddressForm" (ngSubmit)="submitForm()">
       <div class="border-bottom mb-3">

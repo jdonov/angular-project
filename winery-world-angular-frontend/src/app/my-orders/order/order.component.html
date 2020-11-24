@@ -10,11 +10,11 @@
         <p class="border-bottom">
           Name: {{wine.name}},
           Quantity: {{wine.quantity}},
-          Wine price: {{wine.price}},
+          Wine price: {{wine.price | currency: 'EUR'}},
           Total price: {{wine.price * wine.quantity}}</p>
       </div>
     </div>
-    <p>Total price: {{totalPrice()}}</p>
+    <p>Total price: {{totalPrice() | currency: 'EUR'}}</p>
   </div>
   <p><strong>Delivery address:</strong> {{order.receiverAddress.city}}, {{order.receiverAddress.street}}</p>
   <div class="d-inline-flex flex-row align-items-baseline">

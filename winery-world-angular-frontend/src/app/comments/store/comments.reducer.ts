@@ -18,7 +18,7 @@ export function commentsReducer(state: State = initialState, action: AllCommentA
       };
     case AllCommentActions.ADD_COMMENT_SUCCESS:
       const newComments = [...state.comments];
-      newComments.push({...action.payload});
+      newComments.push({...action.payload, replies: []});
       return {
         ...state,
         comments: [...newComments]

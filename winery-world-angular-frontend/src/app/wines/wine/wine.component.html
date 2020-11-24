@@ -6,7 +6,7 @@
     <h6 class="list-group-item-heading">{{ wine.name }}</h6>
     <p>Overall rating: <strong class="text-lowercase">{{wine.rating | removeUnderscore}}</strong></p>
     <p>{{wine.description}}</p>
-    <p [textContent]="'Price: ' + wine.price + 'lv.'"></p>
+    <p [textContent]="'Price: ' + (wine.price | currency: 'EUR')"></p>
     <div class="d-flex align-items-center justify-content-around mb-1" *ngIf="!isMine">
       <span class="mr-1">Your rating: </span>
       <app-rating [initRating]="wine.yourRating" #ratingComponent></app-rating>

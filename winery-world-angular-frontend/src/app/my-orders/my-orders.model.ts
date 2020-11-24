@@ -11,6 +11,7 @@ export interface OrderWineBindingDTO{
 export interface OrderWineView extends OrderWineBindingDTO{
   name: string;
   wineryName: string;
+  price: number;
 }
 export interface AddressUserBindingDTO{
   city: string;

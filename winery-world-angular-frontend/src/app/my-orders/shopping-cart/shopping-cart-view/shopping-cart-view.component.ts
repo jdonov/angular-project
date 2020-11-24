@@ -16,6 +16,7 @@ export class ShoppingCartViewComponent implements OnInit {
   orders: Observable<OrderWineView[]>;
   deliveryAddressForm: FormGroup;
   enterAddress = true;
+  totalOrderPrice: number;
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
@@ -25,6 +26,9 @@ export class ShoppingCartViewComponent implements OnInit {
     this.deliveryAddressForm = new FormGroup({
       'city': new FormControl(null, Validators.required),
       'street': new FormControl(null, Validators.required)
+    });
+    this.orders.subscribe(orders => {
+      this.totalOrderPrice = orders.map(o => o.quantity * o.price).reduce((acc, currValue) => acc + currValue, 0);
     });
   }
 
