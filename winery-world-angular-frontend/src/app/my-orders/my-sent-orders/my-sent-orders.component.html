@@ -1,3 +1,9 @@
-<div *ngFor="let order of (orders | async)">
-  <app-order [order]="order" [received]="received"></app-order>
-</div>
+<ul class="list-group mt-3">
+  <h3>Sent orders</h3>
+  <div *ngIf="(orders | async).length > 0">
+    <app-order *ngFor="let order of (orders | async)" [order]="order" [received]="received"></app-order>
+  </div>
+  <div *ngIf="(orders | async).length === 0">
+    <li class="list-group-item list-group-item-action list-group-item-light text-center">No sent orders!</li>
+  </div>
+</ul>

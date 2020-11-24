@@ -1,9 +1,12 @@
 package com.winery.model.service;
 
+import java.math.BigDecimal;
+
 public class OrderWineServiceDTO {
     private String wineId;
     private String name;
     private int quantity;
+    private BigDecimal price;
 
     public OrderWineServiceDTO() {
     }
@@ -30,6 +33,14 @@ public class OrderWineServiceDTO {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override

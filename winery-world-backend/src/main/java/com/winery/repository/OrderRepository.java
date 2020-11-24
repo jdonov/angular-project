@@ -14,6 +14,6 @@ import java.util.Set;
 public interface OrderRepository extends JpaRepository<Order, String> {
     List<Order> findAllByUser(User user);
 
-    @Query(value = "SELECT o FROM Order o JOIN o.wines w WHERE w.owner.id = :id ORDER BY o.status, o.orderDateTime")
+    @Query(value = "SELECT DISTINCT o FROM Order o JOIN o.wines w WHERE w.owner.id = :id ORDER BY o.status, o.orderDateTime")
     List<Order> findAllByWineryOwner(@Param("id") String id);
 }

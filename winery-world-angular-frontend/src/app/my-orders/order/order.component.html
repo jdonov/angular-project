@@ -1,8 +1,29 @@
-<div>
-  <div *ngFor="let wine of order.wines">
-    <p>Name: {{wine.name}}, Quantity: {{wine.quantity}}</p>
+<li class="list-group-item list-group-item-action list-group-item-light mb-1">
+  <div>
+    <p>Order for {{order.wines.length}} {{order.wines.length === 1 ? 'wine' : 'wines'}} placed
+      on: {{order.orderDateTime | date: 'MMM d, y, h:mm a'}}
+      <span><strong class="text-dark"
+                    (click)="viewWines()">{{!showWines ? 'View' : 'Hide'}} {{order.wines.length === 1 ? 'wine' : 'wines'}}</strong></span>
+    </p>
+    <div *ngIf="showWines">
+      <div *ngFor="let wine of order.wines">
+        <p class="border-bottom">
+          Name: {{wine.name}},
+          Quantity: {{wine.quantity}},
+          Wine price: {{wine.price}},
+          Total price: {{wine.price * wine.quantity}}</p>
+      </div>
+    </div>
+    <p>Total price: {{totalPrice()}}</p>
   </div>
-  <p>Address: {{order.receiverAddress.city}}, {{order.receiverAddress.street}}</p>
-  <p>Date: {{order.orderDateTime}}</p>
-  <p>Status: {{order.status}}</p>
-</div>
+  <p><strong>Delivery address:</strong> {{order.receiverAddress.city}}, {{order.receiverAddress.street}}</p>
+  <div class="d-inline-flex flex-row align-items-baseline">
+    <p>
+      <strong>Status: </strong> {{ order.status | lowercase}}
+    </p>
+    <div *ngIf="received ? true : false" class="d-inline-flex flex-row align-items-baseline">
+      <button class="btn btn-sm btn-outline-secondary ml-2" [disabled]="order.status !== 'RECEIVED'" (click)="confirmOrder()">Confirm</button>
+      <button class="btn btn-sm btn-outline-secondary ml-2" [disabled]="order.status !== 'RECEIVED'" (click)="cancelOrder()">Reject</button>
+    </div>
+  </div>
+</li>

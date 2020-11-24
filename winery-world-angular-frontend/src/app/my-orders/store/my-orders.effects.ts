@@ -11,6 +11,8 @@ import {HttpClient} from '@angular/common/http';
 const END_POINT_FETCH_ORDERS_RECEIVED = 'api/orders/owner';
 const END_POINT_FETCH_ORDERS_SENT = 'api/orders/client';
 const END_POINT_PLACE_ORDER = 'api/orders/placeOrder';
+const END_POINT_CONFIRM = 'api/orders/{id}/confirm';
+const END_POINT_CANCEL = 'api/orders/{id}/cancel';
 
 @Injectable()
 export class MyOrdersEffects {
@@ -55,5 +57,25 @@ export class MyOrdersEffects {
       return this.http.post<OrderServiceDTO>(environment.apiURL + END_POINT_PLACE_ORDER, updatedShoppingCart);
     }),
     map(() => new AllOrdersActions.SendOrderSuccess())
+  );
+
+  @Effect()
+  confirmOrder = this.actions$.pipe(
+    ofType(AllOrdersActions.CONFIRM_ORDER_START),
+    switchMap((action: any) => {
+        const endpoint = END_POINT_CONFIRM.replace('{id}', action.payload.id);
+        return this.http.patch<OrderServiceDTO>(environment.apiURL + endpoint, {});
+    }),
+    map(order => new AllOrdersActions.ConfirmCancelOrderSuccess(order))
+  );
+
+  @Effect()
+  cancelOrder = this.actions$.pipe(
+    ofType(AllOrdersActions.CANCEL_ORDER_START),
+    switchMap((action: any) => {
+      const endpoint = END_POINT_CANCEL.replace('{id}', action.payload.id);
+      return this.http.patch<OrderServiceDTO>(environment.apiURL + endpoint, {});
+    }),
+    map(order => new AllOrdersActions.ConfirmCancelOrderSuccess(order))
   );
 }

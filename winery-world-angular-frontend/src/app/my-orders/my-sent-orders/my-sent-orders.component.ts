@@ -18,7 +18,7 @@ export class MySentOrdersComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromApp.AppState>, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.receivedSubscription = this.route.queryParams.subscribe((params: Params) => this.received = params.received);
+    this.receivedSubscription = this.route.queryParams.subscribe((params: Params) => this.received = params.received === 'true');
     this.orders = this.store.select(state => state.myOrders.sentOrders);
   }
 

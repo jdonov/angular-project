@@ -18,6 +18,7 @@ export interface AddressUserBindingDTO{
 }
 
 export interface OrderServiceDTO{
+  id: string;
   wines: OrderWineServiceDTO[];
   receiverAddress: AddressUserBindingDTO;
   orderDateTime: Date;
@@ -28,4 +29,5 @@ export interface OrderWineServiceDTO{
   wineId: string;
   name: string;
   quantity: number;
+  price: number;
 }

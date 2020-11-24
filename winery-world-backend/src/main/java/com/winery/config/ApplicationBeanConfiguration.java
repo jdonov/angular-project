@@ -58,6 +58,7 @@ public class ApplicationBeanConfiguration {
 
         modelMapper.typeMap(OrderedWines.class, OrderWineServiceDTO.class).addMappings(mapper -> {
             mapper.map(src -> src.getWine().getName(), OrderWineServiceDTO::setName);
+            mapper.map(src -> src.getWine().getPrice(), OrderWineServiceDTO::setPrice);
         });
 
         return modelMapper;

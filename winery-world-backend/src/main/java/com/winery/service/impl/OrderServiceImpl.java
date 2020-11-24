@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderServiceDTO> getOrdersByOwner() {
         //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test2@test.com");
+        User user = this.userService.getUser("test@test.com");
         List<Order> orders = this.orderRepository.findAllByWineryOwner(user.getId());
         return orders.stream()
                 .map(o -> this.modelMapper.map(o, OrderServiceDTO.class))

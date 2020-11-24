@@ -54,6 +54,18 @@ export function ordersReducer(state: State = initialState, action: AllOrdersActi
           receiverAddress: null
         }
       };
+    case AllOrdersActions.CONFIRM_CANCEL_ORDER_SUCCESS:
+      const receivedOrdersUpdated = [...state.receivedOrders];
+      let updatedOrder = receivedOrdersUpdated.find(o => o.id === action.payload.id);
+      const index = receivedOrdersUpdated.indexOf(updatedOrder);
+      updatedOrder = {
+        ...action.payload
+      };
+      receivedOrdersUpdated[index] = updatedOrder;
+      return {
+        ...state,
+        receivedOrders: [...receivedOrdersUpdated]
+      };
     default:
       return {
         ...state
