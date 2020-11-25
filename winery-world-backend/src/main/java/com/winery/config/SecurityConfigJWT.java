@@ -37,14 +37,14 @@ public class SecurityConfigJWT extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/api/**")
+//                .antMatcher("/api/**")
                 .cors()
                 .and()
                 .csrf().disable().authorizeRequests()
-                .anyRequest().permitAll() //TODO REMOVE IN THE END TO ENABLE AUTHENTICATION
-//                .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
-//                .antMatchers(HttpMethod.GET, "/api/products").permitAll()
-//                .anyRequest().authenticated()
+//                .anyRequest().permitAll() //TODO REMOVE IN THE END TO ENABLE AUTHENTICATION
+                .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
+                .antMatchers(HttpMethod.GET, "/api/winery").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), userService))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), userService))

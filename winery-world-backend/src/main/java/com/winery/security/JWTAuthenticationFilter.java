@@ -23,7 +23,6 @@ import java.util.Date;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static com.winery.security.SecurityConstants.*;
 
-
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
@@ -57,6 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        response.addHeader("tokenExpirationDate", String.valueOf(EXPIRATION_TIME));
         String username = ((User) auth.getPrincipal()).getUsername();
         UserServiceDTO userServiceDTO = this.userService.getUserByUsername(username);
 
