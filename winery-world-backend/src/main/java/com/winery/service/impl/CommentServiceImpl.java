@@ -35,8 +35,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentServiceDTO placeComment(CommentBindingDTO commentBindingDTO) {
-        //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test@test.com");
+                User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         Winery winery = this.wineryService.getWineryById(commentBindingDTO.getWineryId());
         Comment comment = this.modelMapper.map(commentBindingDTO, Comment.class);
         comment.setUser(user);
@@ -49,8 +49,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentReplyServiceDTO placeReply(CommentReplyBindingDTO commentReplyBindingDTO) {
-        //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test@test.com");
+                User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         Winery winery = this.wineryService.getWineryById(commentReplyBindingDTO.getReply().getWineryId());
         Comment comment = this.modelMapper.map(commentReplyBindingDTO.getReply(), Comment.class);
         comment.setUser(user);

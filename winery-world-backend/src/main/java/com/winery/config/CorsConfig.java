@@ -23,6 +23,7 @@ public class CorsConfig {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
         config.addExposedHeader("Authorization");
+        config.addExposedHeader("tokenExpirationDate");
 //        config.addExposedHeader("user");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);

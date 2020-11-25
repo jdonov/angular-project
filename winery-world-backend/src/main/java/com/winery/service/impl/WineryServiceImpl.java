@@ -41,8 +41,8 @@ public class WineryServiceImpl implements WineryService {
         Winery winery = this.modelMapper.map(wineryRegisterBindingDTO, Winery.class);
         Address address = this.modelMapper.map(wineryRegisterBindingDTO.getAddress(), Address.class);
         winery.setAddress(address);
-//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test@test.com");
+        User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         winery.setUser(user);
         winery = this.wineryRepository.saveAndFlush(winery);
         WineryDetailsServiceDTO wineryDetailsServiceDTO = this.modelMapper.map(winery, WineryDetailsServiceDTO.class);
@@ -72,8 +72,8 @@ public class WineryServiceImpl implements WineryService {
 
     @Override
     public WineryDetailsServiceDTO getWineryDetails(String id) {
-        //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test@test.com");
+                User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         Winery winery = this.wineryRepository.findById(id).orElseThrow(() -> new WineryNotFoundException("Winery with this ID does not exists!"));
         WineryDetailsServiceDTO wineryDetailsServiceDTO = this.modelMapper.map(winery, WineryDetailsServiceDTO.class);
         wineryDetailsServiceDTO.getWines().forEach(w -> {
@@ -107,8 +107,8 @@ public class WineryServiceImpl implements WineryService {
 
     @Override
     public List<WineryServiceDTO> getMyWineries() {
-        //        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test@test.com");
+                User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         return this.wineryRepository.findAllByUser(user).stream()
                 .map(w -> this.modelMapper.map(w, WineryServiceDTO.class))
                 .collect(Collectors.toList());

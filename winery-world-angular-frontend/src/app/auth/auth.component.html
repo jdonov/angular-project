@@ -13,13 +13,13 @@
           type="email"
           id="email"
           class="form-control"
-          formControlName="email"
+          formControlName="username"
         />
-        <span *ngIf="signupForm.get('email').touched && !signupForm.get('email').valid">
+        <span *ngIf="signupForm.get('username').touched && !signupForm.get('username').valid">
           <small class="text-sm text-danger"
-                 *ngIf="signupForm.get('email').errors['required']">Email is required!</small>
+                 *ngIf="signupForm.get('username').errors['required']">Email is required!</small>
           <small class="text-sm text-danger"
-                 *ngIf="signupForm.get('email').errors['email']">Enter valid email!</small>
+                 *ngIf="signupForm.get('username').errors['username']">Enter valid email!</small>
         </span>
       </div>
       <div class="form-group">

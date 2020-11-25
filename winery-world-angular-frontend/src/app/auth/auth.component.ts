@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
+import * as AllAuthActions from './store/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -12,19 +15,19 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error: string = null;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private store: Store<fromApp.AppState>) {
   }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(3)]],
       confirmPassword: [null]
     }, {
       validator: this.mustMatch('password', 'confirmPassword')
     });
   }
-  mustMatch(controlName: string, matchingControlName: string) {
+  mustMatch(controlName: string, matchingControlName: string): any {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
@@ -46,36 +49,24 @@ export class AuthComponent implements OnInit {
     this.isLoginMode = !this.isLoginMode;
     this.signupForm.get('confirmPassword').reset();
   }
+
   onSubmit(): void {
-    // if (!form.valid) {
-    //   return;
-    // }
-    // const email = form.value.email;
-    // const password = form.value.password;
-    //
-    // let authObs: Observable<AuthResponseData>;
-    //
-    // this.isLoading = true;
-    //
-    // if (this.isLoginMode) {
-    //   authObs = this.authService.login(email, password);
-    // } else {
-    //   authObs = this.authService.signup(email, password);
-    // }
-    //
-    // authObs.subscribe(
-    //   resData => {
-    //     console.log(resData);
-    //     this.isLoading = false;
-    //     this.router.navigate(['/recipes']);
-    //   },
-    //   errorMessage => {
-    //     console.log(errorMessage);
-    //     this.error = errorMessage;
-    //     this.isLoading = false;
-    //   }
-    // );
-    //
-    // form.reset();
+    if (!this.signupForm.valid) {
+      return;
+    }
+    const username = this.signupForm.value.username;
+    const password = this.signupForm.value.password;
+
+    if (this.isLoginMode) {
+      this.store.dispatch(
+        new AllAuthActions.LoginStart({username, password})
+      );
+    } else {
+      this.store.dispatch(
+        new AllAuthActions.SignupStart({...this.signupForm.value})
+      );
+    }
+
+    this.signupForm.reset();
   }
 }

@@ -1,4 +1,10 @@
-export class User {
-  constructor(public id: string, public username: string, private token: string, private tokenExpirationDate: Date) {
-  }
+export interface User {
+  username: string;
+  token: string;
+  tokenExpirationDate: Date;
+}
+
+export interface UserServiceDTO {
+  id: string;
+  username: string;
 }

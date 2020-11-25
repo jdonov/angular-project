@@ -7,12 +7,13 @@ export interface State {
   loading: boolean;
 }
 
-const user = {
-  id: '123', username: 'test2@test.com', token: 'someToken', tokenExpirationDate: new Date()
-};
+// const user = {
+//   id: '123', username: 'test2@test.com', token: 'someToken', tokenExpirationDate: new Date()
+// };
 
 const initialState: State = {
-  user: new User(user.id, user.username, user.token, user.tokenExpirationDate),
+  // user: {...user},
+  user: null,
   authError: null,
   loading: false
 };
@@ -20,13 +21,7 @@ const initialState: State = {
 export function authReducer(state = initialState, action: AuthActions.AuthActions): State {
   switch (action.type) {
     case AuthActions.AUTHENTICATE_SUCCESS:
-      // tslint:disable-next-line:no-shadowed-variable
-      const user = new User(
-        action.payload.email,
-        action.payload.userId,
-        action.payload.token,
-        action.payload.expirationDate
-      );
+      const user = {...action.payload};
       return {
         ...state,
         authError: null,

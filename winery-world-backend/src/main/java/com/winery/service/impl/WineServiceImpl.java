@@ -41,8 +41,8 @@ public class WineServiceImpl implements WineService {
     @Override
     public List<WineServiceDTO> getAllWines(String wineryId) {
         Set<Wine> wines = this.wineRepository.findAllByWineryId(wineryId);
-//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test@test.com");
+        User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         return wines.stream().map(w -> {
             WineServiceDTO wineServiceDTO = this.modelMapper.map(w, WineServiceDTO.class);
             Rating yourRating = this.wineRateService.getWineRatingForUser(w.getId(), user.getId());
@@ -85,8 +85,8 @@ public class WineServiceImpl implements WineService {
         if (wine.getRatings() == null) {
             wine.setRatings(new ArrayList<>());
         }
-//        User user = this.userService.getLoggedInUser(); //TODO UNCOMMENT TO GET LOGGED IN USER
-        User user = this.userService.getUser("test2@test.com");
+        User user = this.userService.getLoggedInUser();
+//        User user = this.userService.getUser("test2@test.com"); //TODO REMOVE STATEMENT
         WineRate wineRate = this.wineRateService.rateWineByUser(wine, user, rating);
         wine.getRatings().add(wineRate);
         wine = this.wineRepository.saveAndFlush(wine);
@@ -121,17 +121,4 @@ public class WineServiceImpl implements WineService {
         }
         return null;
     }
-
-    //    private WineServiceDTO saveAndMap(Wine wine) {
-//        Wine savedWine = this.wineRepository.saveAndFlush(wine);
-//        WineServiceDTO wineServiceDTO = this.modelMapper.map(wine, WineServiceDTO.class);
-//        Rating avgRating = savedWine.getRatings() == null ? Rating.VERY_BAD : setWineRating(savedWine.getRatings());
-//        wineServiceDTO.setRating(avgRating);
-//        return wineServiceDTO;
-//    }
-//
-//    private Rating setWineRating(List<Rating> ratings) {
-//        double avgRate = ratings.stream().mapToInt(Enum::ordinal).average().orElse(0);
-//        return Rating.values()[(int) Math.round(avgRate)];
-//    }
 }

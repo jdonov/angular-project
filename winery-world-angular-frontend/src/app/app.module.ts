@@ -17,6 +17,8 @@ import {SharedModule} from './shared/shared.module';
 import { NavDropdownComponent } from './header/nav-dropdown/nav-dropdown.component';
 import {MyOrdersModule} from './my-orders/my-orders.module';
 import {MyOrdersEffects} from './my-orders/store/my-orders.effects';
+import {AuthEffects} from './auth/store/auth.effects';
+import {CoreModule} from './core.module';
 
 
 @NgModule({
@@ -32,8 +34,8 @@ import {MyOrdersEffects} from './my-orders/store/my-orders.effects';
     AppRoutingModule,
     ReactiveFormsModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([WineriesEffects, CommentsEffects, MyOrdersEffects]),
-    WineriesModule, MyOrdersModule, SharedModule
+    EffectsModule.forRoot([WineriesEffects, CommentsEffects, MyOrdersEffects, AuthEffects]),
+    WineriesModule, MyOrdersModule, SharedModule, CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
