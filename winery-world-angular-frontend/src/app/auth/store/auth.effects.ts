@@ -15,7 +15,7 @@ const END_POINT_LOGIN = 'login';
 const handleAuthentication = (respUser: UserServiceDTO, token: string, expiresIn) => {
   const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
   const user: User = {username: respUser.username, token, tokenExpirationDate: expirationDate};
-  localStorage.setItem('userData', JSON.stringify(user));
+  sessionStorage.setItem('userData', JSON.stringify(user));
   return new AllAuthActions.AuthenticateSuccess(user);
 };
 
@@ -103,48 +103,9 @@ export class AuthEffects {
     ofType(AllAuthActions.LOGOUT),
     tap(() => {
       this.authService.clearLogoutTimer();
-      localStorage.removeItem('userData');
+      sessionStorage.removeItem('userData');
       this.router.navigate(['/auth']);
     })
   );
 }
-
-
-
-  //
-  // @Effect()
-  // autoLogin = this.actions$.pipe(
-  //   ofType(AllAuthActions.AUTO_LOGIN),
-  //   map(() => {
-  //     const userData: User = JSON.parse(localStorage.getItem('userData'));
-  //     if (!userData) {
-  //       return { type: 'DUMMY' };
-  //     }
-  //
-  //     const loadedUser = {
-  //       username: userData.username,
-  //       token: userData.token,
-  //       tokenExpirationDate: new Date(userData.tokenExpirationDate)
-  //     };
-  //
-  //     if (loadedUser.token) {
-  //       // this.user.next(loadedUser);
-  //       const expirationDuration =
-  //         new Date(userData.tokenExpirationDate).getTime() -
-  //         new Date().getTime();
-  //       this.authService.setLogoutTimer(expirationDuration);
-  //       return new AllAuthActions.AuthenticateSuccess({
-  //         username: loadedUser.username,
-  //         token: loadedUser.token,
-  //         tokenExpirationDate: new Date(userData.tokenExpirationDate)
-  //       });
-  //
-  //       // const expirationDuration =
-  //       //   new Date(userData._tokenExpirationDate).getTime() -
-  //       //   new Date().getTime();
-  //       // this.autoLogout(expirationDuration);
-  //     }
-  //     return { type: 'DUMMY' };
-  //   })
-  // );
 
