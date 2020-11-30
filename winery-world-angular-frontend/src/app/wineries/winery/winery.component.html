@@ -6,20 +6,28 @@
     </div>
     <div class="col-6 d-flex flex-column justify-content-between">
       <h4 class="card-title mt-3" [textContent]="(winery | async).winery.name"></h4>
-      <h6 class="card-subtitle mb-2 text-muted" [textContent]="'Region: ' + (winery | async).winery.address.region | removeUnderscore | titlecase"></h6>
-      <h6 class="card-subtitle mb-2 text-muted" [textContent]="'' + (winery | async).winery.address.city + ', ' + (winery | async).winery.address.street"></h6>
+      <h6 class="card-subtitle mb-2 text-muted"
+          [textContent]="'Region: ' + (winery | async).winery.address.region | removeUnderscore | titlecase"></h6>
+      <h6 class="card-subtitle mb-2 text-muted"
+          [textContent]="'' + (winery | async).winery.address.city + ', ' + (winery | async).winery.address.street"></h6>
       <hr>
       <p class="card-body pl-0" [textContent]="(winery | async).winery.description">
       </p>
       <div class="d-flex flex-row justify-content-between pb-3">
         <button type="button" class="btn btn-light btn-sm" (click)="viewWines()">View wines</button>
-        <button *ngIf="isInMine" type="button" class="btn btn-light btn-sm" (click)="registerWine()">Register new wine</button>
+        <button *ngIf="isInMine" type="button" class="btn btn-light btn-sm" (click)="registerWine()">Register new wine
+        </button>
         <button *ngIf="isInMine" type="button" class="btn btn-light btn-sm" (click)="editWinery()">Edit Winery</button>
         <button type="button" class="btn btn-light btn-sm" (click)="viewComments()">Comments</button>
       </div>
     </div>
   </div>
   <div>
-    <router-outlet></router-outlet>
+    <div class="container-fluid d-flex flex-row justify-content-center mt-lg-5" *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!isLoading">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

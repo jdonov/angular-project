@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
+import * as fromApp from './store/app.reducer';
+import {take} from 'rxjs/operators';
 
 
 @Component({
@@ -6,6 +9,11 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  constructor() {}
+export class AppComponent implements OnInit{
+  isLoading: boolean;
+  constructor(private store: Store<fromApp.AppState>) {}
+
+  ngOnInit(): void {
+    this.store.select(state => state.shared.loading).subscribe(loading => this.isLoading = loading);
+  }
 }

@@ -10,15 +10,16 @@ import {CommentsComponent} from '../comments/comments.component';
 import {CommentsResolverService} from '../comments/comments-resolver.service';
 import {AllWinesComponent} from '../wines/all-wines/all-wines.component';
 import {AllWineriesComponent} from './all-wineries/all-wineries.component';
+import {AuthGuard} from '../auth/auth.guard';
 
 
 const routes: Routes = [
   { path: 'home', component: AllWineriesComponent, resolve: [AllWineriesResolverService]},
-  { path: 'my-wineries', component: MyWineriesComponent, resolve: [AllWineriesResolverService], children: [
+  { path: 'my-wineries', canActivate: [AuthGuard], component: MyWineriesComponent, resolve: [AllWineriesResolverService], children: [
       {path: 'register', component: RegisterEditWineryComponent}
     ]
   },
-  { path: 'wineries/:wineryId', component: WineryComponent, resolve: [WineryResolverService], children: [
+  { path: 'wineries/:wineryId', canActivate: [AuthGuard] , component: WineryComponent, resolve: [WineryResolverService], children: [
       {path: 'edit', component: RegisterEditWineryComponent},
       {path: 'register-wine', component: RegisterEditWineComponent},
       {path: 'comments', component: CommentsComponent, resolve: [CommentsResolverService]},

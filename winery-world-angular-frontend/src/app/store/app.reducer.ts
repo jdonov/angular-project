@@ -2,6 +2,7 @@ import * as fromWineries from '../wineries/store/wineries.reducer';
 import * as fromComments from '../comments/store/comments.reducer';
 import * as fromAuth from '../auth/store/auth.reducer';
 import * as fromMyOrders from '../my-orders/store/my-orders.reducer';
+import * as fromShared from '../shared/store/load.reducer';
 
 import {ActionReducerMap, createSelector} from '@ngrx/store';
 import {User} from '../auth/user.model';
@@ -12,13 +13,15 @@ export interface AppState {
   allWineries: fromWineries.State;
   comments: fromComments.State;
   myOrders: fromMyOrders.State;
+  shared: fromShared.State;
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
   auth: fromAuth.authReducer,
   allWineries: fromWineries.wineriesReducer,
   comments: fromComments.commentsReducer,
-  myOrders: fromMyOrders.ordersReducer
+  myOrders: fromMyOrders.ordersReducer,
+  shared: fromShared.loadReducer
 };
 
 export const selectUser = (state: AppState) => state.auth.user;

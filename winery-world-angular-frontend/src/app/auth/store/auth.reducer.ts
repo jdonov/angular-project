@@ -7,12 +7,8 @@ export interface State {
   loading: boolean;
 }
 
-// const user = {
-//   id: '123', username: 'test2@test.com', token: 'someToken', tokenExpirationDate: new Date()
-// };
 
 const initialState: State = {
-  // user: {...user},
   user: null,
   authError: null,
   loading: false

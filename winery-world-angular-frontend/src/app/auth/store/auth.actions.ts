@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import {User} from '../user.model';
 
 export const LOGIN_START = '[Auth] Login Start';
 export const AUTHENTICATE_SUCCESS = '[Auth] Login';

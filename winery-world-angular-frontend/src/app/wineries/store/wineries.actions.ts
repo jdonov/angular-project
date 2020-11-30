@@ -17,7 +17,6 @@ export const EDIT_WINERY_ADD_WINE_SUCCESS = '[Wineries] Edit winery add wine suc
 export const DELETE_WINE_START = '[Wineries] delete wine start';
 export const DELETE_WINE_SUCCESS = '[Wineries] delete wine success';
 export const EDIT_WINE_START = '[Wineries] edit wine start';
-export const EDIT_WINE_SUCCESS = '[Wineries] edit wine success';
 
 export class FetchWineries implements Action {
   readonly type = FETCH_WINERIES;

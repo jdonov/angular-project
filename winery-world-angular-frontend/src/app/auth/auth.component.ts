@@ -19,6 +19,7 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.select(state => state.shared.loading).subscribe(loading => this.isLoading = loading);
     this.signupForm = this.formBuilder.group({
       username: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(3)]],

@@ -22,6 +22,7 @@ export class WineryComponent implements OnInit, OnDestroy {
   wineSubscription: Subscription;
   isMineSubscription: Subscription;
   isSentSubscription: Subscription;
+  isLoading: boolean;
 
   constructor(private store: Store<fromApp.AppState>,
               private route: ActivatedRoute,
@@ -33,7 +34,7 @@ export class WineryComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.wineryId = params.wineryId;
     });
-
+    this.store.select(state => state.shared.loadChild).subscribe(loadChild => this.isLoading = loadChild);
     this.winery = this.store.select('allWineries');
     this.isMineSubscription = this.store.select(state => state.allWineries.winery).pipe(
       withLatestFrom(this.store.select(state => state.auth.user)),

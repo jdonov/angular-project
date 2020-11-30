@@ -4,7 +4,7 @@
       <p>{{ error }}</p>
     </div>
     <div *ngIf="isLoading" style="text-align: center;">
-      <!--      <app-loading-spinner></app-loading-spinner>-->
+      <app-loading-spinner></app-loading-spinner>
     </div>
     <form [formGroup]="signupForm" *ngIf="!isLoading" (ngSubmit)="onSubmit()">
       <div class="form-group">
