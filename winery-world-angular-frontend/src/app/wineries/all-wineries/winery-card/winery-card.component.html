@@ -1,0 +1,12 @@
+<div [@rotatedState]="stateRotate"  (mouseenter)="rotate()" (mouseleave)="rotate()" class="card h-100 shadow">
+  <img class="card-img-top"
+       [src]="winery.imageUrl"
+       alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{winery.name}}</h5>
+    <p class="card-text">{{winery.description}}</p>
+  </div>
+  <div class="d-flex justify-content-center mb-3">
+    <a [routerLink]="['/wineries', winery.id]" class="btn btn-dark w-50">View details</a>
+  </div>
+</div>

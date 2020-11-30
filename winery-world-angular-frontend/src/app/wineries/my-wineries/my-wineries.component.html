@@ -2,12 +2,13 @@
   <li *ngIf="(wyWineries | async).length === 0" class="list-group-item">No wineries registered yet!</li>
 
   <button class="btn btn-light mt-2 mb-2" (click)="register()">Register new winery</button>
-<!--  <app-register-edit-winery *ngIf="registerMode" [isRegisterMode]="true"></app-register-edit-winery>-->
+
   <router-outlet></router-outlet>
 
-  <ul class="list-group" *ngIf="!registerMode && (wyWineries | async).length > 0">
+  <ul class="list-group" *ngIf="!registerMode && (wyWineries | async).length > 0, let i = index" >
     <a *ngFor="let winery of (wyWineries | async)"
-       class="list-group-item list-group-item-action list-group-item-light"
+       [@listItems]
+       class="list-group-item list-group-item-action list-group-item-light mb-1"
        [routerLink]="['/wineries', winery.id]">
       {{winery.name}}
     </a>

@@ -9,10 +9,11 @@ import {RegisterEditWineryComponent} from './register-edit-winery/register-edit-
 import {SharedModule} from '../shared/shared.module';
 import {WinesModule} from '../wines/wines.module';
 import {CommentsModule} from '../comments/comments.module';
+import { WineryCardComponent } from './all-wineries/winery-card/winery-card.component';
 
 @NgModule({
   declarations: [
-    AllWineriesComponent, MyWineriesComponent, WineryComponent, RegisterEditWineryComponent
+    AllWineriesComponent, MyWineriesComponent, WineryComponent, RegisterEditWineryComponent, WineryCardComponent
   ],
   imports: [
     RouterModule,
@@ -24,3 +25,4 @@ import {CommentsModule} from '../comments/comments.module';
   ]
 })
 export class WineriesModule {}
+

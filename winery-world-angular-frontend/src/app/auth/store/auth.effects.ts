@@ -21,27 +21,18 @@ const handleAuthentication = (respUser: UserServiceDTO, token: string, expiresIn
 
 const handleError = (errorRes: any) => {
   let errorMessage = 'An unknown error occurred!';
-  if (!errorRes.error || !errorRes.error.error) {
+  if (errorRes.status !== 200 || errorRes.status !== 403) {
     return of(new AllAuthActions.AuthenticateFail(errorMessage));
   }
-  switch (errorRes.error.error.message) {
-    case 'EMAIL_EXISTS':
-      errorMessage = 'This email exists already';
-      break;
-    case 'EMAIL_NOT_FOUND':
-      errorMessage = 'This email does not exist.';
-      break;
-    case 'INVALID_PASSWORD':
-      errorMessage = 'This password is not correct.';
-      break;
-  }
+  errorMessage = 'Wrong username or password';
   return of(new AllAuthActions.AuthenticateFail(errorMessage));
 };
 
 @Injectable()
 export class AuthEffects {
 
-  constructor(private actions$: Actions, private http: HttpClient, private router: Router, private authService: AuthService) {}
+  constructor(private actions$: Actions, private http: HttpClient, private router: Router, private authService: AuthService) {
+  }
 
   @Effect()
   authSignup = this.actions$.pipe(
@@ -66,34 +57,34 @@ export class AuthEffects {
     })
   );
 
-    @Effect()
-    authLogin = this.actions$.pipe(
-      ofType(AllAuthActions.LOGIN_START),
-      switchMap((action: AllAuthActions.LoginStart) => {
-        return this.http
-          .post(environment.apiURL + END_POINT_LOGIN, action.payload, { observe: 'response' })
-          .pipe(
-            tap(resData => {
-              this.authService.setLogoutTimer(+resData.headers.get('tokenExpirationDate') * 1000);
-            }),
-            map(resData => {
-              const respUser = resData.body as UserServiceDTO;
-              const token = resData.headers.get('authorization');
-              const expiresIn = resData.headers.get('tokenExpirationDate');
-              return handleAuthentication(respUser, token, expiresIn);
-            }),
-            catchError(errorRes => {
-              return handleError(errorRes);
-            })
-          );
-      })
-    );
+  @Effect()
+  authLogin = this.actions$.pipe(
+    ofType(AllAuthActions.LOGIN_START),
+    switchMap((action: AllAuthActions.LoginStart) => {
+      return this.http
+        .post(environment.apiURL + END_POINT_LOGIN, action.payload, {observe: 'response'})
+        .pipe(
+          tap(resData => {
+            this.authService.setLogoutTimer(+resData.headers.get('tokenExpirationDate') * 1000);
+          }),
+          map(resData => {
+            const respUser = resData.body as UserServiceDTO;
+            const token = resData.headers.get('authorization');
+            const expiresIn = resData.headers.get('tokenExpirationDate');
+            return handleAuthentication(respUser, token, expiresIn);
+          }),
+          catchError(errorRes => {
+            return handleError(errorRes);
+          })
+        );
+    })
+  );
   @Effect({dispatch: false})
   authRedirect = this.actions$.pipe(
     ofType(AllAuthActions.AUTHENTICATE_SUCCESS),
     tap((authSuccessAction: AllAuthActions.AuthenticateSuccess) => {
       // if (authSuccessAction.payload.redirect) {
-        this.router.navigate(['/']);
+      this.router.navigate(['/']);
       // }
     })
   );
@@ -105,6 +96,36 @@ export class AuthEffects {
       this.authService.clearLogoutTimer();
       sessionStorage.removeItem('userData');
       this.router.navigate(['/auth']);
+    })
+  );
+
+  @Effect()
+  autoLogin = this.actions$.pipe(
+    ofType(AllAuthActions.AUTO_LOGIN),
+    map(() => {
+      const userData: User = JSON.parse(sessionStorage.getItem('userData'));
+      if (!userData) {
+        return { type: 'DUMMY' };
+      }
+
+      const loadedUser = {
+        username: userData.username,
+        token: userData.token,
+        tokenExpirationDate: new Date(userData.tokenExpirationDate)
+      };
+
+      if (loadedUser.token) {
+        const expirationDuration =
+          new Date(userData.tokenExpirationDate).getTime() -
+          new Date().getTime();
+        this.authService.setLogoutTimer(expirationDuration);
+        return new AllAuthActions.AuthenticateSuccess({
+          username: loadedUser.username,
+          token: loadedUser.token,
+          tokenExpirationDate: new Date(userData.tokenExpirationDate)
+        });
+      }
+      return { type: 'DUMMY' };
     })
   );
 }

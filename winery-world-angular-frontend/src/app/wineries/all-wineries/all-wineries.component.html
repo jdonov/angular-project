@@ -1,20 +1,6 @@
-<!--<div class="container-fluid d-flex flex-row justify-content-center mt-lg-5" *ngIf="isLoading">-->
-<!--  <app-loading-spinner></app-loading-spinner>-->
-<!--</div>-->
 <div class="card-deck d-flex flex-row justify-content-center mt-5">
-  <div *ngFor="let winery of (wineries | async).wineries" class="col-xs-12 col-md-4 mb-4">
-    <div class="card h-100 shadow">
-      <img class="card-img-top"
-           [src]="winery.imageUrl"
-           alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{winery.name}}</h5>
-        <p class="card-text">{{winery.description}}</p>
-      </div>
-      <div class="d-flex justify-content-center mb-3">
-        <a [routerLink]="['/wineries', winery.id]" class="btn btn-dark w-50">View details</a>
-      </div>
-    </div>
+  <div class="col-xs-12 col-md-4 mb-4" *ngFor="let winery of (wineries | async).wineries">
+    <app-winery-card [winery]="winery"></app-winery-card>
   </div>
 </div>
 

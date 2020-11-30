@@ -6,13 +6,15 @@ import { RemoveUnderscorePipe } from './remove-underscore.pipe';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from '@angular/forms';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     RatingComponent, DropdownDirective, RemoveUnderscorePipe, LoadingSpinnerComponent
   ],
   imports: [
-    CommonModule, FontAwesomeModule, ReactiveFormsModule
+    CommonModule, FontAwesomeModule, ReactiveFormsModule,
+    BrowserAnimationsModule,
   ],
     exports: [
         CommonModule,

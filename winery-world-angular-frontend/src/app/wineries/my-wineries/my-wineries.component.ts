@@ -5,12 +5,49 @@ import {Observable, Subscription} from 'rxjs';
 import {WineryServiceDTO} from '../winery.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
+import {animate, keyframes, query, stagger, state, style, transition, trigger} from '@angular/animations';
 
 
 @Component({
   selector: 'app-my-wineries',
   templateUrl: './my-wineries.component.html',
-  styleUrls: ['./my-wineries.component.css']
+  styleUrls: ['./my-wineries.component.css'],
+  animations: [
+    trigger('listItems', [
+      state('in', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition('void => *', [
+        animate(1000, keyframes([
+          style({
+            transform: 'translateX(-100px)',
+            opacity: 0,
+            offset: 0
+          }),
+          style({
+            transform: 'translateX(-75px)',
+            opacity: 0.25,
+            offset: 0.25
+          }),
+          style({
+            transform: 'translateX(-50px)',
+            opacity: 0.5,
+            offset: 0.5
+          }),
+          style({
+            transform: 'translateX(-25px)',
+            opacity: 0.75,
+            offset: 0.75
+          }),
+          style({
+            transform: 'translateX(0px)',
+            opacity: 1,
+            offset: 1
+          })
+        ]))])
+    ])
+  ]
 })
 export class MyWineriesComponent implements OnInit, OnDestroy {
   wyWineries: Observable<WineryServiceDTO[]>;

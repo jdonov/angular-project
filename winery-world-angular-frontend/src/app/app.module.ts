@@ -20,7 +20,6 @@ import {MyOrdersEffects} from './my-orders/store/my-orders.effects';
 import {AuthEffects} from './auth/store/auth.effects';
 import {CoreModule} from './core.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
