@@ -1,8 +1,7 @@
 <div class="container mt-5">
   <div class="card d-flex flex-row">
-    <div class="col-6 pl-0">
-      <img class="card-img"
-           [src]="(winery | async).winery.imageUrl">
+    <div class="col-6 pl-0 image-container overflow-hidden">
+      <img class="card-img w-100" [src]="(winery | async).winery.imageUrl">
     </div>
     <div class="col-6 d-flex flex-column justify-content-between">
       <h4 class="card-title mt-3" [textContent]="(winery | async).winery.name"></h4>

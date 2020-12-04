@@ -4,12 +4,14 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import * as AllWineriesActions from './wineries.actions';
-import {switchMap, map, tap, withLatestFrom} from 'rxjs/operators';
+import {switchMap, map, tap, catchError} from 'rxjs/operators';
 import {WineryDetailsServiceDTO, WineryEditBindingDTO, WineryServiceDTO} from '../winery.model';
 import {environment} from '../../../environments/environment';
 import {AddWineryStart, FetchWinery, RateUpdateWineSuccess} from './wineries.actions';
 import {WineServiceDTO} from '../../wines/wine.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {of} from 'rxjs';
+import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
 
 const END_POINT_GET_ALL_WINERIES = 'api/winery';
 const END_POINT_GET_WINERY = 'api/winery/';
@@ -25,7 +27,9 @@ export class WineriesEffects {
   constructor(private actions$: Actions,
               private http: HttpClient,
               private store: Store<fromApp.AppState>,
-              private router: Router) {
+              private route: ActivatedRoute,
+              private router: Router,
+              private registerEditWineryService: RegisterEditWineryService) {
   }
 
   @Effect()
@@ -54,12 +58,18 @@ export class WineriesEffects {
   registerWinery = this.actions$.pipe(
     ofType(AllWineriesActions.ADD_WINERY_START),
     switchMap((action: AddWineryStart) => {
-      return this.http.post<WineryDetailsServiceDTO>(environment.apiURL + END_POINT_REGISTER_WINERY, action.payload);
-    }),
-    map(winery => new AllWineriesActions.AddWinerySuccess(winery)),
-    // withLatestFrom(this.store.select(state => state.allWineries.winery)),
-    tap(() => {
-      this.router.navigate(['/my-wineries']);
+      return this.http.post<WineryDetailsServiceDTO>(environment.apiURL + END_POINT_REGISTER_WINERY, action.payload).pipe(
+        map(winery => {
+            return new AllWineriesActions.AddWinerySuccess(winery);
+        }),
+        tap((winery) => {
+          this.registerEditWineryService.isSent.next(true);
+          this.router.navigate(['/my-wineries']);
+        }),
+        catchError(errorRes => {
+          return of(new AllWineriesActions.WineryError(errorRes.error.errors[0]));
+        })
+      );
     })
   );
 
@@ -90,9 +100,18 @@ export class WineriesEffects {
         description: action.payload.description,
         address: action.payload.address
       };
-      return this.http.patch<WineryEditBindingDTO>(environment.apiURL + END_POINT_EDIT_WINERY + action.payload.id, winery);
-    }),
-    map(winery => new AllWineriesActions.EditWinerySuccess(winery))
+      return this.http.patch<WineryEditBindingDTO>(environment.apiURL + END_POINT_EDIT_WINERY + action.payload.id, winery).pipe(
+        map(responseWinery => {
+          return new AllWineriesActions.EditWinerySuccess(responseWinery);
+        }),
+        tap(() => {
+          this.registerEditWineryService.isSent.next(true);
+        }),
+        catchError(errorRes => {
+          return of(new AllWineriesActions.WineryError(errorRes.error.errors[0]));
+        })
+      );
+    })
   );
 
   @Effect()

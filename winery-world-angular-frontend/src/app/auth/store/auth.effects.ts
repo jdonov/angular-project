@@ -1,4 +1,4 @@
-import {enableProdMode, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as AllAuthActions from './auth.actions';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {User, UserServiceDTO} from '../user.model';
@@ -21,8 +21,11 @@ const handleAuthentication = (respUser: UserServiceDTO, token: string, expiresIn
 
 const handleError = (errorRes: any) => {
   let errorMessage = 'An unknown error occurred!';
-  if (errorRes.status !== 200 || errorRes.status !== 403) {
+  if (errorRes.status !== 200 && errorRes.status !== 403 && errorRes.status !== 409) {
     return of(new AllAuthActions.AuthenticateFail(errorMessage));
+  }
+  if (errorRes.status === 409) {
+    return of(new AllAuthActions.AuthenticateFail(errorRes.error.errors[0]));
   }
   errorMessage = 'Wrong username or password';
   return of(new AllAuthActions.AuthenticateFail(errorMessage));

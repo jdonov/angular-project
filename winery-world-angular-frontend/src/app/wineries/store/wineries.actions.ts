@@ -17,6 +17,8 @@ export const EDIT_WINERY_ADD_WINE_SUCCESS = '[Wineries] Edit winery add wine suc
 export const DELETE_WINE_START = '[Wineries] delete wine start';
 export const DELETE_WINE_SUCCESS = '[Wineries] delete wine success';
 export const EDIT_WINE_START = '[Wineries] edit wine start';
+export const WINERY_ERROR = '[Wineries] winery error';
+export const WINERY_CLEAR_ERROR = '[Wineries] winery clear error';
 
 export class FetchWineries implements Action {
   readonly type = FETCH_WINERIES;
@@ -106,6 +108,16 @@ export class WineDeleteSuccess implements Action {
   }
 }
 
+export class WineryError implements Action{
+  readonly type = WINERY_ERROR;
+  constructor(public payload: string) {
+  }
+}
+
+export class WineryClearError implements Action {
+  readonly type = WINERY_CLEAR_ERROR;
+}
+
 export type WineriesActions = FetchWineries | SetWineries | AddWineryStart | AddWinerySuccess |
   FetchWinery | SetWinery | RateWineStart | RateUpdateWineSuccess | EditWineryStart | EditWinerySuccess |
-  WineRegisterStart | WineRegisterSuccess | WineDeleteStart | WineDeleteSuccess | WineEditStart;
+  WineRegisterStart | WineRegisterSuccess | WineDeleteStart | WineDeleteSuccess | WineEditStart | WineryError | WineryClearError;

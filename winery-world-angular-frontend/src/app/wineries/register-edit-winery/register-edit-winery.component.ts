@@ -16,15 +16,23 @@ export class RegisterEditWineryComponent implements OnInit {
   regions = ['SELECT_REGION', 'NORTH_WESTERN', 'NORTH_CENTRAL', 'NORTH_EASTERN', 'SOUTH_WESTERN', 'SOUTH_CENTRAL', 'SOUTH_EASTERN'];
   wineryForm: FormGroup;
   selectedOption: string;
-  isRegisterMode: false;
+  isRegisterMode = false;
   winerySubscription: Subscription;
   winery: Observable<WineryDetailsServiceDTO>;
   wineryId: string;
+  isSentSubscription: Subscription;
+  error: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private registerEditService: RegisterEditWineryService, private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => this.isRegisterMode = params.register);
+    this.route.queryParams.subscribe(params => this.isRegisterMode = !!params.register);
+    this.store.select(state => state.allWineries.wineryError).subscribe(err => this.error = err);
+    // this.isSentSubscription = this.registerEditService.isSent.subscribe(isSent => {
+    //   if (isSent) {
+    //     this.router.navigate(['../'], {relativeTo: this.route, fragment: 'top'});
+    //   }
+    // });
     this.wineryForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
       'address': new FormGroup({
@@ -53,16 +61,13 @@ export class RegisterEditWineryComponent implements OnInit {
         }
       );
     }
-
   }
 
   onSubmit(): void{
-
     const winery: WineryRegisterBindingDTO = {
       ...this.wineryForm.value
     };
-
-    this.isRegisterMode ? this.registerEditService.registerWinery(winery) : this.registerEditService.editWinery( this.wineryId, winery);
+    this.isRegisterMode ? this.registerEditService.registerWinery(winery) : this.registerEditService.editWinery(this.wineryId, winery);
   }
 
   cancel(): void {
@@ -70,8 +75,6 @@ export class RegisterEditWineryComponent implements OnInit {
     if (this.isRegisterMode) {
       this.registerEditService.isSent.next(true);
     }
-    this.isRegisterMode = false;
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route, fragment: 'top'});
   }
-
 }

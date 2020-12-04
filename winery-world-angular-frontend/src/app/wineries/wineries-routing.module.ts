@@ -16,10 +16,10 @@ import {AuthGuard} from '../auth/auth.guard';
 const routes: Routes = [
   { path: 'home', component: AllWineriesComponent, resolve: [AllWineriesResolverService]},
   { path: 'my-wineries', canActivate: [AuthGuard], component: MyWineriesComponent, resolve: [AllWineriesResolverService], children: [
-      {path: 'register', component: RegisterEditWineryComponent}
+      {path: 'register', component: RegisterEditWineryComponent, outlet: 'wineries-outlet'}
     ]
   },
-  { path: 'wineries/:wineryId', canActivate: [AuthGuard] , component: WineryComponent, resolve: [WineryResolverService], children: [
+  { path: 'wineries/:wineryId', canActivate: [AuthGuard], component: WineryComponent, resolve: [WineryResolverService], children: [
       {path: 'edit', component: RegisterEditWineryComponent},
       {path: 'register-wine', component: RegisterEditWineComponent},
       {path: 'comments', component: CommentsComponent, resolve: [CommentsResolverService]},

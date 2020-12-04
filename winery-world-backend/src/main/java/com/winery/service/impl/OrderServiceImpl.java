@@ -37,7 +37,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = this.modelMapper.map(orderPlaceBindingDTO, Order.class);
         order.setWines(new HashSet<>());
         User user = this.userService.getLoggedInUser();
-//        User user = this.userService.getUser("test2@test.com");//TODO REMOVE STATEMENT
         order.setUser(user);
         Address receiverAddress = this.addressService.registerAddressUser(orderPlaceBindingDTO.getReceiverAddress());
         order.setReceiverAddress(receiverAddress);
@@ -57,7 +56,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderServiceDTO> getClientOrders() {
         User user = this.userService.getLoggedInUser();
-//        User user = this.userService.getUser("test2@test.com"); //TODO REMOVE STATEMENT
         return this.orderRepository.findAllByUser(user).stream()
                 .map(o -> this.modelMapper.map(o, OrderServiceDTO.class))
                 .collect(Collectors.toList());
@@ -65,8 +63,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderServiceDTO> getOrdersByOwner() {
-                User user = this.userService.getLoggedInUser();
-//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
+        User user = this.userService.getLoggedInUser();
         List<Order> orders = this.orderRepository.findAllByWineryOwner(user.getId());
         return orders.stream()
                 .map(o -> this.modelMapper.map(o, OrderServiceDTO.class))

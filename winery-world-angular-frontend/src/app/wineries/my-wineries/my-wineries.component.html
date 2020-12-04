@@ -3,16 +3,14 @@
 
   <button class="btn btn-light mt-2 mb-2" (click)="register()">Register new winery</button>
 
-  <router-outlet></router-outlet>
 
-  <ul class="list-group" *ngIf="!registerMode && (wyWineries | async).length > 0, let i = index" >
-    <a *ngFor="let winery of (wyWineries | async)"
-       [@listItems]
-       class="list-group-item list-group-item-action list-group-item-light mb-1"
-       [routerLink]="['/wineries', winery.id]">
-      {{winery.name}}
-    </a>
+  <router-outlet name="wineries-outlet"></router-outlet>
+
+  <div [@stagger]>
+  <ul class="list-group" [@listItems] *ngIf="!registerMode && (wyWineries | async).length > 0, let i = index" >
+      <app-my-wineries-item *ngFor="let wineryList of (wyWineries | async)" [winery]="wineryList"></app-my-wineries-item>
   </ul>
+  </div>
 </div>
 
 

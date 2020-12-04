@@ -42,7 +42,6 @@ public class WineryServiceImpl implements WineryService {
         Address address = this.modelMapper.map(wineryRegisterBindingDTO.getAddress(), Address.class);
         winery.setAddress(address);
         User user = this.userService.getLoggedInUser();
-//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         winery.setUser(user);
         winery = this.wineryRepository.saveAndFlush(winery);
         WineryDetailsServiceDTO wineryDetailsServiceDTO = this.modelMapper.map(winery, WineryDetailsServiceDTO.class);
@@ -54,7 +53,7 @@ public class WineryServiceImpl implements WineryService {
     @Override
     public WineryServiceDTO registerWineryInit(WineryRegisterBindingDTO wineryRegisterBindingDTO, String username) {
         if (this.wineryRepository.findByName(wineryRegisterBindingDTO.getName()).orElse(null) != null) {
-            throw new WineryAlreadyExistsException("Winery with this name already exists!");
+            throw new WineryAlreadyExistsException(String.format("Winery with name %s already exists!", wineryRegisterBindingDTO.getName()));
         }
         Winery winery = this.modelMapper.map(wineryRegisterBindingDTO, Winery.class);
         Address address = this.modelMapper.map(wineryRegisterBindingDTO.getAddress(), Address.class);
@@ -72,8 +71,7 @@ public class WineryServiceImpl implements WineryService {
 
     @Override
     public WineryDetailsServiceDTO getWineryDetails(String id) {
-                User user = this.userService.getLoggedInUser();
-//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
+        User user = this.userService.getLoggedInUser();
         Winery winery = this.wineryRepository.findById(id).orElseThrow(() -> new WineryNotFoundException("Winery with this ID does not exists!"));
         WineryDetailsServiceDTO wineryDetailsServiceDTO = this.modelMapper.map(winery, WineryDetailsServiceDTO.class);
         wineryDetailsServiceDTO.getWines().forEach(w -> {
@@ -100,15 +98,14 @@ public class WineryServiceImpl implements WineryService {
 
     @Override
     public List<WineryServiceDTO> getAllWineries() {
-        return this.wineryRepository.findAll().stream()
+        return this.wineryRepository.findAllOrdered().stream()
                 .map(w -> this.modelMapper.map(w, WineryServiceDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<WineryServiceDTO> getMyWineries() {
-                User user = this.userService.getLoggedInUser();
-//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
+        User user = this.userService.getLoggedInUser();
         return this.wineryRepository.findAllByUser(user).stream()
                 .map(w -> this.modelMapper.map(w, WineryServiceDTO.class))
                 .collect(Collectors.toList());
@@ -117,7 +114,13 @@ public class WineryServiceImpl implements WineryService {
     @Override
     public WineryUpdateServiceDTO updateWinery(String id, WineryRegisterBindingDTO wineryRegisterBindingDTO) {
         Winery winery = this.wineryRepository.findById(id).orElseThrow(() -> new WineryNotFoundException("Winery with ID " + id + "does not exists!"));
-        winery.setName(wineryRegisterBindingDTO.getName());
+        if (!winery.getName().equals(wineryRegisterBindingDTO.getName().trim())){
+            if (this.wineryRepository.findByName(wineryRegisterBindingDTO.getName()).orElse(null) != null) {
+                throw new WineryAlreadyExistsException(String.format("Winery with name %s already exists!", wineryRegisterBindingDTO.getName()));
+            }
+        }
+
+        winery.setName(wineryRegisterBindingDTO.getName().trim());
         winery.setImageUrl(wineryRegisterBindingDTO.getImageUrl());
         winery.getAddress().setRegion(Region.valueOf(wineryRegisterBindingDTO.getAddress().getRegion()));
         winery.getAddress().setCity(wineryRegisterBindingDTO.getAddress().getCity());

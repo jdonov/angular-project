@@ -3,18 +3,15 @@ import {WineryEditBindingDTO, WineryRegisterBindingDTO} from '../winery.model';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import {AddWineryStart, EditWineryStart} from '../store/wineries.actions';
-import {Subject} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class RegisterEditWineryService {
-  isSent = new Subject<boolean>();
+  isSent = new BehaviorSubject<boolean>(false);
   constructor(private store: Store<fromApp.AppState>) {}
 
   registerWinery(winery: WineryRegisterBindingDTO): void {
     this.store.dispatch(new AddWineryStart(winery));
-    this.isSent.next(true);
   }
 
   editWinery(id: string, winery: WineryRegisterBindingDTO): void {
@@ -23,6 +20,5 @@ export class RegisterEditWineryService {
       ...winery
     };
     this.store.dispatch(new EditWineryStart(wineryToEdit));
-    this.isSent.next(true);
   }
 }

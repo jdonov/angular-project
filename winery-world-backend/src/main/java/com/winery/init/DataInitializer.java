@@ -62,9 +62,13 @@ public class DataInitializer implements CommandLineRunner {
                             "Test Winery - 4",
                             new AddressWineryBindingDTO("SOUTH_WESTERN", "Blagoevgrad", "Vihren 2C"),
                             "This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.",
-                            "https://images.unsplash.com/photo-1558138818-d44c4dea7a6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+                            "https://images.unsplash.com/photo-1558138818-d44c4dea7a6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
+                    new WineryRegisterBindingDTO(
+                            "Test Winery - 5",
+                            new AddressWineryBindingDTO("NORTH_WESTERN", "Vidin", "Dondukov 15D"),
+                            "This card has supporting text below as a natural lead-in to additional content.",
+                            "https://images.unsplash.com/photo-1572913017567-02f0649bc4fd?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NHx8d2luZXJ5fGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")
             ).stream().map(w -> this.wineryService.registerWineryInit(w, users.get(1).getUsername())).collect(Collectors.toList()));
-
             List<WineServiceDTO> wines = List.of(
                     new WineRegisterDTO(
                             "Mavrud",

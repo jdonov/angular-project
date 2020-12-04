@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
 import {WineriesRoutingModule} from './wineries-routing.module';
 import {MyWineriesComponent} from './my-wineries/my-wineries.component';
 import {AllWineriesComponent} from './all-wineries/all-wineries.component';
@@ -10,14 +9,14 @@ import {SharedModule} from '../shared/shared.module';
 import {WinesModule} from '../wines/wines.module';
 import {CommentsModule} from '../comments/comments.module';
 import { WineryCardComponent } from './all-wineries/winery-card/winery-card.component';
+import { MyWineriesItemComponent } from './my-wineries/my-wineries-item/my-wineries-item.component';
 
 @NgModule({
   declarations: [
-    AllWineriesComponent, MyWineriesComponent, WineryComponent, RegisterEditWineryComponent, WineryCardComponent
+    AllWineriesComponent, MyWineriesComponent, WineryComponent, RegisterEditWineryComponent, WineryCardComponent, MyWineriesItemComponent
   ],
   imports: [
     RouterModule,
-    ReactiveFormsModule,
     WineriesRoutingModule,
     WinesModule,
     CommentsModule,

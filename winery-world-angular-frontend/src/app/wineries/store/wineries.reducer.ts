@@ -5,16 +5,34 @@ import * as AllWineryActions from './wineries.actions';
 export interface State {
   wineries: WineryServiceDTO[];
   winery: WineryDetailsServiceDTO;
+  wineryError: string;
 }
 
 const initialState: State = {
   wineries: [],
-  winery: null
+  winery: null,
+  wineryError: null
 };
 
 
 export function wineriesReducer(state: State = initialState, action: AllWineryActions.WineriesActions): any {
   switch (action.type) {
+    case AllWineryActions.ADD_WINERY_START:
+    case AllWineryActions.EDIT_WINERY_START:
+    case AllWineryActions.RATE_WINE_START:
+    case AllWineryActions.DELETE_WINE_START:
+    case AllWineryActions.EDIT_WINERY_ADD_WINE_START:
+    case AllWineryActions.EDIT_WINE_START:
+    case AllWineryActions.WINERY_CLEAR_ERROR:
+      return {
+        ...state,
+        wineryError: null
+      };
+    case AllWineryActions.WINERY_ERROR:
+      return {
+        ...state,
+        wineryError: action.payload
+      };
     case AllWineryActions.SET_WINERIES:
       return {
         ...state,
@@ -33,7 +51,8 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
       return {
         ...state,
         wineries: updatedWineries,
-        winery: newWinery
+        winery: newWinery,
+        wineryError: null
       };
     case AllWineryActions.SET_WINERY:
       return {
@@ -41,7 +60,6 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
         winery: action.payload
       };
     case AllWineryActions.EDIT_WINERY_SUCCESS:
-
       const editedWinery = {...state.winery, ...action.payload};
       const editedWineries = [...state.wineries];
       const wineryToEdit = editedWineries.find(w => w.id === editedWinery.id);
@@ -51,7 +69,8 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
       return {
         ...state,
         wineries: [...editedWineries],
-        winery: {...editedWinery}
+        winery: {...editedWinery},
+        wineryError: null
       };
 
     case AllWineryActions.EDIT_WINERY_ADD_WINE_SUCCESS:
@@ -63,7 +82,8 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
       };
       return {
         ...state,
-        winery: wineryWithNewWine
+        winery: wineryWithNewWine,
+        wineryError: null
       };
 
     case AllWineryActions.RATE_UPDATE_WINE_SUCCESS:
@@ -82,7 +102,8 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
 
       return {
         ...state,
-        winery: {...updatedWinery}
+        winery: {...updatedWinery},
+        wineryError: null
       };
     case AllWineryActions.DELETE_WINE_SUCCESS:
       const winesCollToDelete = [...state.winery.wines.filter(w => w.id !== action.payload.id)];
@@ -92,7 +113,8 @@ export function wineriesReducer(state: State = initialState, action: AllWineryAc
       };
       return {
         ...state,
-        winery: {...updatedWineryDelWine}
+        winery: {...updatedWineryDelWine},
+        wineryError: null
       };
     default:
       return state;

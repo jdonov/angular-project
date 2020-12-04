@@ -3,6 +3,7 @@ package com.winery.model.binding;
 import com.winery.constraint.AddressWineryValidation;
 import com.winery.model.entity.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -22,7 +23,7 @@ public class WineryRegisterBindingDTO {
         this.imageUrl = imageUrl;
     }
 
-    @NotEmpty(message = "Winery name can not be empty!")
+    @NotBlank(message = "Winery name can not be empty!")
     public String getName() {
         return name;
     }

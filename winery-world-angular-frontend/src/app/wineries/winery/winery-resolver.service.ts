@@ -1,12 +1,12 @@
-import {ActivatedRoute, ActivatedRouteSnapshot, Params, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {WineryDetailsServiceDTO, WineryServiceDTO} from '../winery.model';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {WineryDetailsServiceDTO} from '../winery.model';
 import {Observable, of} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import {Actions, ofType} from '@ngrx/effects';
 import {map, switchMap, take} from 'rxjs/operators';
 import * as AllWineriesActions from '../store/wineries.actions';
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class WineryResolverService implements Resolve<WineryDetailsServiceDTO> {

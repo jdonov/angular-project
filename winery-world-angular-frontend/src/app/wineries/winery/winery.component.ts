@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
@@ -6,7 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 import {WineryDetailsServiceDTO} from '../winery.model';
 import {WineService} from '../../wines/wine/wine.service';
 import {RateWineStart} from '../store/wineries.actions';
-import {map, tap, withLatestFrom} from 'rxjs/operators';
+import {map, withLatestFrom} from 'rxjs/operators';
 import {RegisterEditWineryService} from '../register-edit-winery/register-edit-winery.service';
 import {ResetComments} from '../../comments/store/comments.actions';
 
@@ -40,7 +40,6 @@ export class WineryComponent implements OnInit, OnDestroy {
       withLatestFrom(this.store.select(state => state.auth.user)),
       map(([winery, user]) => {
         return {owner: winery.owner, user: user.username};
-
       })
     ).subscribe((data) => this.isInMine = data.owner === data.user);
 
@@ -48,15 +47,10 @@ export class WineryComponent implements OnInit, OnDestroy {
       this.store.dispatch(new RateWineStart({rating: w.rating, wineId: w.wineId, wineryId: this.wineryId}));
     });
 
-    this.isSentSubscription = this.registerEditWineryService.isSent.subscribe((data) => {
-      if(data){
-        this.router.navigate(['./'], {relativeTo: this.route});
-      }
-    });
   }
 
   editWinery(): void{
-    this.router.navigate(['/wineries', this.wineryId, 'edit']);
+    this.router.navigate(['/wineries', this.wineryId, 'edit'], {fragment: 'winery-register-edit'});
   }
 
   registerWine(): void {

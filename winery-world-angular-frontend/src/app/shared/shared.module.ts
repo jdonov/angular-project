@@ -7,23 +7,27 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from '@angular/forms';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AlertComponent } from './alert/alert.component';
+import {ClickOutsideDirective} from './click-outside.directive';
 
 @NgModule({
   declarations: [
-    RatingComponent, DropdownDirective, RemoveUnderscorePipe, LoadingSpinnerComponent
+    RatingComponent, DropdownDirective, RemoveUnderscorePipe, LoadingSpinnerComponent, AlertComponent, ClickOutsideDirective
   ],
   imports: [
     CommonModule, FontAwesomeModule, ReactiveFormsModule,
     BrowserAnimationsModule,
   ],
-    exports: [
-        CommonModule,
-        FontAwesomeModule,
-        RatingComponent,
-        DropdownDirective,
-        RemoveUnderscorePipe,
-        ReactiveFormsModule,
-        LoadingSpinnerComponent
-    ]
+  exports: [
+    CommonModule,
+    FontAwesomeModule,
+    RatingComponent,
+    DropdownDirective,
+    RemoveUnderscorePipe,
+    ReactiveFormsModule,
+    LoadingSpinnerComponent,
+    AlertComponent,
+    ClickOutsideDirective
+  ]
 })
 export class SharedModule{}

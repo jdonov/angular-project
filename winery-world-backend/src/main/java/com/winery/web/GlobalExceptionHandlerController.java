@@ -32,7 +32,7 @@ public class GlobalExceptionHandlerController {
     public Error userNotFoundHandler(PasswordsNotMatchException e) {
         return new Error().setErrors(List.of(e.getMessage()));
     }
-//
+
 //    @ExceptionHandler(NoSuchOrderException.class)
 //    @ResponseStatus(HttpStatus.NOT_FOUND)
 //    public Error noSuchOrder(NoSuchOrderException e) {

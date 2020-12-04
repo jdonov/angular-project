@@ -51,6 +51,7 @@ export function loadReducer(
     case WineryActions.EDIT_WINERY_ADD_WINE_SUCCESS:
     case WineryActions.RATE_UPDATE_WINE_SUCCESS:
     case WineryActions.DELETE_WINE_SUCCESS:
+    case WineryActions.WINERY_ERROR:
     case CommentActions.SET_COMMENTS:
     case CommentActions.ADD_COMMENT_SUCCESS:
     case CommentActions.REPLY_TO_COMMENT_SUCCESS:
