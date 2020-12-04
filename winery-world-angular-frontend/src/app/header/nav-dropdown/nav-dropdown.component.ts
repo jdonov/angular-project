@@ -15,4 +15,10 @@ export class NavDropdownComponent implements OnInit {
   toggleMenu(): void {
     this.isOpen = !this.isOpen;
   }
+
+  closeMenu(): void {
+    if(this.isOpen){
+      this.isOpen = false;
+    }
+  }
 }

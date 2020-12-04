@@ -1,4 +1,4 @@
-<a class="nav-link dropdown-toggle" appClickOutside (clickOutside)="toggleMenu()" role="button" (click)="toggleMenu()">
+<a class="nav-link dropdown-toggle" appClickOutside (clickOutside)="closeMenu()" role="button" (click)="toggleMenu()">
   My orders</a>
 <ul class="dropdown-menu bg-dark" [ngClass]="{'show': isOpen}">
   <a class="dropdown-item text-light" routerLinkActive="active" routerLink="/my-orders/received" [queryParams]="{'received': true}"
