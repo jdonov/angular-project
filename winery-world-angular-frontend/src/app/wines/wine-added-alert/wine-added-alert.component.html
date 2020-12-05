@@ -1,4 +1,4 @@
-<div class="alert alert-dismissible alert-secondary">
+<div class="alert alert-dismissible alert-secondary" [@wildState]="wildState">
   <button type="button" class="close" data-dismiss="alert" (click)="onClose()">&times;</button>
-  <strong>Excellent choice!</strong> You added {{quantity}} {{quantity === 1 ? 'bottle' : 'bottles'}} of wine <strong>{{wineName}}</strong> to the <a routerLink="/shopping-cart" class="alert-link">caret!</a>.
+  <strong>{{choiceType}} choice!</strong> You added {{quantity}} {{quantity === 1 ? 'bottle' : 'bottles'}} of wine <strong>{{wineName}}</strong> to the <a routerLink="/shopping-cart" class="alert-link">caret!</a>.
 </div>

@@ -21,7 +21,7 @@
       <div class="col-6 d-flex form-group flex-row justify-content-end" *ngIf="!isMine">
         <label for="order-wine">Quantity</label>
         <input #quantity class="form-control ml-2 mr-2 w-25" id="order-wine" type="number" min="0"/>
-        <button class="btn btn-sm btn-dark" type="button" (click)="addToCaret()">Add</button>
+        <button class="btn btn-sm btn-dark" type="button" [disabled]="quantity.value < 1" (click)="addToCaret()">Add</button>
       </div>
     </div>
   </div>

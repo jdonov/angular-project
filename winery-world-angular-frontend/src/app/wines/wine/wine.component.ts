@@ -60,13 +60,34 @@ export class WineComponent implements OnInit, OnDestroy {
     const wineAlertComp = hostViewContainerRef.createComponent(alertCompFactory);
     wineAlertComp.instance.wineName = this.wine.name;
     wineAlertComp.instance.quantity = wine.quantity;
+    wineAlertComp.instance.choiceType = this.choiceType();
     this.closeSubscription = wineAlertComp.instance.close.pipe(tap((event) => {
       hostViewContainerRef.clear();
+      wineAlertComp.destroy();
     })).subscribe();
     this.store.dispatch(new AddWineToOrder(wine));
   }
 
-  ngOnDestroy(): void {
-    this.closeSubscription.unsubscribe();
+  choiceType(): string {
+    switch (this.wine.rating) {
+      case 'NOT_RATED':
+      case 'VERY_BAD':
+        return 'Interesting';
+      case 'POOR':
+        return 'Not bad';
+      case 'OK':
+        return 'Nice';
+      case 'GOOD':
+        return 'Good';
+      case 'EXCELLENT':
+        return 'Excellent';
+    }
   }
+
+  ngOnDestroy(): void {
+    if(this.closeSubscription) {
+      this.closeSubscription.unsubscribe();
+    }
+  }
+
 }
