@@ -64,7 +64,7 @@ export class WineriesEffects {
         }),
         tap((winery) => {
           this.registerEditWineryService.isSent.next(true);
-          this.router.navigate(['/my-wineries']);
+          this.router.navigate(['/my-wineries'], {fragment: 'top'});
         }),
         catchError(errorRes => {
           return of(new AllWineriesActions.WineryError(errorRes.error.errors[0]));

@@ -9,10 +9,13 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AlertComponent } from './alert/alert.component';
 import {ClickOutsideDirective} from './click-outside.directive';
+import {PlaceholderDirective} from './placeholder.directive';
 
 @NgModule({
   declarations: [
-    RatingComponent, DropdownDirective, RemoveUnderscorePipe, LoadingSpinnerComponent, AlertComponent, ClickOutsideDirective
+    RatingComponent, DropdownDirective, RemoveUnderscorePipe,
+    LoadingSpinnerComponent, AlertComponent, ClickOutsideDirective,
+    PlaceholderDirective
   ],
   imports: [
     CommonModule, FontAwesomeModule, ReactiveFormsModule,
@@ -27,7 +30,7 @@ import {ClickOutsideDirective} from './click-outside.directive';
     ReactiveFormsModule,
     LoadingSpinnerComponent,
     AlertComponent,
-    ClickOutsideDirective
+    ClickOutsideDirective, PlaceholderDirective
   ]
 })
 export class SharedModule{}

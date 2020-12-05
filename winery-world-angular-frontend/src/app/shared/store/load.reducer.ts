@@ -27,18 +27,7 @@ export function loadReducer(
       return {...state,
         loading: true
       };
-    case WineryActions.ADD_WINERY_START:
-    case WineryActions.EDIT_WINERY_START:
-    case WineryActions.EDIT_WINERY_ADD_WINE_START:
-    case WineryActions.EDIT_WINE_START:
-    case WineryActions.RATE_WINE_START:
-    case WineryActions.DELETE_WINE_START:
     case CommentActions.FETCH_COMMENTS:
-    case CommentActions.ADD_COMMENT_START:
-    case CommentActions.REPLY_TO_COMMENT_START:
-    case MyOrdersActions.CONFIRM_ORDER_START:
-    case MyOrdersActions.CANCEL_ORDER_START:
-    case MyOrdersActions.SEND_ORDER_START:
       return {...state,
         loadChild: true
       };

@@ -1,26 +1,34 @@
-import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, ElementRef, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {WineServiceDTO} from '../wine.model';
 
 import {WineService} from './wine.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
-import {OrderWineBindingDTO, OrderWineView} from '../../my-orders/my-orders.model';
+import { OrderWineView} from '../../my-orders/my-orders.model';
 import {AddWineToOrder} from '../../my-orders/store/my-orders.actions';
+import {WineAddedAlertComponent} from '../wine-added-alert/wine-added-alert.component';
+import {PlaceholderDirective} from '../../shared/placeholder.directive';
+import {tap} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-wine',
   templateUrl: './wine.component.html',
   styleUrls: ['./wine.component.css']
 })
-export class WineComponent implements OnInit {
+export class WineComponent implements OnInit, OnDestroy {
   @Input() wine: WineServiceDTO;
   @Input() isMine: boolean;
   @Input() wineryName: string;
   editMode = false;
   @ViewChild('quantity') quantity: ElementRef;
+  @ViewChild(PlaceholderDirective) placeholder: PlaceholderDirective;
+  closeSubscription: Subscription;
 
-  constructor(private wineService: WineService, private router: Router, private route: ActivatedRoute, private store: Store<fromApp.AppState>) { }
+  constructor(private wineService: WineService, private router: Router,
+              private route: ActivatedRoute, private store: Store<fromApp.AppState>,
+              private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
   }
@@ -45,6 +53,20 @@ export class WineComponent implements OnInit {
       wineryName: this.wineryName,
       price: this.wine.price
     };
+    this.quantity.nativeElement.value = '';
+    const alertCompFactory = this.componentFactoryResolver.resolveComponentFactory(WineAddedAlertComponent);
+    const hostViewContainerRef = this.placeholder.viewContainerRef;
+    hostViewContainerRef.clear();
+    const wineAlertComp = hostViewContainerRef.createComponent(alertCompFactory);
+    wineAlertComp.instance.wineName = this.wine.name;
+    wineAlertComp.instance.quantity = wine.quantity;
+    this.closeSubscription = wineAlertComp.instance.close.pipe(tap((event) => {
+      hostViewContainerRef.clear();
+    })).subscribe();
     this.store.dispatch(new AddWineToOrder(wine));
+  }
+
+  ngOnDestroy(): void {
+    this.closeSubscription.unsubscribe();
   }
 }
