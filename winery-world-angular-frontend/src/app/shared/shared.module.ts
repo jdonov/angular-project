@@ -10,12 +10,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AlertComponent } from './alert/alert.component';
 import {ClickOutsideDirective} from './click-outside.directive';
 import {PlaceholderDirective} from './placeholder.directive';
+import { ErrorPageComponent } from './error-page-component/error-page.component';
 
 @NgModule({
   declarations: [
     RatingComponent, DropdownDirective, RemoveUnderscorePipe,
     LoadingSpinnerComponent, AlertComponent, ClickOutsideDirective,
-    PlaceholderDirective
+    PlaceholderDirective,
+    ErrorPageComponent
   ],
   imports: [
     CommonModule, FontAwesomeModule, ReactiveFormsModule,

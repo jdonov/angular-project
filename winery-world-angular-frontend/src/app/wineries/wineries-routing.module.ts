@@ -9,12 +9,10 @@ import {RegisterEditWineComponent} from '../wines/register-edit-wine/register-ed
 import {CommentsComponent} from '../comments/comments.component';
 import {CommentsResolverService} from '../comments/comments-resolver.service';
 import {AllWinesComponent} from '../wines/all-wines/all-wines.component';
-import {AllWineriesComponent} from './all-wineries/all-wineries.component';
 import {AuthGuard} from '../auth/auth.guard';
 
 
 const routes: Routes = [
-  { path: 'home', component: AllWineriesComponent, resolve: [AllWineriesResolverService]},
   { path: 'my-wineries', canActivate: [AuthGuard], component: MyWineriesComponent, resolve: [AllWineriesResolverService], children: [
       {path: 'register', component: RegisterEditWineryComponent, outlet: 'wineries-outlet'}
     ]

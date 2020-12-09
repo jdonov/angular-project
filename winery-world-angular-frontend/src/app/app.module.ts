@@ -30,11 +30,11 @@ import {CoreModule} from './core.module';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([WineriesEffects, CommentsEffects, MyOrdersEffects, AuthEffects]),
-    WineriesModule, MyOrdersModule, SharedModule, CoreModule
+    WineriesModule, MyOrdersModule, SharedModule, CoreModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

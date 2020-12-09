@@ -35,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentServiceDTO placeComment(CommentBindingDTO commentBindingDTO) {
-                User user = this.userService.getLoggedInUser();
+        User user = this.userService.getLoggedInUser();
 //        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
         Winery winery = this.wineryService.getWineryById(commentBindingDTO.getWineryId());
         Comment comment = this.modelMapper.map(commentBindingDTO, Comment.class);
@@ -48,9 +48,39 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public CommentServiceDTO placeCommentInit(CommentBindingDTO commentBindingDTO, String username) {
+        User user = this.userService.getUser(username);
+        Winery winery = this.wineryService.getWineryById(commentBindingDTO.getWineryId());
+        Comment comment = this.modelMapper.map(commentBindingDTO, Comment.class);
+        comment.setUser(user);
+        comment.setWinery(winery);
+        comment = this.commentRepository.saveAndFlush(comment);
+//        comment.setParent(comment);
+//        comment = this.commentRepository.saveAndFlush(comment);
+        return this.modelMapper.map(comment, CommentServiceDTO.class);
+    }
+
+    @Override
     public CommentReplyServiceDTO placeReply(CommentReplyBindingDTO commentReplyBindingDTO) {
-                User user = this.userService.getLoggedInUser();
-//        User user = this.userService.getUser("test@test.com"); //TODO REMOVE STATEMENT
+        User user = this.userService.getLoggedInUser();
+        Winery winery = this.wineryService.getWineryById(commentReplyBindingDTO.getReply().getWineryId());
+        Comment comment = this.modelMapper.map(commentReplyBindingDTO.getReply(), Comment.class);
+        comment.setUser(user);
+        comment.setWinery(winery);
+        Comment parent = this.commentRepository.findById(commentReplyBindingDTO.getParentId()).orElse(null);
+        comment.setParent(parent);
+        comment = this.commentRepository.saveAndFlush(comment);
+        if (parent.getReplies() == null) {
+            parent.setReplies(new HashSet<>());
+        }
+        parent.getReplies().add(comment);
+        this.commentRepository.saveAndFlush(parent);
+        return this.modelMapper.map(comment, CommentReplyServiceDTO.class);
+    }
+
+    @Override
+    public CommentReplyServiceDTO placeReplyInit(CommentReplyBindingDTO commentReplyBindingDTO, String username) {
+        User user = this.userService.getUser(username);
         Winery winery = this.wineryService.getWineryById(commentReplyBindingDTO.getReply().getWineryId());
         Comment comment = this.modelMapper.map(commentReplyBindingDTO.getReply(), Comment.class);
         comment.setUser(user);

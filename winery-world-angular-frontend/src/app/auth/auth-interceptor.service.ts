@@ -3,7 +3,7 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpParams, HttpHeaders
+  HttpHeaders
 } from '@angular/common/http';
 import { take, exhaustMap, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';

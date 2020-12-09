@@ -28,11 +28,6 @@ export class RegisterEditWineryComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => this.isRegisterMode = !!params.register);
     this.store.select(state => state.allWineries.wineryError).subscribe(err => this.error = err);
-    // this.isSentSubscription = this.registerEditService.isSent.subscribe(isSent => {
-    //   if (isSent) {
-    //     this.router.navigate(['../'], {relativeTo: this.route, fragment: 'top'});
-    //   }
-    // });
     this.wineryForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
       'address': new FormGroup({
