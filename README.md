@@ -1,4 +1,7 @@
 # angular-project
+PLEASE REPLACE THE FILE: 'bootstrap.min.css' IN: winery-world-angular-frontend/node_modules/bootstrap/dist/css/bootstrap.min.css 
+WITH THE FILE PROVIDED IN THE REPO! 
+
 You have to create your own account in order to view winery details, register winery or perform any kind of actions.
 
 For authorized users:
