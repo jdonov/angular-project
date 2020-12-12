@@ -6,7 +6,7 @@
 
   <router-outlet name="wineries-outlet"></router-outlet>
 
-  <div [@stagger]>
+  <div *ngIf="(wyWineries | async).length > 0" [@stagger]>
   <ul class="list-group" [@listItems] *ngIf="!registerMode && (wyWineries | async).length > 0, let i = index" >
       <app-my-wineries-item *ngFor="let wineryList of (wyWineries | async)" [winery]="wineryList"></app-my-wineries-item>
   </ul>

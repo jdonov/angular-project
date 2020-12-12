@@ -21,7 +21,7 @@ const routes: Routes = [
       {path: 'edit', component: RegisterEditWineryComponent},
       {path: 'register-wine', component: RegisterEditWineComponent},
       {path: 'comments', component: CommentsComponent, resolve: [CommentsResolverService]},
-      {path: 'wines', component: AllWinesComponent},
+      {path: 'wines', component: AllWinesComponent}
     ]
   }
 ];

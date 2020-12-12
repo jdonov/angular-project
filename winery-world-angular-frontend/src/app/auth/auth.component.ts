@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as AllAuthActions from './store/auth.actions';
+import {Router} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -14,8 +17,9 @@ export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  authSubscription: Subscription;
 
-  constructor(private formBuilder: FormBuilder, private store: Store<fromApp.AppState>) {
+  constructor(private formBuilder: FormBuilder, private store: Store<fromApp.AppState>, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -68,7 +72,13 @@ export class AuthComponent implements OnInit {
         new AllAuthActions.SignupStart({...this.signupForm.value})
       );
     }
-
     this.signupForm.reset();
+    this.authSubscription = this.store.select('auth')
+      .pipe(map(authState => authState.user))
+      .subscribe(user => {
+        if (!!user) {
+          this.router.navigate(['/']);
+        }
+      });
   }
 }

@@ -34,7 +34,8 @@ const handleError = (errorRes: any) => {
 @Injectable()
 export class AuthEffects {
 
-  constructor(private actions$: Actions, private http: HttpClient, private router: Router, private authService: AuthService) {
+  constructor(private actions$: Actions,
+              private http: HttpClient, private router: Router, private authService: AuthService) {
   }
 
   @Effect()
@@ -82,15 +83,15 @@ export class AuthEffects {
         );
     })
   );
-  @Effect({dispatch: false})
-  authRedirect = this.actions$.pipe(
-    ofType(AllAuthActions.AUTHENTICATE_SUCCESS),
-    tap((authSuccessAction: AllAuthActions.AuthenticateSuccess) => {
-      // if (authSuccessAction.payload.redirect) {
-      this.router.navigate(['/']);
-      // }
-    })
-  );
+  // @Effect({dispatch: false})
+  // authRedirect = this.actions$.pipe(
+  //   ofType(AllAuthActions.AUTHENTICATE_SUCCESS),
+  //   tap((authSuccessAction: AllAuthActions.AuthenticateSuccess) => {
+  //     // if (authSuccessAction.payload.redirect) {
+  //     // this.router.navigate(['/']);
+  //     // }
+  //   })
+  // );
 
   @Effect({dispatch: false})
   authLogout = this.actions$.pipe(
