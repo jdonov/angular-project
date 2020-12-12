@@ -37,4 +37,10 @@ export class OrderComponent implements OnInit {
       .map(w => w.quantity * w.price)
       .reduce((acc, curr) => acc + curr, 0);
   }
+
+  totalQuantity(): number {
+    return this.order.wines
+      .map(w => w.quantity)
+      .reduce((acc, curr) => acc + curr, 0);
+  }
 }

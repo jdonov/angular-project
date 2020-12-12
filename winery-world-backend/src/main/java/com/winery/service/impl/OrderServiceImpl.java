@@ -4,6 +4,7 @@ import com.winery.exception.NoSuchOrderException;
 import com.winery.model.binding.OrderPlaceBindingDTO;
 import com.winery.model.entity.*;
 import com.winery.model.service.OrderServiceDTO;
+import com.winery.model.service.OrderWineServiceDTO;
 import com.winery.repository.OrderRepository;
 import com.winery.service.*;
 import org.modelmapper.ModelMapper;
@@ -66,7 +67,15 @@ public class OrderServiceImpl implements OrderService {
         User user = this.userService.getLoggedInUser();
         List<Order> orders = this.orderRepository.findAllByWineryOwner(user.getId());
         return orders.stream()
-                .map(o -> this.modelMapper.map(o, OrderServiceDTO.class))
+                .map(o -> {
+                    OrderServiceDTO order = this.modelMapper.map(o, OrderServiceDTO.class);
+                    Set<OrderWineServiceDTO> wines = o.getWines().stream()
+                            .filter(w -> w.getOwner().getId().equals(user.getId()))
+                            .map(w -> this.modelMapper.map(w, OrderWineServiceDTO.class))
+                            .collect(Collectors.toCollection(HashSet::new));
+                    order.setWines(wines);
+                    return order;
+                })
                 .collect(Collectors.toList());
     }
 
