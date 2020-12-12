@@ -3,6 +3,7 @@
     <li class="list-group-item list-group-item-action list-group-item-light" *ngFor="let order of (orders | async)">
       Wine name: {{order.name}}, from winery: {{order.wineryName}}, quantity: {{order.quantity}}, wine price: {{order.price | currency: 'EUR'}},
       total price {{(order.price * order.quantity) | currency: 'EUR'}}
+      <button type="button" class="close ml-2" data-dismiss="alert" (click)="onClose(order.id)">&times;</button>
     </li>
   </ul>
   <p class="border mt-1 p-3"><strong class="mr-2">Total order amount:</strong> {{totalOrderPrice | currency: 'EUR'}}</p>

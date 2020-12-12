@@ -1,5 +1,6 @@
-import {AddressUserBindingDTO, OrderPlaceBindingDTO, OrderServiceDTO, OrderWineBindingDTO, OrderWineView} from '../my-orders.model';
+import { OrderPlaceBindingDTO, OrderServiceDTO } from '../my-orders.model';
 import * as AllOrdersActions from './my-orders.actions';
+import * as AllAuthActions from '../../auth/store/auth.actions';
 
 export interface State {
   shoppingCart: OrderPlaceBindingDTO;
@@ -16,7 +17,7 @@ const initialState: State = {
   sentOrders: null
 };
 
-export function ordersReducer(state: State = initialState, action: AllOrdersActions.OrdersActions): State {
+export function ordersReducer(state: State = initialState, action: AllOrdersActions.OrdersActions | AllAuthActions.AuthActions): State {
   switch (action.type) {
     case AllOrdersActions.ADD_WINE_TO_ORDERS:
       const orderedWinesUpdated = [...state.shoppingCart.orderedWines];
@@ -26,6 +27,16 @@ export function ordersReducer(state: State = initialState, action: AllOrdersActi
         shoppingCart: {
           ...state.shoppingCart,
           orderedWines: [...orderedWinesUpdated]
+        }
+      };
+    case AllOrdersActions.EDIT_ORDER:
+      let allWines = [...state.shoppingCart.orderedWines];
+      allWines = allWines.filter(w => w.id !== action.payload);
+      return {
+        ...state,
+        shoppingCart: {
+          ...state.shoppingCart,
+          orderedWines: [...allWines]
         }
       };
     case AllOrdersActions.SET_RECEIVED_ORDERS:
@@ -65,6 +76,11 @@ export function ordersReducer(state: State = initialState, action: AllOrdersActi
       return {
         ...state,
         receivedOrders: [...receivedOrdersUpdated]
+      };
+    case AllAuthActions.LOGOUT:
+      return {
+        ...state,
+        ...initialState
       };
     default:
       return {

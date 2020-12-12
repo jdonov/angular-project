@@ -6,6 +6,7 @@ import {SharedModule} from '../shared/shared.module';
 import {MyOrdersRoutingModule} from './my-orders-routing.module';
 import { MySentOrdersComponent } from './my-sent-orders/my-sent-orders.component';
 import { OrderComponent } from './order/order.component';
+import { ShoppingCartItemComponent } from './shopping-cart/shopping-cart-view/shopping-cart-item/shopping-cart-item.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { OrderComponent } from './order/order.component';
     ShoppingCartViewComponent,
     MyReceivedOrdersComponent,
     MySentOrdersComponent,
-    OrderComponent
+    OrderComponent,
+    ShoppingCartItemComponent
   ],
   imports: [MyOrdersRoutingModule, SharedModule],
   exports: [MyReceivedOrdersComponent, MySentOrdersComponent, ShoppingCartViewComponent, ShoppingCartComponent, OrderComponent]

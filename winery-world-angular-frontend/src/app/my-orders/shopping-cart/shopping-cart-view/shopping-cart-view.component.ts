@@ -6,6 +6,7 @@ import * as fromApp from '../../../store/app.reducer';
 import {map} from 'rxjs/operators';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as AllMyOrdersActions from '../../store/my-orders.actions';
+import {EditOrder} from '../../store/my-orders.actions';
 
 @Component({
   selector: 'app-shopping-cart-view',
@@ -46,5 +47,8 @@ export class ShoppingCartViewComponent implements OnInit {
 
   editAddress(): void {
     this.enterAddress = true;
+  }
+  onClose(id: string): void {
+    this.store.dispatch(new EditOrder(id));
   }
 }

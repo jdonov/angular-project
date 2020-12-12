@@ -6,6 +6,7 @@ export const FETCH_RECEIVED_ORDERS = '[Orders] Fetch received orders';
 export const SET_RECEIVED_ORDERS = '[Orders] Set received orders';
 export const FETCH_SENT_ORDERS = '[Orders] Fetch sent orders';
 export const SET_SENT_ORDERS = '[Orders] Set sent orders';
+export const EDIT_ORDER = '[Orders] Edit order';
 export const SEND_ORDER_START = '[Orders] Send orders start';
 export const SEND_ORDER_SUCCESS = '[Orders] Send order success';
 export const SET_RECEIVER_ADDRESS = '[Orders] Set receiver address';
@@ -36,6 +37,12 @@ export class FetchSentOrders implements Action {
 export class SetSentOrders implements Action {
   readonly type = SET_SENT_ORDERS;
   constructor(public payload: OrderServiceDTO[]) {
+  }
+}
+
+export class EditOrder implements Action{
+  readonly type = EDIT_ORDER;
+  constructor(public payload: string) {
   }
 }
 
@@ -72,5 +79,5 @@ export class ConfirmCancelOrderSuccess implements Action {
 }
 
 export type OrdersActions = AddWineToOrder | FetchReceivedOrders | SetReceivedOrders |
-  FetchSentOrders | SetSentOrders | SetReceiverAddressStart | SendOrderStart | SendOrderSuccess |
+  FetchSentOrders | SetSentOrders | EditOrder | SetReceiverAddressStart | SendOrderStart | SendOrderSuccess |
   ConfirmOrderStart | CancelOrderStart | ConfirmCancelOrderSuccess;

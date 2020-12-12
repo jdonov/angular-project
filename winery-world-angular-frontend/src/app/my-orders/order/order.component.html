@@ -11,7 +11,7 @@
           Name: {{wine.name}},
           Quantity: {{wine.quantity}},
           Wine price: {{wine.price | currency: 'EUR'}},
-          Total price: {{wine.price * wine.quantity}}</p>
+          Total price: {{(wine.price * wine.quantity) | currency: 'EUR'}}</p>
       </div>
     </div>
     <p>Total price: {{totalPrice() | currency: 'EUR'}}</p>
