@@ -1,1 +1,6 @@
-<p>shopping-cart-item works!</p>
+<li class="list-group-item list-group-item-action list-group-item-light mb-2" [@wildState]="wildState">
+  Wine name: {{order.name}}, from winery: {{order.wineryName}}, quantity: {{order.quantity}}, wine
+  price: {{order.price | currency: 'EUR'}},
+  total price {{(order.price * order.quantity) | currency: 'EUR'}}
+  <button type="button" class="close ml-2" data-dismiss="alert" (click)="onEdit()">&times;</button>
+</li>
