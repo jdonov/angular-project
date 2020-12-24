@@ -1,6 +1,6 @@
 <li class="list-group-item list-group-item-action list-group-item-light mb-1">
   <div>
-    <p>Order for {{totalQuantity()}} {{totalQuantity() === 1 ? 'wine' : 'wines'}} placed
+    <p>Order with ID: <strong style="text-decoration: underline;">{{order.id}}</strong> for {{totalQuantity()}} {{totalQuantity() === 1 ? 'wine' : 'wines'}} placed
       on: {{order.orderDateTime | date: 'MMM d, y, h:mm a'}}
       <span><strong class="text-dark"
                     (click)="viewWines()">{{!showWines ? 'View' : 'Hide'}} {{order.wines.length === 1 ? 'wine' : 'wines'}}</strong></span>

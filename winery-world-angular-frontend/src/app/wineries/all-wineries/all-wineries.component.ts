@@ -3,7 +3,6 @@ import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import {WineryServiceDTO} from '../winery.model';
 import {Observable} from 'rxjs';
-import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 
 @Component({

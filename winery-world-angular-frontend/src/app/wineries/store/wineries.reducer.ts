@@ -14,7 +14,6 @@ const initialState: State = {
   wineryError: null
 };
 
-
 export function wineriesReducer(state: State = initialState, action: AllWineryActions.WineriesActions): any {
   switch (action.type) {
     case AllWineryActions.ADD_WINERY_START:
