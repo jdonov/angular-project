@@ -7,6 +7,7 @@ public class OrderWineServiceDTO {
     private String name;
     private int quantity;
     private BigDecimal price;
+    private String status;
 
     public OrderWineServiceDTO() {
     }
@@ -43,8 +44,16 @@ public class OrderWineServiceDTO {
         this.price = price;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return String.format("Wine: %s, quantity: %d", this.name, this.quantity);
+        return String.format("Wine: %s, quantity: %d, status: %s", this.name, this.quantity, this.status);
     }
 }

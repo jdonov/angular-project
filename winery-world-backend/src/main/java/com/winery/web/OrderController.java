@@ -54,7 +54,8 @@ public class OrderController {
 
     @PatchMapping("/{id}/confirm")
     public ResponseEntity<OrderServiceDTO> confirmOrder(@PathVariable("id") String orderId) {
-        return ResponseEntity.ok(this.orderService.confirmOrder(orderId));
+        OrderServiceDTO order = this.orderService.confirmOrder(orderId);
+        return ResponseEntity.ok(order);
     }
 
     @PatchMapping("/{id}/cancel")

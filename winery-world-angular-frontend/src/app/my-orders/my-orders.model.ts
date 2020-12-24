@@ -31,4 +31,5 @@ export interface OrderWineServiceDTO{
   name: string;
   quantity: number;
   price: number;
+  status: string;
 }

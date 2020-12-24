@@ -11,6 +11,7 @@ public class OrderedWines {
     private Order order;
     private Wine wine;
     private User owner;
+    private OrderStatus status;
 
     public OrderedWines() {
     }
@@ -64,5 +65,15 @@ public class OrderedWines {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 }

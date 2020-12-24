@@ -1,5 +1,6 @@
 package com.winery.service.impl;
 
+import com.winery.aop.ProcessOrder;
 import com.winery.exception.NoSuchOrderException;
 import com.winery.model.binding.OrderPlaceBindingDTO;
 import com.winery.model.entity.*;
@@ -69,30 +70,46 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream()
                 .map(o -> {
                     OrderServiceDTO order = this.modelMapper.map(o, OrderServiceDTO.class);
-                    Set<OrderWineServiceDTO> wines = o.getWines().stream()
-                            .filter(w -> w.getOwner().getId().equals(user.getId()))
-                            .map(w -> this.modelMapper.map(w, OrderWineServiceDTO.class))
-                            .collect(Collectors.toCollection(HashSet::new));
+                    Set<OrderWineServiceDTO> wines = this.ownerWines(o, user.getId());
                     order.setWines(wines);
                     return order;
                 })
                 .collect(Collectors.toList());
     }
 
+    @ProcessOrder
     @Override
     public OrderServiceDTO confirmOrder(String orderId) {
+        User user = this.userService.getLoggedInUser();
         Order order = getOrderValidated(orderId);
-        order.setStatus(OrderStatus.CONFIRMED);
+        order.getWines().stream()
+                .filter(w -> w.getOwner().getId().equals(user.getId()))
+                .forEach(w -> w.setStatus(OrderStatus.CONFIRMED));
+        order = this.orderRepository.saveAndFlush(order);
+        return this.modelMapper.map(order, OrderServiceDTO.class);
+    }
+
+    @ProcessOrder
+    @Override
+    public OrderServiceDTO cancelOrder(String orderId) {
+        User user = this.userService.getLoggedInUser();
+        Order order = getOrderValidated(orderId);
+        order.getWines().stream()
+                .filter(w -> w.getOwner().getId().equals(user.getId()))
+                .forEach(w -> w.setStatus(OrderStatus.CANCELED));
         order = this.orderRepository.saveAndFlush(order);
         return this.modelMapper.map(order, OrderServiceDTO.class);
     }
 
     @Override
-    public OrderServiceDTO cancelOrder(String orderId) {
+    public OrderServiceDTO setOrderStatus(String orderId, OrderStatus status) {
+        User user = this.userService.getLoggedInUser();
         Order order = getOrderValidated(orderId);
-        order.setStatus(OrderStatus.CANCELED);
+        order.setStatus(status);
         order = this.orderRepository.saveAndFlush(order);
-        return this.modelMapper.map(order, OrderServiceDTO.class);
+        OrderServiceDTO orderDTO = this.modelMapper.map(order, OrderServiceDTO.class);
+        orderDTO.setWines(this.ownerWines(order, user.getId()));
+        return orderDTO;
     }
 
     private Order getOrderValidated(String orderId) {
@@ -101,5 +118,12 @@ public class OrderServiceImpl implements OrderService {
             throw new NoSuchOrderException("There is no order with id " + orderId + "!");
         }
         return order;
+    }
+
+    private Set<OrderWineServiceDTO> ownerWines(Order order, String userId) {
+        return order.getWines().stream()
+                .filter(w -> w.getOwner().getId().equals(userId))
+                .map(w -> this.modelMapper.map(w, OrderWineServiceDTO.class))
+                .collect(Collectors.toCollection(HashSet::new));
     }
 }

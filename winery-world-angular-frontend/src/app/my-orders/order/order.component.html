@@ -11,7 +11,9 @@
           Name: {{wine.name}},
           Quantity: {{wine.quantity}},
           Wine price: {{wine.price | currency: 'EUR'}},
-          Total price: {{(wine.price * wine.quantity) | currency: 'EUR'}}</p>
+          Total price: {{(wine.price * wine.quantity) | currency: 'EUR'}},
+          Status: {{wine.status === null ? 'pending' : wine.status | lowercase}}
+        </p>
       </div>
     </div>
     <p>Total price: {{totalPrice() | currency: 'EUR'}}</p>
@@ -19,11 +21,11 @@
   <p><strong>Delivery address:</strong> {{order.receiverAddress.city}}, {{order.receiverAddress.street}}</p>
   <div class="d-inline-flex flex-row align-items-baseline">
     <p>
-      <strong>Status: </strong> {{ order.status | lowercase}}
+      <strong>Status: </strong> {{ order.status | removeUnderscore | lowercase}}
     </p>
     <div *ngIf="received ? true : false" class="d-inline-flex flex-row align-items-baseline">
-      <button class="btn btn-sm btn-outline-secondary ml-2" [disabled]="order.status !== 'RECEIVED'" (click)="confirmOrder()">Confirm</button>
-      <button class="btn btn-sm btn-outline-secondary ml-2" [disabled]="order.status !== 'RECEIVED'" (click)="cancelOrder()">Reject</button>
+      <button class="btn btn-sm btn-outline-secondary ml-2" [disabled]="disableButton()" (click)="confirmOrder()">Confirm</button>
+      <button class="btn btn-sm btn-outline-secondary ml-2" [disabled]="disableButton()" (click)="cancelOrder()">Reject</button>
     </div>
   </div>
 </li>
