@@ -1,6 +1,5 @@
 # angular-project
-PLEASE REPLACE THE FILE: 'bootstrap.min.css' IN: winery-world-angular-frontend/node_modules/bootstrap/dist/css/bootstrap.min.css 
-WITH THE FILE PROVIDED IN THE REPO! 
+The Backend app should run on port 8080
 
 You have to create your own account in order to view winery details, register winery or perform any kind of actions.
 
